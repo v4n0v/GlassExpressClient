@@ -9,12 +9,19 @@ import java.net.URL;
 
 
 public class URLConnection {
-
+    private static  URLConnection urlConnection = new URLConnection();
     static final String ADRESS_URL = "http://localhost:8080";
     static final String SERVLET = "/controller";
 
     static final String KEY = "";
     StringBuffer response = null;
+
+    private URLConnection() {
+    }
+
+   public static URLConnection getInstance(){
+        return  urlConnection;
+    }
 
 
     public String receiveData(String method, String action, String target, String body) {

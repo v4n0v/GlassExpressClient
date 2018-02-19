@@ -12,7 +12,12 @@ public class JsonController {
     private static final JsonParser parser = new JsonParser();
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
-
+    static JsonController jsonController = new JsonController();
+    private JsonController() {
+    }
+    public static JsonController getInstance(){
+        return jsonController;
+    }
 
     public BaseObject convertJsonToObject(String jsonResponse) {
         JsonObject jsonObj = (JsonObject) parser.parse(jsonResponse);

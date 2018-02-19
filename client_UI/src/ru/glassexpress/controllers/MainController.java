@@ -6,7 +6,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
-import javafx.scene.input.MouseEvent;
 import ru.glassexpress.JsonController;
 import ru.glassexpress.ServerVocabulary;
 import ru.glassexpress.URLConnection;
@@ -15,6 +14,7 @@ import ru.glassexpress.objects.BaseObject;
 import ru.glassexpress.objects.Car;
 import ru.glassexpress.objects.CarMark;
 import ru.glassexpress.objects.Composite;
+import ru.glassexpress.request_chain.RequestController;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -33,6 +33,28 @@ public class MainController extends BaseController {
     @FXML
     Button addMarkButton;
 
+    enum State {BUSY, FREE}
+
+    ;
+
+    State state = State.FREE;
+
+    void free() {
+        state = State.FREE;
+    }
+
+    void busy() {
+        state = State.BUSY;
+    }
+
+    boolean isBusy() {
+        if (state == State.BUSY) {
+            System.out.println("BUSY");
+            return true;
+        }
+        return false;
+    }
+
     @FXML
     ListView<String> markListView;
     private URLConnection urlConnection;
@@ -48,43 +70,54 @@ public class MainController extends BaseController {
         return car;
     }
 
+    // класс авто, заполняющийся после конструктора
     Car car;
 
+
+    // инициализация конроллера, вызывается при открытии приложения
     @Override
     public void init() {
-        urlConnection = new URLConnection();
-        jsonController = new JsonController();
+        urlConnection = URLConnection.getInstance();
+        jsonController = JsonController.getInstance();
         car = new Car();
         marks = new HashMap<>();
         markListView.setItems(marksList);
         modelListView.setItems(modelsList);
-        showMarks();
+        fillMarksListView();
 
     }
 
-    void showMarks() {
-
-        fillList(marksList, getMarks());
-        markListView.getSelectionModel().selectFirst();
-        showModels();
+    // получаем данные с сервера и заполняем ListView марок автомобилей
+    private void fillMarksListView() {
+        if (!isBusy()) {
+            busy();
+            fillList(marksList, getList(ServerVocabulary.TARGET_MARK, ""));
+            markListView.getSelectionModel().selectFirst();
+            fillModelsListView();
+            free();
+        }
 
     }
-    private void showModels() {
-        String selectedItem = markListView.getSelectionModel().getSelectedItem();
-        car.setMark(selectedItem);
-        fillList(modelsList, getModels(selectedItem));
-        // modelsList = getModels(selectedItem);
-//
-//        if (modelsList != null) {
-//            modelListView.setItems(modelsList);
-//            //получаем модели
-//           // showModels();
-//        } else modelListView.setItems(null);
-        System.out.println("показать модели авто " + selectedItem);
+
+    // получаем данные с сервера и заполняем ListView моделей автомобилей, выбранной марки
+    public void fillModelsListView() {
+        if (!isBusy()) {
+            busy();
+
+            String selectedItem = markListView.getSelectionModel().getSelectedItem();
+            car.setMark(selectedItem);
+            String body = "&mark=" + selectedItem;
+            fillList(modelsList, getList(ServerVocabulary.TARGET_MODEL, body));
+            System.out.println("показать модели авто " + selectedItem);
+
+            free();
+        }
     }
+
+    // обновляем данные ObservableList, новыми, прилетевшими с сервера
     public void fillList(ObservableList<String> list, List<String> source) {
         list.clear();
-        if (source!=null)
+        if (source != null)
             list.addAll(source);
         System.out.println("список марок обновлен");
     }
@@ -109,116 +142,50 @@ public class MainController extends BaseController {
 
     }
 
+    // получаем список типа ID=TITLE
+    public ObservableList<String> getList(String target, String body) {
 
-
-    public ObservableList<String> getModels(String mark) {
-        String jsonResponse = null;
-        String body = "&mark=" + mark;
-        try {
-            jsonResponse = urlConnection.receiveData("GET", ServerVocabulary.ACTION_SELECT, ServerVocabulary.TARGET_MODEL, body);
-            if (jsonResponse != null) {
-                if (!jsonResponse.equals(ServerVocabulary.ERROR_RESPONSE)) {
-
-                    // получаем список и переносим его во вью
-                    Composite baseObject = (Composite) jsonController.convertJsonToObject(jsonResponse);
-                    List<BaseObject> list = baseObject.getComponents();
-                    ArrayList<String> carMarks = new ArrayList<>();
-
-                    for (int i = 0; i < list.size(); i++) {
-                        CarMark models = (CarMark) list.get(i);
-                        carMarks.add(models.getTitle());
-                    }
-
-                    return FXCollections.observableArrayList(carMarks);
-                } else {
-                    modelsList.clear();
-                }
+        Composite baseObject = (Composite) RequestController.responseToObject(RequestController.recieveResponse("GET", ServerVocabulary.ACTION_SELECT, target, body));
+        if (baseObject != null) {
+            List<BaseObject> list = baseObject.getComponents();
+            ArrayList<String> carMarks = new ArrayList<>();
+            for (int i = 0; i < list.size(); i++) {
+                CarMark mark = (CarMark) list.get(i);
+                carMarks.add(mark.getTitle());
             }
-        } catch (Exception e) {
-            System.out.println("Это фиаско, братан!");
-            AlertWindow.errorMessage("Ошибка соединения с сервером :(");
-
-        }
-        return null;
-
-    }
-
-    public ObservableList<String> getMarks() {
-        String jsonResponse = null;
-        try {
-            jsonResponse = urlConnection.receiveData("GET", ServerVocabulary.ACTION_SELECT, ServerVocabulary.TARGET_MARK, "");
-            if (jsonResponse != null) {
-                if (!jsonResponse.equals(ServerVocabulary.ERROR_RESPONSE)) {
-                    // получаем список и переносим его во вью
-                    Composite baseObject = (Composite) jsonController.convertJsonToObject(jsonResponse);
-                    List<BaseObject> list = baseObject.getComponents();
-                    ArrayList<String> carMarks = new ArrayList<>();
-                    for (int i = 0; i < list.size(); i++) {
-                        CarMark mark = (CarMark) list.get(i);
-                        carMarks.add(mark.getTitle());
-                    }
-
-                    return FXCollections.observableArrayList(carMarks);
-                } else {
-                    marksList.clear();
-                }
-            }
-        } catch (Exception e) {
-            System.out.println("Это фиаско, братан!");
-            AlertWindow.errorMessage("Ошибка соединения с сервером :(");
-
-        }
-
-        return null;
-    }
-
-    String connect(String method, String action, String target, String body) {
-
-        try {
-            return urlConnection.receiveData(method, action, target, body);
-        } catch (Exception e) {
-            System.out.println("Это фиаско, братан!");
-            AlertWindow.errorMessage("Ошибка соединения с сервером :(");
-
+            return FXCollections.observableArrayList(carMarks);
         }
         return null;
     }
 
-
-    public void showModels(MouseEvent mouseEvent) {
-        showModels();
-    }
-
-
-    void addElement(String method, String target, String body) {
-
-    }
 
     void addMark(String mark) {
         System.out.println("Добавляем марку");
         String body = "&mark=" + mark;
-        String jsonResponse = urlConnection.receiveData("GET", ServerVocabulary.ACTION_INSERT, ServerVocabulary.TARGET_MARK, body);
-        //
-        if (jsonResponse.equals("ok")) {
-            System.out.println(mark + ", новая марка добавлена в базу");
 
-            showMarks();
+        if (insertElement(ServerVocabulary.TARGET_MARK, body)) {
+            fillMarksListView();
         } else {
             System.out.println("Фиаско! не добавлено");
         }
     }
 
+    boolean insertElement(String target, String body) {
+        if (!isBusy()) {
+            busy();
+            if (RequestController.isRequestAccepted(RequestController.recieveResponse("GET", ServerVocabulary.ACTION_INSERT, target, body)))
+                return true;
+            free();
+        }
+        return false;
+    }
 
     void addModel(String model) {
         System.out.println("Добавляем модель");
 
         String body = "&mark=" + car.getMark() + "&model=" + model;
-        String jsonResponse = urlConnection.receiveData("GET", ServerVocabulary.ACTION_INSERT, ServerVocabulary.TARGET_MODEL, body);
-
-        if (jsonResponse.equals("ok")) {
-            System.out.println(model + ", новая модель марки " + car.getMark() + " добавлена в базу");
-            markListView.getSelectionModel().getSelectedItem();
-            showModels();
+        if (insertElement(ServerVocabulary.TARGET_MODEL, body)) {
+            fillModelsListView();
         } else {
             System.out.println("Фиаско! не добавлено");
         }
@@ -228,16 +195,18 @@ public class MainController extends BaseController {
 
     // обработка нажатия кнопки (добавить модель)
     public void showAddTitleModal(ActionEvent keyEvent) {
+
         if ((Button) keyEvent.getSource() == addMarkButton) {
 
             String answer = AlertWindow.dialogWindow("Добавить новую марку авто", "Выыедите марку авто");
+
             if (answer != null) {
                 addMark(answer);
-//            mainApp.initAddTitleLayout("Добавить новую марку авто", ServerVocabulary.ADD_MARK);
                 System.out.println("добавить марку авто " + answer);
             }
 
         } else if ((Button) keyEvent.getSource() == addModelButton) {
+
             String answer = AlertWindow.dialogWindow("Добавить новую модель авто", "Выыедите модель марки " + car.getMark());
             addModel(answer);
             System.out.println("добавить модель авто");
@@ -245,8 +214,6 @@ public class MainController extends BaseController {
         } else {
             System.out.println("Такую кнопку не умею");
         }
-        //    showModels();
     }
-
-
 }
+

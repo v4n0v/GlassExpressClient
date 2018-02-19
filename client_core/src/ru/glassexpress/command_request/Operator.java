@@ -10,18 +10,21 @@ import ru.glassexpress.objects.Composite;
 import java.util.ArrayList;
 import java.util.List;
 
-class Operator{
-    void insert(){
+class Operator {
+    void insert() {
         System.out.println("insert");
     }
-    void update(){
+
+    void update() {
         System.out.println("update");
     }
-    void select(){
+
+    void select() {
 
 
     }
-    void delete(){
+
+    void delete() {
         System.out.println("delete");
     }
 }
