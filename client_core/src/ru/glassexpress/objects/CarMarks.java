@@ -1,6 +1,6 @@
-package ru.glassexpress;
+package ru.glassexpress.objects;
 
-public class Cars {
+public class CarMarks {
 
     Integer[] ids;
     String[] markTitles;
@@ -15,11 +15,11 @@ public class Cars {
     }
 
 
-    public Cars() {
+    public CarMarks() {
     }
 
-    public Cars(Integer[] ids,
-                String[] markTitles) {
+    public CarMarks(Integer[] ids,
+                    String[] markTitles) {
         this.ids = ids;
         this.markTitles = markTitles;
     }

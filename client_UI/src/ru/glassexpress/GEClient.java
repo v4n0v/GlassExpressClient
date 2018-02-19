@@ -4,16 +4,22 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
-import ru.glassexpress.controllers.CarsController;
+import ru.glassexpress.controllers.MainController;
+import ru.glassexpress.controllers.MenuController;
+
 
 import java.io.IOException;
 
 public class GEClient extends Application {
 
-    ClientManager clientManager;
-    CarsController carsController;
+
+    private MainController mainController;
+    private MenuController menuController;
+
 
     public static void main(String[] args) {
         launch(args);
@@ -28,20 +34,28 @@ public class GEClient extends Application {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("GlassExpress client");
 
+        // мэнеджер клиента, в нем вся бизнеслогика
+
 
         initRootLayout();
-        showCarInfo();
+        initCarInfoLayout();
 
     }
-// инициализация корневого
+    public  void fillMarksList(){
+
+    }
+
+    // инициализация корневого
     public void initRootLayout() {
-        clientManager=new ClientManager();
+
         try {
             // Загружаем корневой макет из fxml файла.
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(GEClient.class.getResource("fxml/root.fxml"));
             System.out.println("rootLayout.fxml подгружен");
             rootLayout = (BorderPane) loader.load();
+            menuController = loader.getController();
+
             // Отображаем сцену, содержащую корневой макет.
             Scene scene = new Scene(rootLayout);
             primaryStage.setScene(scene);
@@ -51,7 +65,7 @@ public class GEClient extends Application {
         }
     }
 
-    public void showCarInfo() {
+    public void initCarInfoLayout() {
         try {
             // Загружаем сведения об адресатах.
             Stage carsSelectStage = new Stage();
@@ -59,21 +73,26 @@ public class GEClient extends Application {
             loader.setLocation(GEClient.class.getResource("fxml/addCarLayout.fxml"));
             System.out.println("addCarLayout подгружен");
             VBox modelAdd = (VBox) loader.load();
-            carsController = loader.getController();
+            mainController = loader.getController();
             // Помещаем сведения об адресатах в центр корневого макета.
             rootLayout.setCenter(modelAdd);
 
-            carsController.setClientManger(clientManager);
-            carsController.setMainApp(this);
-            carsController.setStage(carsSelectStage);
-            carsController.init();
+          //  mainController.setClientController(clientController);
+            mainController.setMainApp(this);
+            mainController.setStage(carsSelectStage);
+            //clientController.setCarsController(mainController);
+            mainController.init();
             carsSelectStage.setOnCloseRequest((event) -> primaryStage.close());
 
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
+
     public Stage getPrimaryStage() {
         return primaryStage;
     }
+
+
 }
