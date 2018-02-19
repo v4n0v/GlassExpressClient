@@ -37,23 +37,23 @@ public class MainController extends BaseController {
 
     ;
 
-    State state = State.FREE;
-
-    void free() {
-        state = State.FREE;
-    }
-
-    void busy() {
-        state = State.BUSY;
-    }
-
-    boolean isBusy() {
-        if (state == State.BUSY) {
-            System.out.println("BUSY");
-            return true;
-        }
-        return false;
-    }
+//    State state = State.FREE;
+//
+//    void free() {
+//        state = State.FREE;
+//    }
+//
+//    void busy() {
+//        state = State.BUSY;
+//    }
+//
+//    boolean isBusy() {
+//        if (state == State.BUSY) {
+//            System.out.println("BUSY");
+//            return true;
+//        }
+//        return false;
+//    }
 
     @FXML
     ListView<String> markListView;
@@ -83,35 +83,39 @@ public class MainController extends BaseController {
         marks = new HashMap<>();
         markListView.setItems(marksList);
         modelListView.setItems(modelsList);
-        fillMarksListView();
+      reconnect();
 
+    }
+
+    public void reconnect(){
+        fillMarksListView();
     }
 
     // получаем данные с сервера и заполняем ListView марок автомобилей
     private void fillMarksListView() {
-        if (!isBusy()) {
-            busy();
+//        if (!isBusy()) {
+//            busy();
             fillList(marksList, getList(ServerVocabulary.TARGET_MARK, ""));
             markListView.getSelectionModel().selectFirst();
             fillModelsListView();
-            free();
-        }
+//            free();
+//        }
 
     }
 
     // получаем данные с сервера и заполняем ListView моделей автомобилей, выбранной марки
     public void fillModelsListView() {
-        if (!isBusy()) {
-            busy();
+//        if (!isBusy()) {
+//            busy();
 
             String selectedItem = markListView.getSelectionModel().getSelectedItem();
             car.setMark(selectedItem);
             String body = "&mark=" + selectedItem;
             fillList(modelsList, getList(ServerVocabulary.TARGET_MODEL, body));
             System.out.println("показать модели авто " + selectedItem);
-
-            free();
-        }
+//
+//            free();
+//        }
     }
 
     // обновляем данные ObservableList, новыми, прилетевшими с сервера
@@ -171,12 +175,12 @@ public class MainController extends BaseController {
     }
 
     boolean insertElement(String target, String body) {
-        if (!isBusy()) {
-            busy();
+//        if (!isBusy()) {
+//            busy();
             if (RequestController.isRequestAccepted(RequestController.recieveResponse("GET", ServerVocabulary.ACTION_INSERT, target, body)))
                 return true;
-            free();
-        }
+//            free();
+//        }
         return false;
     }
 
@@ -200,16 +204,25 @@ public class MainController extends BaseController {
 
             String answer = AlertWindow.dialogWindow("Добавить новую марку авто", "Выыедите марку авто");
 
-            if (answer != null) {
-                addMark(answer);
-                System.out.println("добавить марку авто " + answer);
+            if (answer!=null) {
+                boolean isShure = AlertWindow.confirmationWindow("Вы уверены?", "Добавить марку "+answer+" в базу?");
+                if (isShure) {
+                    addMark(answer);
+                    System.out.println("добавить марку авто " + answer);
+                }
+
             }
 
         } else if ((Button) keyEvent.getSource() == addModelButton) {
 
-            String answer = AlertWindow.dialogWindow("Добавить новую модель авто", "Выыедите модель марки " + car.getMark());
-            addModel(answer);
-            System.out.println("добавить модель авто");
+            String answer = AlertWindow.dialogWindow("Добавить новую модель авто", "Введите модель марки " + car.getMark());
+            if (answer!=null) {
+                boolean isShure = AlertWindow.confirmationWindow("Вы уверены?", "Добавить "+car.getMark()+" "+answer+" в базу?");
+                if (isShure) {
+                    addModel(answer);
+                    System.out.println("добавить модель авто " + answer);
+                }
+            }
 
         } else {
             System.out.println("Такую кнопку не умею");

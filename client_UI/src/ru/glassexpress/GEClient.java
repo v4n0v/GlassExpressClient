@@ -75,6 +75,7 @@ public class GEClient extends Application {
             VBox modelAdd = (VBox) loader.load();
             mainController = loader.getController();
             // Помещаем сведения об адресатах в центр корневого макета.
+            menuController.setMainController(mainController);
             rootLayout.setCenter(modelAdd);
 
           //  mainController.setClientController(clientController);

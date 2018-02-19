@@ -37,7 +37,7 @@ public class AlertWindow {
         boolean answer=false;
         alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle(title);
-        alert.setHeaderText("Ты точно уверен(а) в своем выборе?");
+        alert.setHeaderText(null);
         alert.setContentText(object);
 
 

@@ -14,19 +14,24 @@ public class RequestController {
 
     public static String recieveResponse(String method, String action, String target, String body) {
         urlConnection = URLConnection.getInstance();
-        String jsonResponse = urlConnection.receiveData(method, action, target, body);
-            if (jsonResponse != null) {
+        String jsonResponse = null;
+        try {
+            jsonResponse = urlConnection.receiveData(method, action, target, body);
+
+        if (jsonResponse != null) {
                 if (!jsonResponse.equals(ServerVocabulary.ERROR_RESPONSE)) {
                     return jsonResponse;
                 }
             } else {
 
                 System.out.println("Это фиаско, братан!");
-                AlertWindow.errorMessage("Ошибка соединения с сервером :(");
+
             }
-            return null;
 
-
+        } catch (Exception e) {
+            AlertWindow.errorMessage("Ошибка соединения с сервером :(");
+        }
+        return null;
     }
 
     public static BaseObject responseToObject(String jsonResponse){

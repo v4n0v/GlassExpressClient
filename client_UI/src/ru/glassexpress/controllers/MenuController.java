@@ -11,6 +11,8 @@ public class MenuController extends BaseController {
 
     public void refresh(ActionEvent actionEvent) {
 
+        mainController.reconnect();
+        System.out.println(mainController);
     }
 
     public void exit(ActionEvent actionEvent) {

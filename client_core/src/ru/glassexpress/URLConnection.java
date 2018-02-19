@@ -24,9 +24,9 @@ public class URLConnection {
     }
 
 
-    public String receiveData(String method, String action, String target, String body) {
+    public String receiveData(String method, String action, String target, String body) throws Exception{
 
-        try {
+
 
             URL url = new URL(ADRESS_URL + SERVLET + "?action=" + action + "&target=" + target + body);//+request);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -55,10 +55,7 @@ public class URLConnection {
                     System.out.println("Server answer error");
             }
 
-        } catch (IOException e) {
-            //   e.printStackTrace();
-            errorMessage();
-        }
+
 
         return response.toString();
     }
