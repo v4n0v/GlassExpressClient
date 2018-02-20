@@ -1,10 +1,11 @@
 package ru.glassexpress.request_chain;
 
 import ru.glassexpress.JsonController;
-import ru.glassexpress.ServerVocabulary;
+import ru.glassexpress.Prefs;
 import ru.glassexpress.URLConnection;
 import ru.glassexpress.library.AlertWindow;
 import ru.glassexpress.objects.BaseObject;
+import ru.glassexpress.request_builder.Request;
 
 public class RequestController {
     static URLConnection urlConnection;
@@ -12,14 +13,14 @@ public class RequestController {
 
 
 
-    public static String recieveResponse(String method, String action, String target, String body) {
+    public static String recieveResponse(Request request) {
         urlConnection = URLConnection.getInstance();
         String jsonResponse = null;
         try {
-            jsonResponse = urlConnection.receiveData(method, action, target, body);
+            jsonResponse = urlConnection.receiveData(request);
 
         if (jsonResponse != null) {
-                if (!jsonResponse.equals(ServerVocabulary.ERROR_RESPONSE)) {
+                if (!jsonResponse.equals(Prefs.ERROR_RESPONSE)) {
                     return jsonResponse;
                 }
             } else {

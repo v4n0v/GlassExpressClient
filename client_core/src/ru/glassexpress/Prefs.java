@@ -1,13 +1,21 @@
 package ru.glassexpress;
 
-public class ServerVocabulary {
+public class Prefs {
+
+    public final static String METHOD_GET = "GET";
+    public final static String METHOD_POST = "POST";
+
     public final static String ACTION_SELECT = "list";
    // public final static String ACTION_GET_MODEL_LIST = "model-list";
     public final static String ACTION_INSERT = "insert";
 
 
+
+
     public final static String TARGET_MARK = "mark";
     public static final String TARGET_MODEL = "model" ;
+    public static final String TARGET_GENERATION = "generation" ;
+
 
     public final static String ERROR_RESPONSE= "FUCK OFF";
 

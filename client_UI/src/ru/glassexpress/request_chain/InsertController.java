@@ -1,14 +1,15 @@
 package ru.glassexpress.request_chain;
 
 
-import ru.glassexpress.ServerVocabulary;
+import ru.glassexpress.Prefs;
+import ru.glassexpress.request_builder.Request;
 
 abstract class InsertController {
 
 
-    void insert(String target, String body){
-        if (RequestController.isRequestAccepted(RequestController.recieveResponse("GET", ServerVocabulary.ACTION_INSERT, target, body))) {
-            System.out.println(target + " успешно добавлена в базу");
+    void insert(Request request){
+        if (RequestController.isRequestAccepted(RequestController.recieveResponse(request))) {
+            System.out.println(request.getTarget() + " успешно добавлена в базу");
             execute();
         } else {
             System.out.println("Фиаско! не добавлено");

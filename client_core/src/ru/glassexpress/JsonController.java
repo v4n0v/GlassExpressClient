@@ -2,7 +2,7 @@ package ru.glassexpress;
 
 import com.google.gson.*;
 import ru.glassexpress.objects.BaseObject;
-import ru.glassexpress.objects.CarMark;
+import ru.glassexpress.objects.IdTitleObj;
 import ru.glassexpress.objects.Composite;
 
 import java.util.ArrayList;
@@ -55,9 +55,9 @@ public class JsonController {
         String objClass = removeBrackets(jsonObj.get("objClass").toString());
 
         switch (objClass) {
-            case "CarMark":
+            case "IdTitleObj":
              //   ArrayList<String> marks = new ArrayList<>();
-                return GSON.fromJson(jsonObj, CarMark.class);
+                return GSON.fromJson(jsonObj, IdTitleObj.class);
             case "CarModel":
                 System.out.println("Распаковка модели");
                 return null;
@@ -82,11 +82,11 @@ class ObjectFactory implements FactoryMetod {
     public BaseObject createObject(String classObj) {
         BaseObject object = null;
         switch (classObj) {
-            case "CarMark":
-                object = new CarMark();
+            case "IdTitleObj":
+                object = new IdTitleObj();
                 break;
             case "CarModel":
-                //object = new CarMark(); break;
+                //object = new IdTitleObj(); break;
                 System.out.println("НЕ ГОТОВО ЕЩЕ");
             default:
                 break;

@@ -3,9 +3,9 @@ package ru.glassexpress.objects;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-public class CarMark extends BaseObject {
-    public CarMark() {
-        super("CarMark");
+public class IdTitleObj extends BaseObject {
+    public IdTitleObj() {
+        super("IdTitleObj");
     }
 
     public int getId() {
@@ -21,8 +21,8 @@ public class CarMark extends BaseObject {
     private String title;
 
 
-    public CarMark(int id, String title) {
-        super("CarMark");
+    public IdTitleObj(int id, String title) {
+        super("IdTitleObj");
         this.id = id;
         this.title = title;
     }
@@ -38,7 +38,7 @@ public class CarMark extends BaseObject {
         obj1.addProperty("id", id);
         obj1.addProperty("title", title);
 
-        CarMark dd = GSON.fromJson(obj1, CarMark.class);
+        IdTitleObj dd = GSON.fromJson(obj1, IdTitleObj.class);
 
         return obj1;
     }

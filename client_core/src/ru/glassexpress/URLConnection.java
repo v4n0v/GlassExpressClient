@@ -1,8 +1,9 @@
 package ru.glassexpress;
 
 
+import ru.glassexpress.request_builder.Request;
+
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -24,20 +25,20 @@ public class URLConnection {
     }
 
 
-    public String receiveData(String method, String action, String target, String body) throws Exception{
+    public String receiveData(Request request) throws Exception{
 
 
 
-            URL url = new URL(ADRESS_URL + SERVLET + "?action=" + action + "&target=" + target + body);//+request);
+            URL url = new URL(ADRESS_URL + SERVLET + request.toString());//+request);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
-            con.setRequestMethod(method);
+            con.setRequestMethod(request.getMethod());
             System.out.println(con.getResponseMessage());
             if (con.getResponseMessage() != null) {
                 int code = con.getResponseCode();
 
                 if (code == 200) {
                     System.out.println("Response code: " + code);
-                    System.out.println("Reading " + method);
+                    System.out.println("Reading " + request.getMethod());
                     BufferedReader in = new BufferedReader(
                             new InputStreamReader(con.getInputStream()));
                     String inputLine;
@@ -46,7 +47,7 @@ public class URLConnection {
                         response.append(inputLine);
                     }
 
-                    if (response.equals(ServerVocabulary.ERROR_RESPONSE)) {
+                    if (response.equals(Prefs.ERROR_RESPONSE)) {
                         errorMessage();
                     }
                     in.close();
