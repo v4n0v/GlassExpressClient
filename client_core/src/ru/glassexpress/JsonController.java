@@ -1,28 +1,29 @@
 package ru.glassexpress;
 
 import com.google.gson.*;
-import ru.glassexpress.objects.BaseObject;
-import ru.glassexpress.objects.IdTitleObj;
-import ru.glassexpress.objects.Composite;
+import ru.glassexpress.objects.*;
 
 import java.util.ArrayList;
 import java.util.List;
+
 // класс обработчик входящих JSON
 public class JsonController {
     private static final JsonParser parser = new JsonParser();
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
     static JsonController jsonController = new JsonController();
+
     private JsonController() {
     }
-    public static JsonController getInstance(){
+
+    public static JsonController getInstance() {
         return jsonController;
     }
 
     public BaseObject convertJsonToObject(String jsonResponse) {
         JsonObject jsonObj = (JsonObject) parser.parse(jsonResponse);
-        String objClass = removeBrackets(jsonObj.get("objClass").toString());
-        List<BaseObject> list = new ArrayList<>();
+//        String objClass = removeBrackets(jsonObj.get("objClass").toString());
+//        List<BaseObject> list = new ArrayList<>();
 
         return parseJson(jsonObj);
 
@@ -56,11 +57,14 @@ public class JsonController {
 
         switch (objClass) {
             case "IdTitleObj":
-             //   ArrayList<String> marks = new ArrayList<>();
+                //   ArrayList<String> marks = new ArrayList<>();
                 return GSON.fromJson(jsonObj, IdTitleObj.class);
-            case "CarModel":
-                System.out.println("Распаковка модели");
-                return null;
+            case "generation":
+                return GSON.fromJson(jsonObj, GenerationObj.class);
+            case "error":
+                return GSON.fromJson(jsonObj, ErrorObject.class);
+            case "ok":
+                return GSON.fromJson(jsonObj, OkObject.class);
             default:
                 return null;
 

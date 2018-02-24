@@ -41,9 +41,7 @@ public class GEClient extends Application {
         initCarInfoLayout();
 
     }
-    public  void fillMarksList(){
 
-    }
 
     // инициализация корневого
     public void initRootLayout() {

@@ -7,16 +7,21 @@ import com.google.gson.JsonObject;
 
 abstract public class BaseObject {
     protected static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
+
+    public String getObjectClass() {
+        return objectClass;
+    }
+
     String objectClass;
 
     public BaseObject(String objectClass) {
         this.objectClass = objectClass;
     }
-
+    JsonObject obj1 = new JsonObject();
     // серверынй метод, возвращает JSON
-    abstract public String toJSON();
+
     // клиентский метод, возвращает запрос
-    abstract public String toGET();
+
     abstract public JsonElement toJSONObject();
 }
 

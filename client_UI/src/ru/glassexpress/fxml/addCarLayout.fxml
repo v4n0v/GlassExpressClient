@@ -18,7 +18,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox fx:id="id_contaner" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="1016.0" minWidth="900.0" prefHeight="1016.0" prefWidth="900.0" styleClass="container" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.glassexpress.controllers.MainController">
+<VBox fx:id="id_contaner" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="1016.0" minWidth="900.0" prefHeight="1016.0" prefWidth="900.0" styleClass="container" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.glassexpress.controllers.MainController">
     <children>
       <Label alignment="CENTER" layoutX="468.0" layoutY="270.0" styleClass="header" text="Выбрать авто">
          <font>
@@ -62,7 +62,7 @@
                         <Insets bottom="5.0" />
                      </VBox.margin>
                   </Label>
-                  <ListView fx:id="genListView" prefWidth="200.0" />
+                  <ListView fx:id="genListView" onMouseClicked="#setGeneration" prefWidth="200.0" />
                   <Button fx:id="addGenerationButton" mnemonicParsing="false" onAction="#showAddTitleModal" prefHeight="25.0" prefWidth="223.0" text="+" />
                </children>
             </VBox>
@@ -92,7 +92,7 @@
             </VBox>
          </children>
       </AnchorPane>
-      <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="25.0" prefWidth="870.0" text="Показать товар">
+      <Button fx:id="showGoodsButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#showGoods" prefHeight="25.0" prefWidth="870.0" text="Показать товар">
          <VBox.margin>
             <Insets bottom="15.0" top="10.0" />
          </VBox.margin>

@@ -1,8 +1,11 @@
 package ru.glassexpress.objects;
 
-public class Car {
+import com.google.gson.JsonElement;
+
+public class Car extends BaseObject{
 
     public Car() {
+        super("car");
     }
 
     public int getId() {
@@ -38,7 +41,7 @@ public class Car {
     }
 
     public int getYearFrom() {
-        return yearFrom;
+        return gen.getYearFrom();
     }
 
     public void setYearFrom(int yearFrom) {
@@ -46,7 +49,7 @@ public class Car {
     }
 
     public int getYearTo() {
-        return yearTo;
+        return gen.getYearTo();
     }
 
     public void setYearTo(int yearTo) {
@@ -59,4 +62,25 @@ public class Car {
     private String bodytype;
     private int yearFrom;
     private int yearTo;
+
+    public GenerationObj getGen() {
+        return gen;
+    }
+
+    public void setGen(GenerationObj gen) {
+        this.gen = gen;
+    }
+
+    GenerationObj gen;
+
+
+    @Override
+    public String toString() {
+        return mark+" "+model+" "+gen.yearFrom+" "+gen.yearTo;
+    }
+
+    @Override
+    public JsonElement toJSONObject() {
+        return null;
+    }
 }

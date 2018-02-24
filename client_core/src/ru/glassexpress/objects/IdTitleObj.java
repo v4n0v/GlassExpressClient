@@ -27,10 +27,7 @@ public class IdTitleObj extends BaseObject {
         this.title = title;
     }
 
-    @Override
-    public String toJSON() {
-        return GSON.toJson(this);
-    }
+
 
     public JsonElement toJSONObject() {
         JsonObject obj1 = new JsonObject();
@@ -38,14 +35,9 @@ public class IdTitleObj extends BaseObject {
         obj1.addProperty("id", id);
         obj1.addProperty("title", title);
 
-        IdTitleObj dd = GSON.fromJson(obj1, IdTitleObj.class);
+        //IdTitleObj dd = GSON.fromJson(obj1, IdTitleObj.class);
 
         return obj1;
     }
 
-
-    @Override
-    public String toGET() {
-        return null;
-    }
 }

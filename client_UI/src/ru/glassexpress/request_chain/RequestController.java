@@ -5,7 +5,10 @@ import ru.glassexpress.Prefs;
 import ru.glassexpress.URLConnection;
 import ru.glassexpress.library.AlertWindow;
 import ru.glassexpress.objects.BaseObject;
+import ru.glassexpress.objects.Composite;
 import ru.glassexpress.request_builder.Request;
+
+import java.util.List;
 
 public class RequestController {
     static URLConnection urlConnection;
@@ -44,9 +47,16 @@ public class RequestController {
     }
 
     public static boolean isRequestAccepted(String jsonResponse){
-        if (jsonResponse.equals("ok")) {
+        jsonController=JsonController.getInstance();
+        Composite object = (Composite) jsonController.convertJsonToObject(jsonResponse);
+        List<BaseObject> answers =  object.getComponents();
+        if (answers.get(0).getObjectClass().equals("ok")){
             return true;
-        }
+        } else
+
+//        if (jsonResponse.equals("ok")) {
+//            return true;
+//        }
 
         return false;
     }
