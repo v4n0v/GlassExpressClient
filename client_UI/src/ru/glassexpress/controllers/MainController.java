@@ -6,6 +6,9 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.ToggleGroup;
+import javafx.scene.input.MouseEvent;
 import ru.glassexpress.JsonController;
 import ru.glassexpress.Prefs;
 import ru.glassexpress.URLConnection;
@@ -39,6 +42,15 @@ public class MainController extends BaseController {
 
     @FXML
     Button addMarkButton;
+
+    @FXML
+    ToggleGroup radioGroup;
+
+    @FXML
+    RadioButton isFrontRadio;
+    @FXML
+    RadioButton isRearRadio;
+
 
 
     GetListOperator getListOperator;
@@ -76,6 +88,11 @@ public class MainController extends BaseController {
         markListView.setItems(marksList);
         modelListView.setItems(modelsList);
         genListView.setItems(genList);
+
+        radioGroup= new ToggleGroup();
+        isFrontRadio.setToggleGroup(radioGroup);
+        isRearRadio.setToggleGroup(radioGroup);
+
         reconnect();
 
     }
@@ -157,6 +174,7 @@ public class MainController extends BaseController {
 
         if (addOperator.addGenerationIsComplete(answer, car)) {
             fillGenerationsListView();
+            currentModelGenerations = getListOperator.getComponents();
         } else {
             System.out.println("Фиаско!" + car.getMark() + " " + car.getMark() + " " + answer + " не добавлено");
         }
@@ -236,6 +254,14 @@ public class MainController extends BaseController {
 
     public void showGoods() {
 
+        System.out.println("показываю подходящий товар");
+    }
+
+    public void buildCar() {
+        System.out.println("заполняю объект Car");
+        car.setGen((GenerationObj) currentModelGenerations.get(genListView.getSelectionModel().getSelectedIndex()));
+        car.setId(car.getGen().getModelID());
+        System.out.println(car);
 
     }
 }

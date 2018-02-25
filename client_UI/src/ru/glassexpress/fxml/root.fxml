@@ -6,17 +6,15 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="1016.0" prefWidth="900.0"
-            xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="ru.glassexpress.controllers.MenuController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="1140.0" prefWidth="1425.0" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.glassexpress.controllers.MenuController">
     <top>
         <MenuBar BorderPane.alignment="CENTER">
             <menus>
                 <Menu mnemonicParsing="false" text="Файл">
                     <items>
-                        <MenuItem mnemonicParsing="false" text="Подключиться" onAction="#refresh"/>
+                        <MenuItem mnemonicParsing="false" onAction="#refresh" text="Подключиться" />
                         <MenuItem mnemonicParsing="false" text="Сменить пользователя" />
-                  <MenuItem mnemonicParsing="false" text="Выход"  onAction="#exit" />
+                  <MenuItem mnemonicParsing="false" onAction="#exit" text="Выход" />
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Правка">

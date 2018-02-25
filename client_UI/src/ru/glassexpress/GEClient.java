@@ -3,6 +3,7 @@ package ru.glassexpress;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -68,9 +69,9 @@ public class GEClient extends Application {
             // Загружаем сведения об адресатах.
             Stage carsSelectStage = new Stage();
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(GEClient.class.getResource("fxml/addCarLayout.fxml"));
+            loader.setLocation(GEClient.class.getResource("fxml/baseScreen.fxml"));
             System.out.println("addCarLayout подгружен");
-            VBox modelAdd = (VBox) loader.load();
+            AnchorPane modelAdd = (AnchorPane) loader.load();
             mainController = loader.getController();
             // Помещаем сведения об адресатах в центр корневого макета.
             menuController.setMainController(mainController);
