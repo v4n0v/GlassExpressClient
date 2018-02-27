@@ -17,7 +17,7 @@ public abstract class ObservedCommand {
     // содержимое контейнера
     protected List<BaseObject> components;
     // даанные, которые заносятсяв колонку таблицы
-    protected ArrayList<String> resultString;
+    protected ArrayList<BaseObject> resultString;
     // запрос на сервер
     protected Request request;
     // единица содержимого контейнера
@@ -39,19 +39,19 @@ public abstract class ObservedCommand {
     }
 
     // возвращаем список строк
-    public ObservableList<String> returnList() {
+    public ObservableList<BaseObject> returnList() {
         // отправляем запрос, получаем контейнер
-        recieveObj();
+        receiveObj();
         if (serverObject != null) {
             // получаем содержимое контейнера
             components = serverObject.getComponents();
-            resultString = new ArrayList<>();
-            for (int i = 0; i < components.size(); i++) {
-                // подготавливаем колонку, для переноса в обсерведлист
-                fillObject(i);
-            }
+//            resultString = new ArrayList<>();
+//            for (int i = 0; i < components.size(); i++) {
+//                // подготавливаем колонку, для переноса в обсерведлист
+//                fillObject(i);
+//            }
             // заполняем колонку и возварщаем ее
-            return FXCollections.observableArrayList(resultString);
+            return FXCollections.observableArrayList(components);
         }
         return null;
     }
@@ -59,7 +59,7 @@ public abstract class ObservedCommand {
 
     abstract void buildRequest();
 
-      void recieveObj(){
+      void receiveObj(){
         serverObject = (Composite) RequestController.responseToObject(RequestController.recieveResponse(request));
     }
 

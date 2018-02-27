@@ -8,6 +8,7 @@ import javafx.beans.property.StringProperty;
 import java.util.List;
 
 public class TableGoodsInStockRow extends BaseObject {
+
     public TableGoodsInStockRow() {
         super("tab_goods_in_stock");
     }

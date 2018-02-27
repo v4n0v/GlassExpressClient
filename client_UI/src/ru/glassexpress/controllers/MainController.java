@@ -262,6 +262,9 @@ public class MainController extends BaseController {
     private TableColumn<TableGoodsInStockRow, String>colTGDesc;
 
     private void initTGTable() {
+        tableGoodsInStockRows =   getListOperator.getTableGoods(car);
+
+
         tblGoodsInStock.setEditable(false);
         colTGId.setCellValueFactory(cellData -> cellData.getValue().getIdProperty());
         colTGDesc.setCellValueFactory(cellData -> cellData.getValue().getDescProperty());
