@@ -4,22 +4,14 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.ToggleGroup;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.control.*;
 import ru.glassexpress.JsonController;
-import ru.glassexpress.Prefs;
 import ru.glassexpress.URLConnection;
 import ru.glassexpress.core.addCommand.AddOperator;
 import ru.glassexpress.core.get_command.ObservedCommand;
 import ru.glassexpress.core.get_command.GetListOperator;
 import ru.glassexpress.library.AlertWindow;
 import ru.glassexpress.objects.*;
-import ru.glassexpress.request_builder.Request;
-import ru.glassexpress.request_builder.RequestBuilder;
-import ru.glassexpress.request_chain.RequestController;
 
 
 import java.util.ArrayList;
@@ -253,8 +245,28 @@ public class MainController extends BaseController {
     }
 
     public void showGoods() {
-
         System.out.println("показываю подходящий товар");
+        initTGTable();
+
+    }
+
+    // таблица стекол на складе
+    ObservableList<TableGoodsInStockRow> tableGoodsInStockRows;
+    @FXML
+    private TableView<TableGoodsInStockRow> tblGoodsInStock;
+    @FXML
+    private TableColumn<TableGoodsInStockRow, Integer> colTGId;
+    @FXML
+    private TableColumn<TableGoodsInStockRow, Float> colTGPrice;
+    @FXML
+    private TableColumn<TableGoodsInStockRow, String>colTGDesc;
+
+    private void initTGTable() {
+        tblGoodsInStock.setEditable(false);
+        colTGId.setCellValueFactory(cellData -> cellData.getValue().getIdProperty());
+        colTGDesc.setCellValueFactory(cellData -> cellData.getValue().getDescProperty());
+        colTGPrice.setCellValueFactory(cellData -> cellData.getValue().getPriceProperty());
+        tblGoodsInStock.setItems(tableGoodsInStockRows);
     }
 
     public void buildCar() {

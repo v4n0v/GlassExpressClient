@@ -16,8 +16,10 @@ abstract public class BaseObject {
 
     public BaseObject(String objectClass) {
         this.objectClass = objectClass;
+        obj1 = new JsonObject();
+        // серверынй метод, возвращает JSON
     }
-    JsonObject obj1 = new JsonObject();
+    protected JsonObject obj1;
     // серверынй метод, возвращает JSON
 
     // клиентский метод, возвращает запрос

@@ -40,5 +40,13 @@ public class GetListOperator implements GetListCommands {
         return command.returnList();
     }
 
+//    public ObservableList<String> getTableGoods(BaseObject object) {
+//
+//        command = new GenerationObservedCommand(object);
+//        return command.returnList();
+//    }
+
+
+
 
 }

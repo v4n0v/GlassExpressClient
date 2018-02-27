@@ -15,7 +15,7 @@ public class Prefs {
     public final static String TARGET_MARK = "mark";
     public static final String TARGET_MODEL = "model" ;
     public static final String TARGET_GENERATION = "generation" ;
-
+    public static final String TARGET_TABLE_GOODS = "table_goods";
 
     public final static String ERROR_RESPONSE= "FUCK OFF";
 
@@ -23,4 +23,5 @@ public class Prefs {
     public final static String ADD_MODEL= "ADD_MODEL";
     public final static String ADD_GENERATION= "ADD_GENERATION";
 
+    ;
 }

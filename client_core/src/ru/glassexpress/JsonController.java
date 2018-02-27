@@ -61,6 +61,9 @@ public class JsonController {
                 return GSON.fromJson(jsonObj, IdTitleObj.class);
             case "generation":
                 return GSON.fromJson(jsonObj, GenerationObj.class);
+            case "tab_goods_in_stock":
+                return GSON.fromJson(jsonObj, TableGoodsInStockRow.class);
+
             case "error":
                 return GSON.fromJson(jsonObj, ErrorObject.class);
             case "ok":
