@@ -9,6 +9,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import ru.glassexpress.controllers.AddGlassController;
 import ru.glassexpress.controllers.MainController;
 import ru.glassexpress.controllers.MenuController;
 
@@ -20,7 +21,7 @@ public class GEClient extends Application {
 
     private MainController mainController;
     private MenuController menuController;
-
+    private AddGlassController addGlassController;
 
     public static void main(String[] args) {
         launch(args);
@@ -88,7 +89,37 @@ public class GEClient extends Application {
             e.printStackTrace();
         }
     }
-
+    public void initAddGlassLayout() {
+        try {
+            // Загружаем сведения об адресатах.
+            Stage addGlassStage = new Stage();
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(GEClient.class.getResource("fxml/addGlassLayout.fxml"));
+            System.out.println("addGlassLayout подгружен");
+            AnchorPane modelAdd = (AnchorPane) loader.load();
+            Scene scene = new Scene(modelAdd);
+            addGlassStage.setScene(scene);
+            addGlassController = loader.getController();
+            addGlassStage.setTitle("Добавить стекло в базу");
+            // Помещаем сведения об адресатах в центр корневого макета.
+            addGlassController.setMainController(mainController);
+            addGlassController.setStage(addGlassStage);
+           // rootLayout.setCenter(modelAdd);
+            addGlassStage.initModality(Modality.WINDOW_MODAL);
+            addGlassStage.initOwner(primaryStage);
+            addGlassStage.setResizable(false);
+            //  mainController.setClientController(clientController);
+            mainController.setMainApp(this);
+            mainController.setStage(addGlassStage);
+            mainController.setAggGlassController(addGlassController);
+            //clientController.setCarsController(mainController);
+            addGlassController.init();
+            //addGlassStage.setOnCloseRequest((event) -> primaryStage.close());
+            addGlassStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     public Stage getPrimaryStage() {
         return primaryStage;

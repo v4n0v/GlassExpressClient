@@ -21,7 +21,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1140.0" prefWidth="1425.0" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.glassexpress.controllers.MainController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1140.0" prefWidth="1425.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.glassexpress.controllers.MainController">
    <children>
       <TabPane layoutX="247.0" layoutY="39.0" prefHeight="950.0" prefWidth="1154.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="300.0">
         <tabs>
@@ -63,7 +63,8 @@
                               <TableColumn minWidth="0.0" prefWidth="135.0" text="Склад2" />
                            </columns>
                         </TableView>
-                        <Button layoutX="193.0" layoutY="738.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="1205.0" text="Оформить заказ" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+                        <Button layoutX="193.0" layoutY="738.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="793.0" text="Оформить заказ" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="602.0" />
+                        <Button fx:id="addNewGlass1" layoutX="1236.0" layoutY="751.0" mnemonicParsing="false" onAction="#addGlass" text="Добавить новое стекло" />
                      </children>
                      <padding>
                         <Insets top="5.0" />
@@ -113,7 +114,7 @@
                         <ButtonBar layoutX="1054.0" layoutY="651.0" prefHeight="40.0" prefWidth="504.0" AnchorPane.rightAnchor="0.0">
                           <buttons>
                             <Button disable="true" mnemonicParsing="false" text="Редактировать количество" />
-                              <Button layoutX="206.0" layoutY="18.0" mnemonicParsing="false" text="Добавить новое стекло" />
+                              <Button fx:id="addNewGlass" layoutX="206.0" layoutY="18.0" mnemonicParsing="false" onAction="#addGlass" text="Добавить новое стекло" />
                           </buttons>
                         </ButtonBar>
                      </children>
@@ -238,7 +239,7 @@
             </VBox>
          </children>
       </GridPane>
-      <ComboBox layoutX="704.0" layoutY="234.0" prefWidth="150.0" promptText="Кузов" />
+      <ComboBox fx:id="bodyTypeListView" layoutX="704.0" layoutY="234.0" prefWidth="150.0" promptText="Кузов" />
       <ComboBox layoutX="704.0" layoutY="65.0" prefWidth="150.0" promptText="Класс установки" />
       <Button layoutX="704.0" layoutY="100.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="150.0" text="Сохранить" />
    </children>

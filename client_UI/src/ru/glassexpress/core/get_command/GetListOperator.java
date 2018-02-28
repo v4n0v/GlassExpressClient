@@ -3,6 +3,7 @@ package ru.glassexpress.core.get_command;
 import javafx.collections.ObservableList;
 import ru.glassexpress.core.get_command.adapter.BaseObjectAdapter;
 import ru.glassexpress.objects.BaseObject;
+import ru.glassexpress.objects.IdTitleObj;
 import ru.glassexpress.objects.TableGoodsInStockRow;
 import ru.glassexpress.request_builder.Request;
 
@@ -12,7 +13,7 @@ public class GetListOperator implements GetListCommands {
 
     ObservedCommand command;
     Request request;
-BaseObjectAdapter titleStringAdapter = new BaseObjectAdapter();
+BaseObjectAdapter objectAdapter = new BaseObjectAdapter();
 
 
     public List<BaseObject> getComponents() {
@@ -23,29 +24,52 @@ BaseObjectAdapter titleStringAdapter = new BaseObjectAdapter();
     public ObservableList<String> getMarks(BaseObject object) {
         command = new GetMarksCommand(object);
 
-        return titleStringAdapter.returnStringList(command.returnList());
+        //return command.returnRecievedList();
+        return objectAdapter.returnStringList(command.returnRecievedList());
+    }
+
+    public ObservableList<String> getGlassTypes( ) {
+        command = new GetGlassTypeCommand(null);
+
+        //return command.returnRecievedList();
+        return objectAdapter.returnStringList(command.returnRecievedList());
     }
 
     @Override
     public ObservableList<String> getModels(BaseObject object) {
 
         command = new GetModelsCommand(object);
-        return titleStringAdapter.returnStringList(command.returnList());
+        return objectAdapter.returnStringList(command.returnRecievedList());
     }
 
     @Override
     public ObservableList<String> getGenerations(BaseObject object) {
 
         command = new GenerationObservedCommand(object);
-        return titleStringAdapter.returnGenerationList(command.returnList());
+        return objectAdapter.returnGenerationList(command.returnRecievedList());
     }
 
     public ObservableList<TableGoodsInStockRow> getTableGoods(BaseObject object) {
         command = new GetTableGoodsCommand(object);
-        return  titleStringAdapter.returnTableGoodsList(command.returnList());
+        return  objectAdapter.returnTableGoodsList(command.returnRecievedList());
     }
 
 
+    public List<IdTitleObj> getBodyTypes() {
+        command = new GetBodyTypeCommand(null);
+        return objectAdapter.baseObjToIdTitleObj(command.returnRecievedList());
+//        return objectAdapter.returnStringList(command.returnRecievedList());
+    }
 
+    public List<IdTitleObj> getGlassOptions() {
+        command = new GetGlassOptionList(null);
+        return objectAdapter.baseObjToIdTitleObj(command.returnRecievedList());
+//        return objectAdapter.returnStringList(command.returnRecievedList());
+    }
 
+    public List<IdTitleObj> getGlassFactory() {
+        command = new GetGlassFactoryCommand(null);
+        return objectAdapter.baseObjToIdTitleObj(command.returnRecievedList());
+//        return objectAdapter.returnStringList(command.returnRecievedList());
+    }
 }

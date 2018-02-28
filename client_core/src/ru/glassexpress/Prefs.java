@@ -23,5 +23,10 @@ public class Prefs {
     public final static String ADD_MODEL= "ADD_MODEL";
     public final static String ADD_GENERATION= "ADD_GENERATION";
 
-    ;
+    public static final String TARGET_GLASS_TYPE = "glass_type";
+    public static final String TARGET_BODY_TYPE = "body_type";
+    public static final String TARGET_GLASS_OPTION = "glass_option";
+    public static final String TARGET_GLASS_FACTORY = "glass_factory";
+
+
 }

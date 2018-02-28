@@ -39,7 +39,7 @@ public abstract class ObservedCommand {
     }
 
     // возвращаем список строк
-    public ObservableList<BaseObject> returnList() {
+    public ObservableList<BaseObject> returnRecievedList() {
         // отправляем запрос, получаем контейнер
         receiveObj();
         if (serverObject != null) {

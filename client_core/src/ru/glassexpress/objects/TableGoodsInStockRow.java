@@ -94,6 +94,17 @@ public class TableGoodsInStockRow extends BaseObject {
     }
 
     private int id;
+
+    public int getCarId() {
+        return carId;
+    }
+
+    public void setCarId(int carId) {
+        this.carId = carId;
+    }
+
+    private int carId;
+
     private int glassType;
     private int glassOption;
     private String description;
@@ -102,6 +113,16 @@ public class TableGoodsInStockRow extends BaseObject {
     private float insertPrice;
     private int countWh1;
     private int countWh2;
+
+    public int getGlassFactory() {
+        return glassFactory;
+    }
+
+    public void setGlassFactory(int glassFactory) {
+        this.glassFactory = glassFactory;
+    }
+
+    private int glassFactory;
     private int countRemainder;
 
 

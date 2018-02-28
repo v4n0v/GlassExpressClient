@@ -10,6 +10,7 @@ import ru.glassexpress.URLConnection;
 import ru.glassexpress.core.addCommand.AddOperator;
 import ru.glassexpress.core.get_command.ObservedCommand;
 import ru.glassexpress.core.get_command.GetListOperator;
+import ru.glassexpress.core.get_command.adapter.BaseObjectAdapter;
 import ru.glassexpress.library.AlertWindow;
 import ru.glassexpress.objects.*;
 
@@ -18,6 +19,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainController extends BaseController {
+    @FXML
+    ComboBox bodyTypeListView;
     @FXML
     Button addGenerationButton;
     @FXML
@@ -44,7 +47,6 @@ public class MainController extends BaseController {
     RadioButton isRearRadio;
 
 
-
     GetListOperator getListOperator;
     AddOperator addOperator;
 
@@ -58,6 +60,9 @@ public class MainController extends BaseController {
 
     private ObservableList<String> modelsList = FXCollections.observableArrayList();
     private ObservableList<String> genList = FXCollections.observableArrayList();
+    private ObservableList<String> bodyTypeStringList = FXCollections.observableArrayList();
+    private List<IdTitleObj> glassOptList;
+    private AddGlassController aggGlassController;
 
     public Car getCar() {
         return car;
@@ -65,28 +70,44 @@ public class MainController extends BaseController {
 
     // класс авто, заполняющийся после конструктора
     Car car;
+    BaseObjectAdapter adapter;
+    List<String> glassTypeList;
+    List<IdTitleObj> bodyTypeList;
 
+    public List<IdTitleObj> getGlassFactoryList() {
+        return glassFactoryList;
+    }
 
+    List<IdTitleObj> glassFactoryList;
     // инициализация конроллера, вызывается при открытии приложения
     @Override
     public void init() {
         urlConnection = URLConnection.getInstance();
         jsonController = JsonController.getInstance();
         car = new Car();
-
+        adapter = new BaseObjectAdapter();
         getListOperator = new GetListOperator();
         addOperator = new AddOperator();
+        glassTypeList = new ArrayList<>();
 
         markListView.setItems(marksList);
         modelListView.setItems(modelsList);
         genListView.setItems(genList);
-
-        radioGroup= new ToggleGroup();
+        bodyTypeListView.setItems(bodyTypeStringList);
+        radioGroup = new ToggleGroup();
         isFrontRadio.setToggleGroup(radioGroup);
         isRearRadio.setToggleGroup(radioGroup);
 
         reconnect();
+        // получаем список типов стекол, кузовов
+        glassTypeList = getListOperator.getGlassTypes();
+        bodyTypeList = getListOperator.getBodyTypes();
+        glassOptList = getListOperator.getGlassOptions();
+        glassFactoryList=getListOperator.getGlassFactory();
 
+        fillObservableList(bodyTypeStringList, adapter.IdTitleObjToString(bodyTypeList));
+
+        System.out.println(glassTypeList);
     }
 
     public void reconnect() {
@@ -97,36 +118,41 @@ public class MainController extends BaseController {
     private void fillMarksListView() {
 
 
-        fillObservableList(marksList, getListOperator.getMarks(null));
-        markListView.getSelectionModel().selectFirst();
+            fillObservableList(marksList, getListOperator.getMarks(null));
+        if (marksList.size() > 0) {
+            markListView.getSelectionModel().selectFirst();
 
-        // формируется запрос на получение списка моделей
-        if (marksList.size() > 0)
+            // формируется запрос на получение списка моделей
+
             fillModelsListView();
-
+        }
     }
 
     // получаем данные с сервера и заполняем ListView моделей автомобилей, выбранной марки
     public void fillModelsListView() {
 
-        car.setMark(markListView.getSelectionModel().getSelectedItem());
+            car.setMark(markListView.getSelectionModel().getSelectedItem());
 
-        fillObservableList(modelsList, getListOperator.getModels(car));
-        modelListView.getSelectionModel().selectFirst();
-        System.out.println("показать модели марки " + car.getMark());
-        if (modelsList.size() > 0)
+            fillObservableList(modelsList, getListOperator.getModels(car));
+        if (modelsList.size() > 0) {
+            modelListView.getSelectionModel().selectFirst();
+            System.out.println("показать модели марки " + car.getMark());
+
             fillGenerationsListView();
-
+        }
     }
 
     List<BaseObject> currentModelGenerations = new ArrayList<>();
 
     public void fillGenerationsListView() {
-        System.out.println("Запрос поколений авто");
 
-        car.setModel(modelListView.getSelectionModel().getSelectedItem());
-        fillObservableList(genList, getListOperator.getGenerations(car));
-        currentModelGenerations = getListOperator.getComponents();
+            System.out.println("Запрос поколений авто");
+
+            car.setModel(modelListView.getSelectionModel().getSelectedItem());
+            fillObservableList(genList, getListOperator.getGenerations(car));
+        if (genList.size() > 0) {
+            currentModelGenerations = getListOperator.getComponents();
+        }
     }
 
 
@@ -259,10 +285,10 @@ public class MainController extends BaseController {
     @FXML
     private TableColumn<TableGoodsInStockRow, Float> colTGPrice;
     @FXML
-    private TableColumn<TableGoodsInStockRow, String>colTGDesc;
+    private TableColumn<TableGoodsInStockRow, String> colTGDesc;
 
     private void initTGTable() {
-        tableGoodsInStockRows =   getListOperator.getTableGoods(car);
+        tableGoodsInStockRows = getListOperator.getTableGoods(car);
 
 
         tblGoodsInStock.setEditable(false);
@@ -278,5 +304,18 @@ public class MainController extends BaseController {
         car.setId(car.getGen().getModelID());
         System.out.println(car);
 
+    }
+
+    public void addGlass() {
+        mainApp.initAddGlassLayout();
+        aggGlassController.setCarId(car.getId());
+    }
+
+    public List<IdTitleObj> getGlassOptList() {
+        return glassOptList;
+    }
+
+    public void setAggGlassController(AddGlassController aggGlassController) {
+        this.aggGlassController = aggGlassController;
     }
 }

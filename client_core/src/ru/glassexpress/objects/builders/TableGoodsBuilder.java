@@ -54,8 +54,16 @@ public class TableGoodsBuilder {
         this.countRemainder = countRemainder;
         return this;
     }
-
+    public TableGoodsBuilder setGlassFactory(int glassFactory) {
+        this.glassFactory = glassFactory;
+        return this;
+    }
+    public TableGoodsBuilder setCarId(int carId) {
+        this.carId = carId;
+        return this;
+    }
     private int id;
+    private int carId;
     private int glassType;
     private int glassOption;
     private String description;
@@ -65,6 +73,7 @@ public class TableGoodsBuilder {
     private int countWh1;
     private int countWh2;
     private int countRemainder;
+    private  int glassFactory;
 
     public TableGoodsInStockRow build() {
         TableGoodsInStockRow table = new TableGoodsInStockRow();
@@ -78,6 +87,7 @@ public class TableGoodsBuilder {
         table.setCountRemainder(countRemainder);
         table.setCountWh1(countWh1);
         table.setCountWh2(countWh2);
+        table.setGlassFactory(glassFactory);
         return table;
         }
 

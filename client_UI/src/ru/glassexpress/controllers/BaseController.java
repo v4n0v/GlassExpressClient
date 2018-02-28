@@ -6,7 +6,7 @@ import ru.glassexpress.GEClient;
 
 abstract class BaseController {
     GEClient mainApp;
-    private Stage stage;
+    Stage stage;
 
     MainController mainController;
 
