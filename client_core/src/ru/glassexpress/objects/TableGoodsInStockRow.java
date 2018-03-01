@@ -114,6 +114,16 @@ public class TableGoodsInStockRow extends BaseObject {
     private int countWh1;
     private int countWh2;
 
+    public int getInsertMethod() {
+        return insertMethod;
+    }
+
+    public void setInsertMethod(int insertMethod) {
+        this.insertMethod = insertMethod;
+    }
+
+    private int insertMethod;
+
     public int getGlassFactory() {
         return glassFactory;
     }

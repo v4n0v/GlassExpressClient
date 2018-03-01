@@ -1,8 +1,6 @@
-package ru.glassexpress.core.addCommand;
+package ru.glassexpress.core.edit_content_command.addCommand;
 
 import ru.glassexpress.Prefs;
-import ru.glassexpress.objects.BaseObject;
-import ru.glassexpress.request_builder.Request;
 import ru.glassexpress.request_builder.RequestBuilder;
 
 public class AddMarkCommand extends AddElementCommand{
@@ -12,7 +10,7 @@ public class AddMarkCommand extends AddElementCommand{
     }
 
     @Override
-    void prepareRequest() {
+    protected void prepareRequest() {
         request = new RequestBuilder().setMethod(Prefs.METHOD_GET)
                 .setTarget(Prefs.TARGET_MARK)
                 .setAction(Prefs.ACTION_INSERT)

@@ -68,4 +68,24 @@ public class AlertWindow {
 
         return null;
     }
+
+    public static String dialogIndexWindow(String title, String msg){
+
+        dialog = new TextInputDialog( );
+
+        dialog.setTitle(title);
+        dialog.setHeaderText(null);
+        dialog.setContentText(msg);
+
+        Optional<String> result = dialog.showAndWait();
+        if (result.isPresent()) {
+            String res = result.get();
+            return res;
+        }
+        // System.out.println("Your name: " + result.get());
+
+        // dialog.showAndWait();
+
+        return null;
+    }
 }

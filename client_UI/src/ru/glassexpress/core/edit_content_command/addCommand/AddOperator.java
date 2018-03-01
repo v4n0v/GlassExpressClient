@@ -1,4 +1,4 @@
-package ru.glassexpress.core.addCommand;
+package ru.glassexpress.core.edit_content_command.addCommand;
 
 import ru.glassexpress.objects.BaseObject;
 

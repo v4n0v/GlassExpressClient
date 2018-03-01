@@ -76,7 +76,7 @@ public class Car extends BaseObject{
 
     @Override
     public String toString() {
-        return id+": "+ mark+" "+model+" "+gen.yearFrom+" "+gen.yearTo;
+        return id+": "+ mark+" "+model+" "+gen.getYearFrom()+" "+gen.getYearTo();
     }
 
     @Override

@@ -3,6 +3,7 @@ package ru.glassexpress.core.get_command;
 import javafx.collections.ObservableList;
 import ru.glassexpress.core.get_command.adapter.BaseObjectAdapter;
 import ru.glassexpress.objects.BaseObject;
+import ru.glassexpress.objects.GenerationObj;
 import ru.glassexpress.objects.IdTitleObj;
 import ru.glassexpress.objects.TableGoodsInStockRow;
 import ru.glassexpress.request_builder.Request;
@@ -28,11 +29,11 @@ BaseObjectAdapter objectAdapter = new BaseObjectAdapter();
         return objectAdapter.returnStringList(command.returnRecievedList());
     }
 
-    public ObservableList<String> getGlassTypes( ) {
+    public List<IdTitleObj> getGlassTypes( ) {
         command = new GetGlassTypeCommand(null);
 
-        //return command.returnRecievedList();
-        return objectAdapter.returnStringList(command.returnRecievedList());
+        return objectAdapter.baseObjToIdTitleObj(command.returnRecievedList());
+//        return objectAdapter.returnStringList(command.returnRecievedList());
     }
 
     @Override
@@ -43,10 +44,10 @@ BaseObjectAdapter objectAdapter = new BaseObjectAdapter();
     }
 
     @Override
-    public ObservableList<String> getGenerations(BaseObject object) {
+    public List<GenerationObj> getGenerations(BaseObject object) {
 
         command = new GenerationObservedCommand(object);
-        return objectAdapter.returnGenerationList(command.returnRecievedList());
+        return  objectAdapter.returnGenerationList(command.returnRecievedList());
     }
 
     public ObservableList<TableGoodsInStockRow> getTableGoods(BaseObject object) {

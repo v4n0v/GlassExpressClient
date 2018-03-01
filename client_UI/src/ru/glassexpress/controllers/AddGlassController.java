@@ -8,26 +8,38 @@ import ru.glassexpress.library.AlertWindow;
 import ru.glassexpress.objects.TableGoodsInStockRow;
 import ru.glassexpress.objects.builders.TableGoodsBuilder;
 
-public class AddGlassController extends BaseController {
-    public RadioButton glueRB;
-    public RadioButton rubberRB;
-    public TextField descriptionTextField;
-    public TextField priceInTextField;
-    public TextField priceTextField;
-    public TextField insertPriceTextField;
-    @FXML
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-    ComboBox glassOptComboBox;
+public class AddGlassController extends BaseController {
     @FXML
-    ComboBox glassFactoryComboBox;
+    RadioButton glueRB;
+    @FXML
+    RadioButton rubberRB;
+    @FXML
+    TextField descriptionTextField;
+    @FXML
+    TextField priceInTextField;
+    @FXML
+    TextField priceTextField;
+    @FXML
+    TextField insertPriceTextField;
+
+    @FXML
+    ComboBox<String> glassOptComboBox;
+    @FXML
+    ComboBox<String> glassFactoryComboBox;
+    @FXML
+    ComboBox<String> glassTypeComboBox;
 
     private BaseObjectAdapter adapter = new BaseObjectAdapter();
     private ObservableList<String> glassOptList;
     private ObservableList<String> glassFactoryList;
+    private ObservableList<String> glassTypeList;
     private int carId;
+    private int carIndex;
 
-    ToggleGroup toggleGroup;
-    TableGoodsInStockRow glassTableRow;
+    private TableGoodsInStockRow glassTableRow;
 
     public AddGlassController() {
     }
@@ -35,14 +47,16 @@ public class AddGlassController extends BaseController {
 
     @Override
     public void init() {
-        toggleGroup = new ToggleGroup();
-        glueRB.setToggleGroup(toggleGroup);
-        rubberRB.setToggleGroup(toggleGroup);
+//        toggleGroup = new ToggleGroup();
+//        glueRB.setToggleGroup(toggleGroup);
+//        rubberRB.setToggleGroup(toggleGroup);
 
-        glassOptList = adapter.IdTitleObjToString(mainController.getGlassOptList());
-        glassFactoryList = adapter.IdTitleObjToString(mainController.getGlassFactoryList());
+        glassOptList = adapter.IdTitleObjToString(dataMap.getGlassOptList());
+        glassFactoryList = adapter.IdTitleObjToString(dataMap.getGlassFactoryList());
+        glassTypeList = adapter.IdTitleObjToString(dataMap.getGlassTypeList());
         glassOptComboBox.setItems(glassOptList);
         glassFactoryComboBox.setItems(glassFactoryList);
+        glassTypeComboBox.setItems(glassTypeList);
     }
 
     public void setCarId(int carId) {
@@ -50,36 +64,55 @@ public class AddGlassController extends BaseController {
     }
 
     public void addGlass() {
+        //получаем данные с полей вводв
         String description = descriptionTextField.getText();
         String priceIn = priceInTextField.getText();
         String price = priceTextField.getText();
 
         int glassOptIndex = glassOptComboBox.getSelectionModel().getSelectedIndex();
         int glassFactoryIndex = glassFactoryComboBox.getSelectionModel().getSelectedIndex();
-
+        int glassTypeIndex = glassTypeComboBox.getSelectionModel().getSelectedIndex();
 
         if (!description.equals("") && !priceIn.equals("") && !price.equals("") &&
-                glassOptIndex != -1 && glassFactoryIndex != -1) {
- 
-            int glassOptId = mainController.getGlassOptList().get(glassOptIndex).getId();
-            int glassFactoryId = mainController.getGlassFactoryList().get(glassFactoryIndex).getId();
-            glassTableRow = new TableGoodsBuilder().setCarId(carId)
+                glassOptIndex != -1 && glassFactoryIndex != -1 && glassTypeIndex != -1 &&
+                isNumeric(price) && isNumeric(priceIn)) {
+
+            int insertMethod = 0;
+            if (glueRB.isSelected()) insertMethod = 0;
+            else if (rubberRB.isSelected()) insertMethod = 1;
+            else AlertWindow.errorMessage("Выбирете метод установки");
+
+            int glassOptId = dataMap.getGlassOptList().get(glassOptIndex).getId();
+            int glassFactoryId = dataMap.getGlassFactoryList().get(glassFactoryIndex).getId();
+            int glassTypeId = dataMap.getGlassTypeList().get(glassTypeIndex).getId();
+            glassTableRow = new TableGoodsBuilder()
+                    .setCarId(carId)
                     .setDescription(description)
                     .setPriceIn(Float.parseFloat(priceIn))
                     .setPrice(Float.parseFloat(price))
                     .setGlassOption(glassOptId)
                     .setGlassFactory(glassFactoryId)
+                    .setInsertMethod(insertMethod)
+                    .setGlassType(glassTypeId)
                     .build();
-
+            dataMap.setGlassTableRow(glassTableRow);
+            mainController.insertGlass(glassTableRow);
+            close();
         } else {
-            AlertWindow.errorMessage("Заполните все формы");
+            AlertWindow.errorMessage("Корректно заполните все формы");
         }
-        System.out.println("Добавить стекло");
     }
 
 
     public void closeModal() {
         close();
     }
+
+    public static boolean isNumeric(String x) {
+        Pattern p = Pattern.compile("^\\d+(?:\\.\\d+)?$");
+        Matcher m = p.matcher(x);
+        return m.matches();
+    }
+
 
 }

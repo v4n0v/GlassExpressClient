@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import ru.glassexpress.data.DataMap;
 
 abstract public class BaseObject {
     protected static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();

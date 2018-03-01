@@ -29,4 +29,5 @@ public class Prefs {
     public static final String TARGET_GLASS_FACTORY = "glass_factory";
 
 
+    public static final String ACTION_DELETE = "delete";
 }

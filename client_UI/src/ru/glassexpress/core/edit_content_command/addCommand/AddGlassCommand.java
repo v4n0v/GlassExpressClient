@@ -1,4 +1,4 @@
-package ru.glassexpress.core.addCommand;
+package ru.glassexpress.core.edit_content_command.addCommand;
 
 import ru.glassexpress.Prefs;
 import ru.glassexpress.objects.BaseObject;
@@ -11,7 +11,7 @@ public class AddGlassCommand extends AddElementCommand{
     }
 
     @Override
-    void prepareRequest() {
+    protected void prepareRequest() {
 
         Car car = (Car) baseObject;
         request=new RequestBuilder().setMethod(Prefs.METHOD_GET)

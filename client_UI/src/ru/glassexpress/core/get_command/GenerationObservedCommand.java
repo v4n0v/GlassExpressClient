@@ -14,13 +14,17 @@ public class GenerationObservedCommand extends ObservedCommand {
 
     @Override
     void buildRequest() {
-        Car car = (Car) inputObject;
-        request = new RequestBuilder().setMethod(Prefs.METHOD_POST)
-                .setAction(Prefs.ACTION_SELECT)
-                .setTarget(Prefs.TARGET_GENERATION)
-                // .setRequest("mark", markListView.getSelectionModel().getSelectedItem())
-                .setRequest("model", car.getModel())
-                .build();
+        if (inputObject!=null) {
+            Car car = (Car) inputObject;
+            request = new RequestBuilder().setMethod(Prefs.METHOD_POST)
+                    .setAction(Prefs.ACTION_SELECT)
+                    .setTarget(Prefs.TARGET_GENERATION)
+                    // .setRequest("mark", markListView.getSelectionModel().getSelectedItem())
+                    .setRequest("model", car.getModel())
+                    .build();
+        } else {
+            System.out.println("GenerationObservedCommand inputObject = null!");
+        }
     }
 
     @Override

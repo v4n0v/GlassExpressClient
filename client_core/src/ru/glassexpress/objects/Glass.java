@@ -4,6 +4,8 @@ import com.google.gson.JsonElement;
 
 public class Glass extends BaseObject{
 
+
+
     public Glass(String objectClass) {
         super(objectClass);
     }

@@ -1,9 +1,8 @@
-package ru.glassexpress.core.addCommand;
+package ru.glassexpress.core.edit_content_command.addCommand;
 
 import ru.glassexpress.Prefs;
 import ru.glassexpress.objects.BaseObject;
 import ru.glassexpress.objects.Car;
-import ru.glassexpress.request_builder.Request;
 import ru.glassexpress.request_builder.RequestBuilder;
 
 public class AddModelCommand extends AddElementCommand{
@@ -13,8 +12,8 @@ public class AddModelCommand extends AddElementCommand{
 
 
     }
-
-    void prepareRequest(){
+    @Override
+    protected void prepareRequest(){
         Car car = (Car) baseObject;
         request=new RequestBuilder().setMethod(Prefs.METHOD_GET)
                 .setTarget(Prefs.TARGET_MODEL)

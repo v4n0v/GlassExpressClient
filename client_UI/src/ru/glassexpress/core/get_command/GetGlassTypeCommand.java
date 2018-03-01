@@ -5,7 +5,7 @@ import ru.glassexpress.objects.BaseObject;
 import ru.glassexpress.request_builder.RequestBuilder;
 
 public class GetGlassTypeCommand extends IDTitleObsevedCommand {
-    public GetGlassTypeCommand(BaseObject object) {
+    public    GetGlassTypeCommand(BaseObject object) {
         super(object);
     }
 

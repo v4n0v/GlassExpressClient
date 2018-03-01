@@ -5,13 +5,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import ru.glassexpress.controllers.AddGlassController;
 import ru.glassexpress.controllers.MainController;
 import ru.glassexpress.controllers.MenuController;
+import ru.glassexpress.data.DataMap;
 
 
 import java.io.IOException;
@@ -22,7 +21,7 @@ public class GEClient extends Application {
     private MainController mainController;
     private MenuController menuController;
     private AddGlassController addGlassController;
-
+    DataMap dataMap;
     public static void main(String[] args) {
         launch(args);
     }
@@ -36,11 +35,12 @@ public class GEClient extends Application {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("GlassExpress client");
 
+        dataMap=new DataMap();
         // мэнеджер клиента, в нем вся бизнеслогика
 
 
         initRootLayout();
-        initCarInfoLayout();
+        initMainLayout();
 
     }
 
@@ -65,7 +65,7 @@ public class GEClient extends Application {
         }
     }
 
-    public void initCarInfoLayout() {
+    public void initMainLayout() {
         try {
             // Загружаем сведения об адресатах.
             Stage carsSelectStage = new Stage();
@@ -81,6 +81,7 @@ public class GEClient extends Application {
           //  mainController.setClientController(clientController);
             mainController.setMainApp(this);
             mainController.setStage(carsSelectStage);
+            mainController.setDataMap(dataMap);
             //clientController.setCarsController(mainController);
             mainController.init();
             carsSelectStage.setOnCloseRequest((event) -> primaryStage.close());
@@ -104,12 +105,14 @@ public class GEClient extends Application {
             // Помещаем сведения об адресатах в центр корневого макета.
             addGlassController.setMainController(mainController);
             addGlassController.setStage(addGlassStage);
+            addGlassController.setDataMap(dataMap);
            // rootLayout.setCenter(modelAdd);
             addGlassStage.initModality(Modality.WINDOW_MODAL);
             addGlassStage.initOwner(primaryStage);
             addGlassStage.setResizable(false);
             //  mainController.setClientController(clientController);
             mainController.setMainApp(this);
+
             mainController.setStage(addGlassStage);
             mainController.setAggGlassController(addGlassController);
             //clientController.setCarsController(mainController);

@@ -59,21 +59,49 @@ public class BaseObjectAdapter {
         }
         return null;
     }
-    public ObservableList<String> returnGenerationList(ObservableList<BaseObject> inputList) {
 
+    public ObservableList<String> generationObjToString(List<GenerationObj> inputList){
         if (inputList != null) {
             List<String> resultList = new ArrayList<>();
             for (int i = 0; i < inputList.size(); i++) {
-                GenerationObj cars = (GenerationObj) inputList.get(i);
-                //currentModelGenerations.add(cars);
-                resultList.add((i + 1) + ". " + cars.toString());
-
+                GenerationObj obj = inputList.get(i);
+                resultList.add((i+1)+". "+obj.getYearFrom()+"-"+obj.getYearTo());
             }
             return FXCollections.observableArrayList(resultList);
         }
         return null;
     }
 
+
+//    public ObservableList<String> returnGenerationList(ObservableList<BaseObject> inputList) {
+//
+//        if (inputList != null) {
+//            List<String> resultList = new ArrayList<>();
+//            for (int i = 0; i < inputList.size(); i++) {
+//                GenerationObj cars = (GenerationObj) inputList.get(i);
+//                //currentModelGenerations.add(cars);
+//                resultList.add((i + 1) + ". " + cars.toString());
+//
+//            }
+//            return FXCollections.observableArrayList(resultList);
+//        }
+//        return null;
+//    }
+
+    public List<GenerationObj> returnGenerationList(ObservableList<BaseObject> inputList) {
+
+        if (inputList != null) {
+            List<GenerationObj> resultList = new ArrayList<>();
+            for (int i = 0; i < inputList.size(); i++) {
+                GenerationObj car = (GenerationObj) inputList.get(i);
+                //currentModelGenerations.add(cars);
+                resultList.add(car);
+
+            }
+            return resultList;
+        }
+        return null;
+    }
     public ObservableList<TableGoodsInStockRow> returnTableGoodsList(ObservableList<BaseObject> inputList) {
 
         if (inputList != null) {

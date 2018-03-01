@@ -8,6 +8,19 @@ public class GenerationObj extends BaseObject{
         super("generation");
         this.yearFrom = yearFrom;
     }
+    private int yearFrom;
+    private int yearTo;
+    private  int modelID;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    private int id;
 
     public int getYearFrom() {
         return yearFrom;
@@ -25,9 +38,10 @@ public class GenerationObj extends BaseObject{
         this.yearTo = yearTo;
     }
 
-    int yearFrom;
-    int yearTo;
-    int modelID;
+
+    public void setModelID(int modelID) {
+        this.modelID = modelID;
+    }
 
     public int getModelID() {
         return modelID;
@@ -52,11 +66,12 @@ public class GenerationObj extends BaseObject{
     public JsonElement toJSONObject() {
 
         obj1.addProperty("objClass", objectClass);
+        obj1.addProperty("id",id);
         obj1.addProperty("yearFrom", yearFrom);
         obj1.addProperty("yearTo", yearTo);
         obj1.addProperty("modelID", modelID);
 
-        IdTitleObj dd = GSON.fromJson(obj1, IdTitleObj.class);
+
 
         return obj1;
     }

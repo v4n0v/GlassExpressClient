@@ -7,7 +7,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import ru.glassexpress.JsonController;
 import ru.glassexpress.URLConnection;
-import ru.glassexpress.core.addCommand.AddOperator;
+import ru.glassexpress.core.edit_content_command.addCommand.AddOperator;
+import ru.glassexpress.core.edit_content_command.deleteCommand.DeleteOperator;
 import ru.glassexpress.core.get_command.ObservedCommand;
 import ru.glassexpress.core.get_command.GetListOperator;
 import ru.glassexpress.core.get_command.adapter.BaseObjectAdapter;
@@ -15,12 +16,11 @@ import ru.glassexpress.library.AlertWindow;
 import ru.glassexpress.objects.*;
 
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class MainController extends BaseController {
     @FXML
-    ComboBox bodyTypeListView;
+    ComboBox<String> bodyTypeListView;
     @FXML
     Button addGenerationButton;
     @FXML
@@ -49,7 +49,7 @@ public class MainController extends BaseController {
 
     GetListOperator getListOperator;
     AddOperator addOperator;
-
+    DeleteOperator deleteOperator;
 
     private URLConnection urlConnection;
     private JsonController jsonController;
@@ -61,8 +61,10 @@ public class MainController extends BaseController {
     private ObservableList<String> modelsList = FXCollections.observableArrayList();
     private ObservableList<String> genList = FXCollections.observableArrayList();
     private ObservableList<String> bodyTypeStringList = FXCollections.observableArrayList();
-    private List<IdTitleObj> glassOptList;
+
     private AddGlassController aggGlassController;
+    @FXML
+    Button delGenerationButton;
 
     public Car getCar() {
         return car;
@@ -71,14 +73,8 @@ public class MainController extends BaseController {
     // класс авто, заполняющийся после конструктора
     Car car;
     BaseObjectAdapter adapter;
-    List<String> glassTypeList;
-    List<IdTitleObj> bodyTypeList;
 
-    public List<IdTitleObj> getGlassFactoryList() {
-        return glassFactoryList;
-    }
 
-    List<IdTitleObj> glassFactoryList;
     // инициализация конроллера, вызывается при открытии приложения
     @Override
     public void init() {
@@ -87,8 +83,9 @@ public class MainController extends BaseController {
         car = new Car();
         adapter = new BaseObjectAdapter();
         getListOperator = new GetListOperator();
+        deleteOperator=new DeleteOperator();
         addOperator = new AddOperator();
-        glassTypeList = new ArrayList<>();
+       // glassTypeList = new ArrayList<>();
 
         markListView.setItems(marksList);
         modelListView.setItems(modelsList);
@@ -100,14 +97,14 @@ public class MainController extends BaseController {
 
         reconnect();
         // получаем список типов стекол, кузовов
-        glassTypeList = getListOperator.getGlassTypes();
-        bodyTypeList = getListOperator.getBodyTypes();
-        glassOptList = getListOperator.getGlassOptions();
-        glassFactoryList=getListOperator.getGlassFactory();
+        dataMap.setGlassTypeList(getListOperator.getGlassTypes());
+        dataMap.setBodyTypeList(getListOperator.getBodyTypes());
+        dataMap.setGlassOptList(getListOperator.getGlassOptions());
+        dataMap.setGlassFactoryList(getListOperator.getGlassFactory());
 
-        fillObservableList(bodyTypeStringList, adapter.IdTitleObjToString(bodyTypeList));
+        fillObservableList(bodyTypeStringList, adapter.IdTitleObjToString(dataMap.getBodyTypeList()));
 
-        System.out.println(glassTypeList);
+        System.out.println(dataMap.getBodyTypeList());
     }
 
     public void reconnect() {
@@ -142,16 +139,19 @@ public class MainController extends BaseController {
         }
     }
 
-    List<BaseObject> currentModelGenerations = new ArrayList<>();
+//    private List<BaseObject> currentModelGenerations = new ArrayList<>();
 
     public void fillGenerationsListView() {
 
             System.out.println("Запрос поколений авто");
 
             car.setModel(modelListView.getSelectionModel().getSelectedItem());
-            fillObservableList(genList, getListOperator.getGenerations(car));
+            dataMap.setGenerationObjList( getListOperator.getGenerations(car));
+            fillObservableList(genList, adapter.generationObjToString(dataMap.getGenerationObjList()));
         if (genList.size() > 0) {
-            currentModelGenerations = getListOperator.getComponents();
+            //currentModelGenerations = getListOperator.getComponents();
+        } else {
+            System.out.println("пустой список поколений");
         }
     }
 
@@ -192,9 +192,18 @@ public class MainController extends BaseController {
 
         if (addOperator.addGenerationIsComplete(answer, car)) {
             fillGenerationsListView();
-            currentModelGenerations = getListOperator.getComponents();
+          //  dataMap.setGenerationObjList(getListOperator.getGenerations(car));
         } else {
             System.out.println("Фиаско!" + car.getMark() + " " + car.getMark() + " " + answer + " не добавлено");
+        }
+    }
+
+
+    private void deleteGeneration(int id){
+        if (deleteOperator.deleteGenerationIsComplete(id)) {
+            fillGenerationsListView();
+        } else {
+            System.out.println("Фиаско! Не удалено");
         }
     }
 
@@ -237,14 +246,26 @@ public class MainController extends BaseController {
                 }
             }
 
-        } else {
+        } else if ((Button) keyEvent.getSource() == delGenerationButton) {
+
+                boolean isTrue = AlertWindow.confirmationWindow("Вы уверены?", "Удалить поколение" + car.getMark() + " " + car.getModel() + " " + " из базы?");
+                if (isTrue) {
+                   int id =  dataMap.getGenerationObjList().get(genListView.getSelectionModel().getSelectedIndex()).getId();
+                    deleteGeneration(id);
+                    System.out.println("удалить поколение авто " + car.getMark() + " " + car.getModel());
+                }
+
+
+        }
+
+        else {
             System.out.println("Такую кнопку не умею");
         }
     }
 
 
     public void setGeneration() {
-        car.setGen((GenerationObj) currentModelGenerations.get(genListView.getSelectionModel().getSelectedIndex()));
+        car.setGen((GenerationObj) dataMap.getGenerationObjList().get(genListView.getSelectionModel().getSelectedIndex()));
     }
 
 
@@ -300,7 +321,7 @@ public class MainController extends BaseController {
 
     public void buildCar() {
         System.out.println("заполняю объект Car");
-        car.setGen((GenerationObj) currentModelGenerations.get(genListView.getSelectionModel().getSelectedIndex()));
+        car.setGen((GenerationObj) dataMap.getGenerationObjList().get(genListView.getSelectionModel().getSelectedIndex()));
         car.setId(car.getGen().getModelID());
         System.out.println(car);
 
@@ -311,11 +332,13 @@ public class MainController extends BaseController {
         aggGlassController.setCarId(car.getId());
     }
 
-    public List<IdTitleObj> getGlassOptList() {
-        return glassOptList;
-    }
+
 
     public void setAggGlassController(AddGlassController aggGlassController) {
         this.aggGlassController = aggGlassController;
+    }
+
+    public void insertGlass(TableGoodsInStockRow glassTableRow) {
+        System.out.println("добавляю новое стекло в базу");
     }
 }

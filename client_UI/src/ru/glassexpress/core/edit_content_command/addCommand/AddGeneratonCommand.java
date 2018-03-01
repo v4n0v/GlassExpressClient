@@ -1,18 +1,17 @@
-package ru.glassexpress.core.addCommand;
+package ru.glassexpress.core.edit_content_command.addCommand;
 
 import ru.glassexpress.Prefs;
 import ru.glassexpress.objects.BaseObject;
 import ru.glassexpress.objects.Car;
-import ru.glassexpress.request_builder.Request;
 import ru.glassexpress.request_builder.RequestBuilder;
 
 public class AddGeneratonCommand extends AddElementCommand {
-    public AddGeneratonCommand(String model, BaseObject baseObject) {
-        super(model, baseObject);
+    public AddGeneratonCommand(String generation, BaseObject baseObject) {
+        super(generation, baseObject);
     }
 
     @Override
-    void prepareRequest() {
+    protected void prepareRequest() {
         answer = answer.replace(" ", "");
         String[] gen = answer.split("-");
         Car car = (Car) baseObject;

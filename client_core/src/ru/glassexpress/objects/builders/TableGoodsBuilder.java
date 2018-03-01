@@ -62,6 +62,10 @@ public class TableGoodsBuilder {
         this.carId = carId;
         return this;
     }
+    public TableGoodsBuilder setInsertMethod(int insertMethod) {
+        this.insertMethod = insertMethod;
+        return this;
+    }
     private int id;
     private int carId;
     private int glassType;
@@ -74,10 +78,12 @@ public class TableGoodsBuilder {
     private int countWh2;
     private int countRemainder;
     private  int glassFactory;
+    private  int insertMethod;
 
     public TableGoodsInStockRow build() {
         TableGoodsInStockRow table = new TableGoodsInStockRow();
         table.setId(id);
+        table.setCarId(carId);
         table.setGlassType(glassType);
         table.setGlassOption(glassOption);
         table.setDescription(description);
@@ -88,6 +94,7 @@ public class TableGoodsBuilder {
         table.setCountWh1(countWh1);
         table.setCountWh2(countWh2);
         table.setGlassFactory(glassFactory);
+        table.setInsertMethod(insertMethod);
         return table;
         }
 
