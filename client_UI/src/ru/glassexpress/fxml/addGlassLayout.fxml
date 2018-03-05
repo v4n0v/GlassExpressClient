@@ -39,7 +39,7 @@
             <Label text="Параметр" GridPane.rowIndex="6" />
             <ComboBox fx:id="glassOptComboBox" prefHeight="25.0" prefWidth="304.0" promptText="Выбирите параметр" GridPane.columnIndex="1" GridPane.rowIndex="6" />
             <Label text="Мин. остаток" GridPane.rowIndex="5" />
-            <TextField layoutX="134.0" layoutY="83.0" prefWidth="0.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <TextField fx:id="alertTextField" layoutX="134.0" layoutY="83.0" prefWidth="0.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
             <Label text="Цена установки" GridPane.rowIndex="7" />
             <TextField fx:id="insertPriceTextField" GridPane.columnIndex="1" GridPane.rowIndex="7" />
             <ComboBox fx:id="glassFactoryComboBox" layoutX="134.0" layoutY="203.0" prefHeight="25.0" prefWidth="777.0" promptText="Выбирите производителя" GridPane.columnIndex="1" />

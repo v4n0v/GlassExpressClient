@@ -2,11 +2,10 @@ package ru.glassexpress.core.get_command.adapter;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import ru.glassexpress.core.get_command.ObservedCommand;
 import ru.glassexpress.objects.BaseObject;
 import ru.glassexpress.objects.GenerationObj;
 import ru.glassexpress.objects.IdTitleObj;
-import ru.glassexpress.objects.TableGoodsInStockRow;
+import ru.glassexpress.objects.GlassObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,7 +46,7 @@ public class BaseObjectAdapter {
         }
         return null;
     }
-    public ObservableList<String> IdTitleObjToString(List<IdTitleObj> inputList){
+    public ObservableList<String> idTitleObjToString(List<IdTitleObj> inputList){
         if (inputList != null) {
             List<String> resultList = new ArrayList<>();
             for (int i = 0; i < inputList.size(); i++) {
@@ -102,12 +101,12 @@ public class BaseObjectAdapter {
         }
         return null;
     }
-    public ObservableList<TableGoodsInStockRow> returnTableGoodsList(ObservableList<BaseObject> inputList) {
+    public ObservableList<GlassObject> returnTableGoodsList(ObservableList<BaseObject> inputList) {
 
         if (inputList != null) {
-            List<TableGoodsInStockRow> resultList = new ArrayList<>();
+            List<GlassObject> resultList = new ArrayList<>();
             for (int i = 0; i < inputList.size(); i++) {
-                TableGoodsInStockRow row = (TableGoodsInStockRow) inputList.get(i);
+                GlassObject row = (GlassObject) inputList.get(i);
                 //currentModelGenerations.add(cars);
                 resultList.add(row);
 

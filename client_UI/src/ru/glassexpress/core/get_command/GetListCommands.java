@@ -10,9 +10,9 @@ import java.util.List;
 
 public interface GetListCommands {
 
-    ObservableList<String> getMarks(BaseObject object);
+    List<IdTitleObj> getMarks();
 
-    ObservableList<String> getModels(BaseObject object);
+    List<IdTitleObj> getModels(BaseObject object);
 
     List<GenerationObj> getGenerations(BaseObject object);
    // ObservableList<IdTitleObj> getMarksIdTitle(BaseObject object);

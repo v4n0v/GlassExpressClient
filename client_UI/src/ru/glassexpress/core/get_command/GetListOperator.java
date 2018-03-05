@@ -5,7 +5,7 @@ import ru.glassexpress.core.get_command.adapter.BaseObjectAdapter;
 import ru.glassexpress.objects.BaseObject;
 import ru.glassexpress.objects.GenerationObj;
 import ru.glassexpress.objects.IdTitleObj;
-import ru.glassexpress.objects.TableGoodsInStockRow;
+import ru.glassexpress.objects.GlassObject;
 import ru.glassexpress.request_builder.Request;
 
 import java.util.List;
@@ -21,13 +21,13 @@ BaseObjectAdapter objectAdapter = new BaseObjectAdapter();
         return command.getComponents();
     }
 
-    @Override
-    public ObservableList<String> getMarks(BaseObject object) {
-        command = new GetMarksCommand(object);
-
-        //return command.returnRecievedList();
-        return objectAdapter.returnStringList(command.returnRecievedList());
-    }
+//    @Override
+//    public ObservableList<String> getMarks(BaseObject object) {
+//        command = new GetMarksCommand(object);
+//
+//        //return command.returnRecievedList();
+//        return objectAdapter.returnStringList(command.returnRecievedList());
+//    }
 
     public List<IdTitleObj> getGlassTypes( ) {
         command = new GetGlassTypeCommand(null);
@@ -36,13 +36,23 @@ BaseObjectAdapter objectAdapter = new BaseObjectAdapter();
 //        return objectAdapter.returnStringList(command.returnRecievedList());
     }
 
-    @Override
-    public ObservableList<String> getModels(BaseObject object) {
+//    @Override
+//    public ObservableList<String> getModels(BaseObject object) {
+//
+//        command = new GetModelsCommand(object);
+//        return objectAdapter.returnStringList(command.returnRecievedList());
+//    }
+    public List<IdTitleObj> getModels(BaseObject object) {
 
         command = new GetModelsCommand(object);
-        return objectAdapter.returnStringList(command.returnRecievedList());
+        return objectAdapter.baseObjToIdTitleObj(command.returnRecievedList());
     }
 
+
+    public List<IdTitleObj> getMarks() {
+        command = new GetMarksCommand(null);
+        return objectAdapter.baseObjToIdTitleObj(command.returnRecievedList());
+    }
     @Override
     public List<GenerationObj> getGenerations(BaseObject object) {
 
@@ -50,7 +60,7 @@ BaseObjectAdapter objectAdapter = new BaseObjectAdapter();
         return  objectAdapter.returnGenerationList(command.returnRecievedList());
     }
 
-    public ObservableList<TableGoodsInStockRow> getTableGoods(BaseObject object) {
+    public ObservableList<GlassObject> getTableGoods(BaseObject object) {
         command = new GetTableGoodsCommand(object);
         return  objectAdapter.returnTableGoodsList(command.returnRecievedList());
     }

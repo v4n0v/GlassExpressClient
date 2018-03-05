@@ -21,7 +21,7 @@ public abstract class DeleteElementCommand {
     abstract void prepareRequest();
 
     boolean deleteElement() {
-        System.out.println("Добавляем модель");
+        System.out.println("Удаляем модель");
         if (RequestController.isRequestAccepted(RequestController.recieveResponse(request)))
             return true;
 

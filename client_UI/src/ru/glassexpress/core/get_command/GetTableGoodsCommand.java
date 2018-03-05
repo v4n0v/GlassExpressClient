@@ -1,14 +1,10 @@
 package ru.glassexpress.core.get_command;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import ru.glassexpress.Prefs;
 import ru.glassexpress.objects.BaseObject;
 import ru.glassexpress.objects.Car;
-import ru.glassexpress.objects.TableGoodsInStockRow;
+import ru.glassexpress.objects.GlassObject;
 import ru.glassexpress.request_builder.RequestBuilder;
-
-import java.util.ArrayList;
 
 public class GetTableGoodsCommand extends ObservedCommand{
     public GetTableGoodsCommand(BaseObject inputObject) {
@@ -30,6 +26,6 @@ public class GetTableGoodsCommand extends ObservedCommand{
 
     @Override
     void fillObject(int i) {
-        TableGoodsInStockRow tblRow = (TableGoodsInStockRow) components.get(i);
+        GlassObject tblRow = (GlassObject) components.get(i);
     }
 }

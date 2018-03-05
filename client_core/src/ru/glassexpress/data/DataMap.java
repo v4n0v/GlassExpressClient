@@ -2,15 +2,13 @@ package ru.glassexpress.data;
 
 import ru.glassexpress.objects.GenerationObj;
 import ru.glassexpress.objects.IdTitleObj;
-import ru.glassexpress.objects.TableGoodsInStockRow;
+import ru.glassexpress.objects.GlassObject;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 // класс, в котором хранятся данные в "чистом виде", как пришли с сервера
 public class DataMap {
-    private TableGoodsInStockRow glassTableRow;
+    private GlassObject glassTableRow;
     // список видов стекол
     private List<IdTitleObj> glassTypeList;
     // список типов кузовов
@@ -21,6 +19,37 @@ public class DataMap {
     private List<IdTitleObj> glassFactoryList;
     // список поколений(автомобилей марки)
     private List<GenerationObj> generationObjList;
+    // список марок
+    private List<IdTitleObj> carMarksList;
+    // список стекол
+    private List<GlassObject> glassList;
+
+    public List<GlassObject> getGlassList() {
+        return glassList;
+    }
+
+    public void setGlassList(List<GlassObject> glassList) {
+        this.glassList = glassList;
+    }
+
+
+    public List<IdTitleObj> getCarMarksList() {
+        return carMarksList;
+    }
+
+    public void setCarMarksList(List<IdTitleObj> carMarksList) {
+        this.carMarksList = carMarksList;
+    }
+
+    public List<IdTitleObj> getCarModelsList() {
+        return carModelsList;
+    }
+
+    public void setCarModelsList(List<IdTitleObj> carModelsList) {
+        this.carModelsList = carModelsList;
+    }
+
+    private List<IdTitleObj> carModelsList;
 
     public List<GenerationObj> getGenerationObjList() {
         return generationObjList;
@@ -66,7 +95,7 @@ public class DataMap {
     }
 
 
-    public void setGlassTableRow(TableGoodsInStockRow glassTableRow) {
+    public void setGlassTableRow(GlassObject glassTableRow) {
         this.glassTableRow = glassTableRow;
     }
 }

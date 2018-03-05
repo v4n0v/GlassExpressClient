@@ -90,7 +90,7 @@ public class GEClient extends Application {
             e.printStackTrace();
         }
     }
-    public void initAddGlassLayout() {
+    public void initAddGlassLayout(String selectedCar) {
         try {
             // Загружаем сведения об адресатах.
             Stage addGlassStage = new Stage();
@@ -101,7 +101,7 @@ public class GEClient extends Application {
             Scene scene = new Scene(modelAdd);
             addGlassStage.setScene(scene);
             addGlassController = loader.getController();
-            addGlassStage.setTitle("Добавить стекло в базу");
+            addGlassStage.setTitle("Добавить стекло "+selectedCar);
             // Помещаем сведения об адресатах в центр корневого макета.
             addGlassController.setMainController(mainController);
             addGlassController.setStage(addGlassStage);

@@ -4,6 +4,7 @@ import ru.glassexpress.Prefs;
 import ru.glassexpress.objects.BaseObject;
 import ru.glassexpress.objects.Car;
 import ru.glassexpress.objects.GenerationObj;
+import ru.glassexpress.objects.IdTitleObj;
 import ru.glassexpress.request_builder.Request;
 import ru.glassexpress.request_builder.RequestBuilder;
 
@@ -15,12 +16,12 @@ public class GenerationObservedCommand extends ObservedCommand {
     @Override
     void buildRequest() {
         if (inputObject!=null) {
-            Car car = (Car) inputObject;
+            IdTitleObj car = (IdTitleObj) inputObject;
             request = new RequestBuilder().setMethod(Prefs.METHOD_POST)
                     .setAction(Prefs.ACTION_SELECT)
                     .setTarget(Prefs.TARGET_GENERATION)
                     // .setRequest("mark", markListView.getSelectionModel().getSelectedItem())
-                    .setRequest("model", car.getModel())
+                    .setRequest("model", String.valueOf(car.getId()))
                     .build();
         } else {
             System.out.println("GenerationObservedCommand inputObject = null!");

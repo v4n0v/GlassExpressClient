@@ -54,9 +54,6 @@ public class RequestController {
             return true;
         } else
 
-//        if (jsonResponse.equals("ok")) {
-//            return true;
-//        }
 
         return false;
     }

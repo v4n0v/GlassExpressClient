@@ -5,13 +5,14 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import ru.glassexpress.core.get_command.adapter.BaseObjectAdapter;
 import ru.glassexpress.library.AlertWindow;
-import ru.glassexpress.objects.TableGoodsInStockRow;
-import ru.glassexpress.objects.builders.TableGoodsBuilder;
+import ru.glassexpress.objects.GlassObject;
+import ru.glassexpress.objects.builders.GlassBuilder;
 
+import java.util.concurrent.Callable;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class AddGlassController extends BaseController {
+public class AddGlassController extends BaseController implements Callable{
     @FXML
     RadioButton glueRB;
     @FXML
@@ -24,7 +25,8 @@ public class AddGlassController extends BaseController {
     TextField priceTextField;
     @FXML
     TextField insertPriceTextField;
-
+    @FXML
+    TextField alertTextField;
     @FXML
     ComboBox<String> glassOptComboBox;
     @FXML
@@ -39,7 +41,7 @@ public class AddGlassController extends BaseController {
     private int carId;
     private int carIndex;
 
-    private TableGoodsInStockRow glassTableRow;
+    private GlassObject glassTableRow;
 
     public AddGlassController() {
     }
@@ -51,9 +53,9 @@ public class AddGlassController extends BaseController {
 //        glueRB.setToggleGroup(toggleGroup);
 //        rubberRB.setToggleGroup(toggleGroup);
 
-        glassOptList = adapter.IdTitleObjToString(dataMap.getGlassOptList());
-        glassFactoryList = adapter.IdTitleObjToString(dataMap.getGlassFactoryList());
-        glassTypeList = adapter.IdTitleObjToString(dataMap.getGlassTypeList());
+        glassOptList = adapter.idTitleObjToString(dataMap.getGlassOptList());
+        glassFactoryList = adapter.idTitleObjToString(dataMap.getGlassFactoryList());
+        glassTypeList = adapter.idTitleObjToString(dataMap.getGlassTypeList());
         glassOptComboBox.setItems(glassOptList);
         glassFactoryComboBox.setItems(glassFactoryList);
         glassTypeComboBox.setItems(glassTypeList);
@@ -68,32 +70,37 @@ public class AddGlassController extends BaseController {
         String description = descriptionTextField.getText();
         String priceIn = priceInTextField.getText();
         String price = priceTextField.getText();
-
+        String alert = alertTextField.getText();
+        String insertPrice = insertPriceTextField.getText();
         int glassOptIndex = glassOptComboBox.getSelectionModel().getSelectedIndex();
         int glassFactoryIndex = glassFactoryComboBox.getSelectionModel().getSelectedIndex();
         int glassTypeIndex = glassTypeComboBox.getSelectionModel().getSelectedIndex();
 
         if (!description.equals("") && !priceIn.equals("") && !price.equals("") &&
+                !alert.equals("") & !insertPrice.equals("") &&
                 glassOptIndex != -1 && glassFactoryIndex != -1 && glassTypeIndex != -1 &&
                 isNumeric(price) && isNumeric(priceIn)) {
 
-            int insertMethod = 0;
-            if (glueRB.isSelected()) insertMethod = 0;
-            else if (rubberRB.isSelected()) insertMethod = 1;
+            int insertMethod = 2;
+            if (glueRB.isSelected()) insertMethod = 2;
+            else if (rubberRB.isSelected()) insertMethod = 3;
             else AlertWindow.errorMessage("Выбирете метод установки");
+
 
             int glassOptId = dataMap.getGlassOptList().get(glassOptIndex).getId();
             int glassFactoryId = dataMap.getGlassFactoryList().get(glassFactoryIndex).getId();
             int glassTypeId = dataMap.getGlassTypeList().get(glassTypeIndex).getId();
-            glassTableRow = new TableGoodsBuilder()
+            glassTableRow = new GlassBuilder()
                     .setCarId(carId)
                     .setDescription(description)
                     .setPriceIn(Float.parseFloat(priceIn))
                     .setPrice(Float.parseFloat(price))
-                    .setGlassOption(glassOptId)
-                    .setGlassFactory(glassFactoryId)
-                    .setInsertMethod(insertMethod)
-                    .setGlassType(glassTypeId)
+                    .setGlassOptionId(glassOptId)
+                    .setGlassFactoryId(glassFactoryId)
+                    .setInsertMethodId(insertMethod)
+                    .setGlassTypeId(glassTypeId)
+                    .setAlert(Integer.parseInt(alert))
+                    .setInsertPrice(Float.parseFloat(insertPrice))
                     .build();
             dataMap.setGlassTableRow(glassTableRow);
             mainController.insertGlass(glassTableRow);
@@ -115,4 +122,47 @@ public class AddGlassController extends BaseController {
     }
 
 
+    @Override
+    public GlassObject call() throws Exception {
+        String description = descriptionTextField.getText();
+        String priceIn = priceInTextField.getText();
+        String price = priceTextField.getText();
+        String alert = alertTextField.getText();
+        String insertPrice = insertPriceTextField.getText();
+        int glassOptIndex = glassOptComboBox.getSelectionModel().getSelectedIndex();
+        int glassFactoryIndex = glassFactoryComboBox.getSelectionModel().getSelectedIndex();
+        int glassTypeIndex = glassTypeComboBox.getSelectionModel().getSelectedIndex();
+
+        if (!priceIn.equals("") && !price.equals("") &&
+                !alert.equals("") & !insertPrice.equals("") &&
+                glassOptIndex != -1 && glassFactoryIndex != -1 && glassTypeIndex != -1 &&
+                isNumeric(price) && isNumeric(priceIn)) {
+
+            int insertMethod = 2;
+            if (glueRB.isSelected()) insertMethod = 2;
+            else if (rubberRB.isSelected()) insertMethod = 3;
+            else AlertWindow.errorMessage("Выбирете метод установки");
+
+
+            int glassOptId = dataMap.getGlassOptList().get(glassOptIndex).getId();
+            int glassFactoryId = dataMap.getGlassFactoryList().get(glassFactoryIndex).getId();
+            int glassTypeId = dataMap.getGlassTypeList().get(glassTypeIndex).getId();
+            glassTableRow = new GlassBuilder()
+                    .setCarId(carId)
+                    .setDescription(description)
+                    .setPriceIn(Float.parseFloat(priceIn))
+                    .setPrice(Float.parseFloat(price))
+                    .setGlassOptionId(glassOptId)
+                    .setGlassFactoryId(glassFactoryId)
+                    .setInsertMethodId(insertMethod)
+                    .setGlassTypeId(glassTypeId)
+                    .setAlert(Integer.parseInt(alert))
+                    .setInsertPrice(Float.parseFloat(insertPrice))
+                    .build();
+            //dataMap.setGlassTableRow(glassTableRow);
+            //mainController.insertGlass(glassTableRow);
+            return glassTableRow;
+        }
+        return null;
+    }
 }

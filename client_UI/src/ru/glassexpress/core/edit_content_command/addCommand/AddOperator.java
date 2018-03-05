@@ -24,4 +24,9 @@ public class AddOperator  implements AddCommands{
         comand=new AddGeneratonCommand(generation, baseObject);
         return comand.addElement(generation);
     }
+
+    public boolean addGlassIsComplete(BaseObject baseObject) {
+        comand=new AddGlassCommand(baseObject);
+        return comand.addElement(null);
+    }
 }

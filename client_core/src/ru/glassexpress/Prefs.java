@@ -30,4 +30,5 @@ public class Prefs {
 
 
     public static final String ACTION_DELETE = "delete";
+    public static final String TARGET_GLASS = "glass";
 }

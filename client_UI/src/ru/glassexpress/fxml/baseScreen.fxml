@@ -23,15 +23,15 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1140.0" prefWidth="1425.0" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.glassexpress.controllers.MainController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1091.0" prefWidth="1419.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.glassexpress.controllers.MainController">
    <children>
       <TabPane layoutX="247.0" layoutY="39.0" prefHeight="950.0" prefWidth="1154.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="300.0">
         <tabs>
           <Tab text="Наличие товара">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="1410.0" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="193.0" AnchorPane.rightAnchor="424.0" AnchorPane.topAnchor="750.0">
                      <children>
-                        <GridPane layoutX="48.0" layoutY="35.0" AnchorPane.bottomAnchor="698.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0">
+                        <GridPane disable="true" layoutX="48.0" layoutY="35.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="30.0">
                           <columnConstraints>
                             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -40,6 +40,7 @@
                               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                           </columnConstraints>
                           <rowConstraints>
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -52,21 +53,26 @@
                               <CheckBox mnemonicParsing="false" text="заднеее правое" GridPane.columnIndex="4" />
                               <CheckBox mnemonicParsing="false" text="заднеее левое" GridPane.columnIndex="5" />
                               <CheckBox mnemonicParsing="false" text="другое" GridPane.columnIndex="6" />
+                              <Button mnemonicParsing="false" text="Обновить" GridPane.columnIndex="7" />
                            </children>
                         </GridPane>
                         <Button fx:id="showGoods" layoutX="164.0" layoutY="25.0" mnemonicParsing="false" onAction="#showGoods" text="Показать товар" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                        <TableView fx:id="tblGoodsInStock" layoutY="74.0" prefHeight="672.0" prefWidth="1395.0" AnchorPane.bottomAnchor="36.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="65.0">
+                        <TableView fx:id="tblGoodsInStock" layoutY="85.0" prefHeight="657.0" prefWidth="1410.0" tableMenuButtonVisible="true" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="80.0">
                            <columns>
-                              <TableColumn fx:id="colTGId" prefWidth="132.0" text="ID" />
-                              <TableColumn fx:id="colTGDesc" prefWidth="764.0" text="Описание" />
-                              <TableColumn fx:id="colTGPrice" minWidth="0.0" prefWidth="115.0" text="Цена" />
-                              <TableColumn minWidth="0.0" prefWidth="133.0" text="Цена установки" />
-                              <TableColumn minWidth="0.0" prefWidth="115.0" text="Склад 1" />
-                              <TableColumn minWidth="0.0" prefWidth="135.0" text="Склад2" />
+                              <TableColumn fx:id="colTGId" minWidth="0.0" prefWidth="82.0" text="ID" />
+                              <TableColumn fx:id="colTGDesc" prefWidth="458.0" text="Описание" />
+                              <TableColumn fx:id="colTGFactory" minWidth="0.0" prefWidth="135.0" text="Завод" />
+                              <TableColumn fx:id="colTGType" prefWidth="118.0" text="Тип" />
+                              <TableColumn fx:id="colTGOption" prefWidth="72.0" text="Параметр" />
+                              <TableColumn fx:id="colTGPrice" minWidth="0.0" prefWidth="94.0" text="Цена" />
+                              <TableColumn fx:id="colTGPriceIn" minWidth="0.0" prefWidth="116.0" text="Цена закупки" visible="false" />
+                              <TableColumn fx:id="colTGInsertPrice" minWidth="0.0" prefWidth="115.0" text="Цена установки" />
+                              <TableColumn fx:id="colTGWh1" minWidth="0.0" prefWidth="101.0" text="Склад1" />
+                              <TableColumn fx:id="colTGWh2" minWidth="0.0" prefWidth="103.0" text="Склад2" />
                            </columns>
                         </TableView>
-                        <Button layoutX="193.0" layoutY="738.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="793.0" text="Оформить заказ" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="602.0" />
-                        <Button fx:id="addNewGlass1" layoutX="1236.0" layoutY="751.0" mnemonicParsing="false" onAction="#addGlass" text="Добавить новое стекло" />
+                        <Button layoutX="1236.0" layoutY="751.0" mnemonicParsing="false" onAction="#addGlass" text="Добавить новое стекло" AnchorPane.bottomAnchor="2.0" AnchorPane.rightAnchor="0.0" />
+                        <Button layoutX="1261.0" layoutY="760.0" mnemonicParsing="false" onAction="#addGlass" text="Оформить с\ебатор" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" />
                      </children>
                      <padding>
                         <Insets top="5.0" />
@@ -116,7 +122,7 @@
                         <ButtonBar layoutX="1054.0" layoutY="651.0" prefHeight="40.0" prefWidth="504.0" AnchorPane.rightAnchor="0.0">
                           <buttons>
                             <Button disable="true" mnemonicParsing="false" text="Редактировать количество" />
-                              <Button fx:id="addNewGlass" layoutX="206.0" layoutY="18.0" mnemonicParsing="false" onAction="#addGlass" text="Добавить новое стекло" />
+
                           </buttons>
                         </ButtonBar>
                      </children>
@@ -193,7 +199,7 @@
             </Tab>
         </tabs>
       </TabPane>
-      <GridPane hgap="10.0" layoutX="45.0" layoutY="45.0" prefHeight="214.0" prefWidth="668.0" AnchorPane.bottomAnchor="830.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="30.0">
+      <GridPane layoutX="30.0" layoutY="31.0" prefHeight="274.0" prefWidth="668.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="16.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -214,7 +220,12 @@
                      </VBox.margin>
                   </Label>
                   <ListView fx:id="markListView" onMouseClicked="#fillModelsListView" prefHeight="299.0" prefWidth="216.0" />
-                  <Button fx:id="addMarkButton" mnemonicParsing="false" onAction="#showAddTitleModal" prefHeight="25.0" prefWidth="222.0" text="+" />
+                  <HBox>
+                     <children>
+                        <Button fx:id="addMarkButton" mnemonicParsing="false" onAction="#showAddTitleModal" prefHeight="25.0" prefWidth="222.0" text="+" />
+                        <Button fx:id="delMarkButton" mnemonicParsing="false" onAction="#showAddTitleModal" prefHeight="25.0" prefWidth="222.0" text="-" />
+                     </children>
+                  </HBox>
                </children>
             </VBox>
             <VBox prefHeight="387.0" prefWidth="216.0" GridPane.columnIndex="1">
@@ -225,7 +236,12 @@
                      </VBox.margin>
                   </Label>
                   <ListView fx:id="modelListView" onMouseClicked="#fillGenerationsListView" prefHeight="361.0" prefWidth="216.0" />
-                  <Button fx:id="addModelButton" mnemonicParsing="false" onAction="#showAddTitleModal" prefHeight="25.0" prefWidth="223.0" text="+" />
+                  <HBox>
+                     <children>
+                        <Button fx:id="addModelButton" mnemonicParsing="false" onAction="#showAddTitleModal" prefHeight="25.0" prefWidth="223.0" text="+" />
+                        <Button fx:id="delModelButton" mnemonicParsing="false" onAction="#showAddTitleModal" prefHeight="25.0" prefWidth="223.0" text="-" />
+                     </children>
+                  </HBox>
                </children>
             </VBox>
             <VBox maxWidth="200.0" prefHeight="240.0" prefWidth="200.0" GridPane.columnIndex="2">
@@ -239,20 +255,20 @@
                   <HBox>
                      <children>
                         <Button fx:id="addGenerationButton" mnemonicParsing="false" onAction="#showAddTitleModal" prefHeight="25.0" prefWidth="223.0" text="+" />
-                        <Button fx:id="delGenerationButton" mnemonicParsing="false" onAction="#showAddTitleModal" prefHeight="25.0" prefWidth="223.0" text="-" />
+                        <Button fx:id="delGenerationButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="223.0" text="-" />
                      </children>
                   </HBox>
                </children>
             </VBox>
          </children>
       </GridPane>
-      <ComboBox fx:id="bodyTypeListView" layoutX="704.0" layoutY="234.0" prefWidth="150.0" promptText="Кузов" AnchorPane.bottomAnchor="830.0" AnchorPane.topAnchor="250.0" />
+      <ComboBox fx:id="bodyTypeListView" layoutX="704.0" layoutY="234.0" prefWidth="150.0" promptText="Кузов" AnchorPane.topAnchor="250.0" />
       <ComboBox layoutX="704.0" layoutY="65.0" prefWidth="150.0" promptText="Класс установки" />
       <Button layoutX="704.0" layoutY="100.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="150.0" text="Сохранить" />
-      <Separator layoutX="680.0" layoutY="70.0" orientation="VERTICAL" prefHeight="220.0" prefWidth="10.0" AnchorPane.bottomAnchor="830.0" AnchorPane.leftAnchor="665.0" AnchorPane.topAnchor="50.0" />
+      <Separator layoutX="695.0" layoutY="80.0" orientation="VERTICAL" prefHeight="230.0" prefWidth="10.0" AnchorPane.leftAnchor="665.0" AnchorPane.topAnchor="50.0" />
       <Separator layoutX="190.0" layoutY="24.0" prefHeight="6.0" prefWidth="1199.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
       <Separator layoutX="149.0" layoutY="306.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="290.0" />
-      <Separator layoutX="881.0" layoutY="70.0" orientation="VERTICAL" prefHeight="220.0" prefWidth="10.0" AnchorPane.bottomAnchor="830.0" AnchorPane.leftAnchor="860.0" AnchorPane.topAnchor="50.0" />
+      <Separator layoutX="890.0" layoutY="80.0" orientation="VERTICAL" prefHeight="230.0" prefWidth="10.0" AnchorPane.leftAnchor="860.0" AnchorPane.topAnchor="50.0" />
    </children>
    <padding>
       <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />

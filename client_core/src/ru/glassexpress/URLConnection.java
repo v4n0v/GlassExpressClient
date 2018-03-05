@@ -7,13 +7,15 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 
 
 public class URLConnection {
     private static  URLConnection urlConnection = new URLConnection();
-    static final String ADRESS_URL = "http://localhost:8080";
+//    static final String ADRESS_URL = "http://localhost:8080";
+    static final String ADRESS_URL = "http://env-1571803.jelastic.regruhosting.ru";
     static final String SERVLET = "/controller";
-
+//    http://env-1571803.jelastic.regruhosting.ru/controller?target=mark&action=list&target=mark
     static final String KEY = "";
     StringBuffer response = null;
 
@@ -28,8 +30,8 @@ public class URLConnection {
     public String receiveData(Request request) throws Exception{
 
 
-
-            URL url = new URL(ADRESS_URL + SERVLET + request.toString());//+request);
+        String req = URLEncoder.encode(request.toString(), "UTF-8");
+            URL url = new URL(ADRESS_URL + SERVLET + req);//+request);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod(request.getMethod());
             System.out.println(con.getResponseMessage());
@@ -67,11 +69,6 @@ public class URLConnection {
 
 
     public static void main(String[] args) {
-
-
-//        CarMarks car = new CarMarks(10001, "Volkswagen", "Polo", "sedan", 2);
-//        String json = GSON.toJson(car);
-//        System.out.println(json);
 
 
     }

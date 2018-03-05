@@ -11,4 +11,13 @@ public class DeleteOperator {
         return comand.deleteElement();
     }
 
+    public boolean deleteModelIsComplete(int id) {
+        comand=new DeleteModelCommand(id);
+        return comand.deleteElement();
+    }
+
+    public boolean deleteMarkIsComplete(int id) {
+        comand=new DeleteMarkCommand(id);
+        return comand.deleteElement();
+    }
 }

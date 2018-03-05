@@ -3,9 +3,6 @@ package ru.glassexpress;
 import com.google.gson.*;
 import ru.glassexpress.objects.*;
 
-import java.util.ArrayList;
-import java.util.List;
-
 // класс обработчик входящих JSON
 public class JsonController {
     private static final JsonParser parser = new JsonParser();
@@ -62,7 +59,7 @@ public class JsonController {
             case "generation":
                 return GSON.fromJson(jsonObj, GenerationObj.class);
             case "tab_goods_in_stock":
-                return GSON.fromJson(jsonObj, TableGoodsInStockRow.class);
+                return GSON.fromJson(jsonObj, GlassObject.class);
 
             case "error":
                 return GSON.fromJson(jsonObj, ErrorObject.class);
