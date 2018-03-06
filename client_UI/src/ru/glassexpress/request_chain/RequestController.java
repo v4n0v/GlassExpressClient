@@ -1,5 +1,6 @@
 package ru.glassexpress.request_chain;
 
+import ru.glassexpress.ConnectionManager;
 import ru.glassexpress.JsonController;
 import ru.glassexpress.Prefs;
 import ru.glassexpress.URLConnection;
@@ -13,16 +14,17 @@ import java.util.List;
 public class RequestController {
     static URLConnection urlConnection;
     static JsonController jsonController;
-
+    static ConnectionManager connectionManager;
 
 
     public static String recieveResponse(Request request) {
-        urlConnection = URLConnection.getInstance();
+        connectionManager = ConnectionManager.getInstance();
+       // connectionManager.setRequest(request.toString());
+       // urlConnection = URLConnection.getInstance();
         String jsonResponse = null;
         try {
-            jsonResponse = urlConnection.receiveData(request);
-
-        if (jsonResponse != null) {
+            jsonResponse = connectionManager.setRequest(request.toString()).getResp();
+            if (jsonResponse != null) {
                 if (!jsonResponse.equals(Prefs.ERROR_RESPONSE)) {
                     return jsonResponse;
                 }
@@ -31,31 +33,46 @@ public class RequestController {
                 System.out.println("Это фиаско, братан!");
 
             }
-
         } catch (Exception e) {
             AlertWindow.errorMessage("Ошибка соединения с сервером :(");
         }
+//        try {
+//            jsonResponse = urlConnection.receiveData(request);
+//
+//            if (jsonResponse != null) {
+//                if (!jsonResponse.equals(Prefs.ERROR_RESPONSE)) {
+//                    return jsonResponse;
+//                }
+//            } else {
+//
+//                System.out.println("Это фиаско, братан!");
+//
+//            }
+//
+//        } catch (Exception e) {
+//            AlertWindow.errorMessage("Ошибка соединения с сервером :(");
+//        }
         return null;
     }
 
-    public static BaseObject responseToObject(String jsonResponse){
-        jsonController=JsonController.getInstance();
-        if (jsonResponse!=null) {
+    public static BaseObject responseToObject(String jsonResponse) {
+        jsonController = JsonController.getInstance();
+        if (jsonResponse != null) {
             return jsonController.convertJsonToObject(jsonResponse);
         }
         return null;
     }
 
-    public static boolean isRequestAccepted(String jsonResponse){
-        jsonController=JsonController.getInstance();
+    public static boolean isRequestAccepted(String jsonResponse) {
+        jsonController = JsonController.getInstance();
         Composite object = (Composite) jsonController.convertJsonToObject(jsonResponse);
-        List<BaseObject> answers =  object.getComponents();
-        if (answers.get(0).getObjectClass().equals("ok")){
+        List<BaseObject> answers = object.getComponents();
+        if (answers.get(0).getObjectClass().equals("ok")) {
             return true;
         } else
 
 
-        return false;
+            return false;
     }
 
 }

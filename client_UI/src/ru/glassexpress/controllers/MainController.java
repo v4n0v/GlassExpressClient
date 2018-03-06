@@ -106,7 +106,7 @@ public class MainController extends BaseController {
         dataMap.setGlassFactoryList(getListOperator.getGlassFactory());
 
         fillObservableList(bodyTypeStringList, adapter.idTitleObjToString(dataMap.getBodyTypeList()));
-
+        initTGTable();
         System.out.println(dataMap.getBodyTypeList());
     }
 
@@ -328,7 +328,7 @@ public class MainController extends BaseController {
     public void showGoods() {
         List<GenerationObj> generationObjList= dataMap.getGenerationObjList();
         if (generationObjList!=null&&generationObjList.size()>0){
-            glassObjects = getListOperator.getTableGoods(car);
+            glassObjects.addAll(getListOperator.getTableGoods(car));
         } else {
             AlertWindow.errorMessage("Укажите поколение авто");
         }
@@ -339,7 +339,7 @@ public class MainController extends BaseController {
     }
 
     // таблица стекол на складе
-    ObservableList<GlassObject> glassObjects;
+   private ObservableList<GlassObject> glassObjects=FXCollections.observableArrayList();;
     @FXML
     private TableView<GlassObject> tblGoodsInStock;
     @FXML
@@ -410,7 +410,8 @@ public class MainController extends BaseController {
         System.out.println("добавляю новое стекло в базу");
         if (addOperator.addGlassIsComplete(glassTableRow)) {
             //fillGenerationsListView();
-            System.out.println("все ок");
+            System.out.println("Добавлено в базу, все ок");
+            AlertWindow.infoMessage("Добавлено в базу");
             //  dataMap.setGenerationObjList(getListOperator.getGenerations(car));
         } else {
             System.out.println("Фиаско! не добавлено");
