@@ -2,6 +2,8 @@ package ru.glassexpress.core.get_command.adapter;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import ru.glassexpress.controllers.MainController;
+import ru.glassexpress.data.DataMap;
 import ru.glassexpress.objects.BaseObject;
 import ru.glassexpress.objects.GenerationObj;
 import ru.glassexpress.objects.IdTitleObj;
@@ -12,11 +14,10 @@ import java.util.List;
 
 public class BaseObjectAdapter {
 
-    public BaseObjectAdapter() {
-        this.inputList = inputList;
-    }
 
-    ObservableList<BaseObject> inputList;
+    public BaseObjectAdapter() {
+
+    }
 
 
     public ObservableList<String> returnStringList(ObservableList<BaseObject> inputList) {
@@ -101,12 +102,14 @@ public class BaseObjectAdapter {
         }
         return null;
     }
-    public ObservableList<GlassObject> returnTableGoodsList(ObservableList<BaseObject> inputList) {
+    public ObservableList<GlassObject> returnTableGLassList(ObservableList<BaseObject> inputList) {
 
         if (inputList != null) {
             List<GlassObject> resultList = new ArrayList<>();
             for (int i = 0; i < inputList.size(); i++) {
                 GlassObject row = (GlassObject) inputList.get(i);
+               // row.setGlassFactoryTitle(getTitleById(mainController.getDataMap().getGlassFactoryList(), row.getGlassFactory()));
+
                 //currentModelGenerations.add(cars);
                 resultList.add(row);
 
@@ -117,4 +120,14 @@ public class BaseObjectAdapter {
         return null;
 
     }
+
+    String getTitleById(List<IdTitleObj> objs, int id){
+        for (int i = 0; i < objs.size(); i++) {
+            if (objs.get(i).getId()==id){
+                return objs.get(i).getTitle();
+            }
+        }
+        return null;
+    }
+
 }

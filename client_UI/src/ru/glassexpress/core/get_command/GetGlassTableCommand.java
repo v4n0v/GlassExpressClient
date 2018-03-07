@@ -1,13 +1,11 @@
 package ru.glassexpress.core.get_command;
 
 import ru.glassexpress.Prefs;
-import ru.glassexpress.objects.BaseObject;
-import ru.glassexpress.objects.Car;
-import ru.glassexpress.objects.GlassObject;
+import ru.glassexpress.objects.*;
 import ru.glassexpress.request_builder.RequestBuilder;
 
-public class GetTableGoodsCommand extends ObservedCommand{
-    public GetTableGoodsCommand(BaseObject inputObject) {
+public class GetGlassTableCommand extends ObservedCommand{
+    public GetGlassTableCommand(BaseObject inputObject) {
         super(inputObject);
     }
 
@@ -16,7 +14,7 @@ public class GetTableGoodsCommand extends ObservedCommand{
 
     @Override
     void buildRequest() {
-        Car car = (Car) inputObject;
+        GenerationObj car = (GenerationObj) inputObject;
         request = new RequestBuilder().setMethod(Prefs.METHOD_POST)
                 .setAction(Prefs.ACTION_SELECT)
                 .setTarget(Prefs.TARGET_TABLE_GOODS)

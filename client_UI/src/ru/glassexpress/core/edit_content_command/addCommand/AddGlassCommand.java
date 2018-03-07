@@ -27,6 +27,7 @@ public class AddGlassCommand extends AddElementCommand{
                 .setRequest("glass_factory", String.valueOf(glass.getGlassFactory()))
                 .setRequest("insert_method", String.valueOf(glass.getInsertMethod()))
                 .setRequest("insert_price", String.valueOf(glass.getInsertPrice()))
+                .setRequest("body_type", String.valueOf(glass.getBodyTypeId()))
                 .build();
     }
 }

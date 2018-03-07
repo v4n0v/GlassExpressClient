@@ -3,6 +3,7 @@ package ru.glassexpress.data;
 import ru.glassexpress.objects.GenerationObj;
 import ru.glassexpress.objects.IdTitleObj;
 import ru.glassexpress.objects.GlassObject;
+import ru.glassexpress.objects.InsertClass;
 
 import java.util.List;
 
@@ -23,6 +24,16 @@ public class DataMap {
     private List<IdTitleObj> carMarksList;
     // список стекол
     private List<GlassObject> glassList;
+// список классов вклейки\установик
+private List<InsertClass> insertClassList;
+
+    public List<InsertClass> getInsertClassList() {
+        return insertClassList;
+    }
+
+    public void setInsertClassList(List<InsertClass> insertClassList) {
+        this.insertClassList = insertClassList;
+    }
 
     public List<GlassObject> getGlassList() {
         return glassList;
@@ -98,4 +109,6 @@ public class DataMap {
     public void setGlassTableRow(GlassObject glassTableRow) {
         this.glassTableRow = glassTableRow;
     }
+
+
 }

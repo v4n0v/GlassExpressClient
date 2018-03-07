@@ -30,6 +30,7 @@ public class JsonController {
         return type.replace("\"", "");
     }
 
+    // реурсивное преобразование в объект
     private BaseObject parseJson(JsonObject jsonObj) {
         String objClass = removeBrackets(jsonObj.get("objClass").toString());
 
@@ -59,7 +60,8 @@ public class JsonController {
                 return GSON.fromJson(jsonObj, GenerationObj.class);
             case "tab_goods_in_stock":
                 return GSON.fromJson(jsonObj, GlassObject.class);
-
+            case (Prefs.TARGET_INSERT_CLASS):
+                return GSON.fromJson(jsonObj, InsertClass.class);
             case "error":
                 return GSON.fromJson(jsonObj, ErrorObject.class);
             case "ok":

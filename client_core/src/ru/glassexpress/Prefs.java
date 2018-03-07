@@ -16,6 +16,7 @@ public class Prefs {
     public static final String TARGET_MODEL = "model" ;
     public static final String TARGET_GENERATION = "generation" ;
     public static final String TARGET_TABLE_GOODS = "table_goods";
+    public static final String TARGET_INSERT_CLASS = "insert_class";
 
     public final static String ERROR_RESPONSE= "FUCK OFF";
 

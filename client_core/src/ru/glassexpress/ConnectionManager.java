@@ -13,6 +13,9 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.concurrent.Callable;
 import java.util.concurrent.FutureTask;
 
@@ -26,7 +29,25 @@ public class ConnectionManager implements Callable<String>{
     private ConnectionManager() {
     }
 
+    public static void main(String[] args) {
+        String s = "строка";
+        System.out.println("String = "+s);
+        try {
+            s= URLEncoder.encode(s, "UTF-8");
+            System.out.println("URLEncoder = "+s);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
 
+        try {
+            s= URLDecoder.decode(s,"UTF-8");
+            System.out.println("URLDecoder = "+s);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
+
+    }
 
     public static ConnectionManager getInstance() {
         return manager;

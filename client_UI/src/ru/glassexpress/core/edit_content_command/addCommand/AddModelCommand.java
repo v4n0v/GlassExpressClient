@@ -3,6 +3,7 @@ package ru.glassexpress.core.edit_content_command.addCommand;
 import ru.glassexpress.Prefs;
 import ru.glassexpress.objects.BaseObject;
 import ru.glassexpress.objects.Car;
+import ru.glassexpress.objects.IdTitleObj;
 import ru.glassexpress.request_builder.RequestBuilder;
 
 public class AddModelCommand extends AddElementCommand{
@@ -14,11 +15,12 @@ public class AddModelCommand extends AddElementCommand{
     }
     @Override
     protected void prepareRequest(){
-        Car car = (Car) baseObject;
+       // Car car = (Car) baseObject;
+        IdTitleObj car = (IdTitleObj) baseObject;
         request=new RequestBuilder().setMethod(Prefs.METHOD_GET)
                 .setTarget(Prefs.TARGET_MODEL)
                 .setAction(Prefs.ACTION_INSERT)
-                .setRequest("mark", car.getMark())
+                .setRequest("mark", car.getTitle())
                 .setRequest("model", answer)
                 .build();
     }

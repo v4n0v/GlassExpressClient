@@ -32,12 +32,12 @@ public class RequestBuilder {
     }
 
     public RequestBuilder setRequest(String parameter, String value){
-        req.append("&"+parameter+"="+value);
-//        try {
-//            req.append("&"+parameter+"="+ URLEncoder.encode(value, "UTF-8"));
-//                    } catch (UnsupportedEncodingException e) {
-//            e.printStackTrace();
-//        }
+     //   req.append("&"+parameter+"="+value);
+        try {
+            req.append("&"+parameter+"="+ URLEncoder.encode(value, "UTF-8"));
+                    } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
         return this;
     }
 

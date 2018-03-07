@@ -1,7 +1,9 @@
 package ru.glassexpress.core.get_command;
 
 import javafx.collections.ObservableList;
+import ru.glassexpress.controllers.MainController;
 import ru.glassexpress.core.get_command.adapter.BaseObjectAdapter;
+import ru.glassexpress.data.DataMap;
 import ru.glassexpress.objects.BaseObject;
 import ru.glassexpress.objects.GenerationObj;
 import ru.glassexpress.objects.IdTitleObj;
@@ -12,9 +14,10 @@ import java.util.List;
 
 public class GetListOperator implements GetListCommands {
 
-    ObservedCommand command;
+    private ObservedCommand command;
     Request request;
-BaseObjectAdapter objectAdapter = new BaseObjectAdapter();
+    MainController mainController;
+    BaseObjectAdapter objectAdapter = new BaseObjectAdapter();
 
 
     public List<BaseObject> getComponents() {
@@ -56,13 +59,13 @@ BaseObjectAdapter objectAdapter = new BaseObjectAdapter();
     @Override
     public List<GenerationObj> getGenerations(BaseObject object) {
 
-        command = new GenerationObservedCommand(object);
+        command = new GetGenerationCommand(object);
         return  objectAdapter.returnGenerationList(command.returnRecievedList());
     }
 
     public ObservableList<GlassObject> getTableGoods(BaseObject object) {
-        command = new GetTableGoodsCommand(object);
-        return  objectAdapter.returnTableGoodsList(command.returnRecievedList());
+        command = new GetGlassTableCommand(object);
+        return  objectAdapter.returnTableGLassList(command.returnRecievedList());
     }
 
 

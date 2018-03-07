@@ -12,8 +12,8 @@ import java.net.URLEncoder;
 
 public class URLConnection {
     private static  URLConnection urlConnection = new URLConnection();
-//    static final String ADRESS_URL = "http://localhost:8080";
-    static final String ADRESS_URL = "http://env-1571803.jelastic.regruhosting.ru";
+    static final String ADRESS_URL = "http://localhost:8080";
+//    static final String ADRESS_URL = "http://env-1571803.jelastic.regruhosting.ru";
     static final String SERVLET = "/controller";
 //    http://env-1571803.jelastic.regruhosting.ru/controller?target=mark&action=list&target=mark
     static final String KEY = "";

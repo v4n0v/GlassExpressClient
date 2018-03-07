@@ -8,8 +8,8 @@ import ru.glassexpress.objects.IdTitleObj;
 import ru.glassexpress.request_builder.Request;
 import ru.glassexpress.request_builder.RequestBuilder;
 
-public class GenerationObservedCommand extends ObservedCommand {
-    public GenerationObservedCommand(BaseObject object) {
+public class GetGenerationCommand extends ObservedCommand {
+    public GetGenerationCommand(BaseObject object) {
         super(object);
     }
 
@@ -24,7 +24,7 @@ public class GenerationObservedCommand extends ObservedCommand {
                     .setRequest("model", String.valueOf(car.getId()))
                     .build();
         } else {
-            System.out.println("GenerationObservedCommand inputObject = null!");
+            System.out.println("GetGenerationCommand inputObject = null!");
         }
     }
 
