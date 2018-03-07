@@ -9,8 +9,11 @@ import ru.glassexpress.objects.BaseObject;
 import ru.glassexpress.objects.Composite;
 import ru.glassexpress.request_builder.Request;
 
+import java.net.URLEncoder;
 import java.util.List;
 
+
+// класс формирует и отправляет запросы
 public class RequestController {
     static URLConnection urlConnection;
     static JsonController jsonController;
@@ -21,9 +24,13 @@ public class RequestController {
         connectionManager = ConnectionManager.getInstance();
        // connectionManager.setRequest(request.toString());
        // urlConnection = URLConnection.getInstance();
+
         String jsonResponse = null;
         try {
-            jsonResponse = connectionManager.setRequest(request.toString()).getResp();
+            String req=request.toString();
+            System.out.println(req);
+           // String req = URLEncoder.encode(request.toString(), "UTF-8");
+            jsonResponse = connectionManager.setRequest(req).getResp();
             if (jsonResponse != null) {
                 if (!jsonResponse.equals(Prefs.ERROR_RESPONSE)) {
                     return jsonResponse;

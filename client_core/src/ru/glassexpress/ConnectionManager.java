@@ -19,7 +19,8 @@ import java.util.concurrent.FutureTask;
 public class ConnectionManager implements Callable<String>{
     private String responseBody;
     String request;
-    static final String ADRESS_URL = "http://env-1571803.jelastic.regruhosting.ru";
+     static final String ADRESS_URL = "http://localhost:8080";
+//    static final String ADRESS_URL = "http://env-1571803.jelastic.regruhosting.ru";
     static final String SERVLET = "/controller";
 
     private ConnectionManager() {
@@ -51,7 +52,7 @@ public class ConnectionManager implements Callable<String>{
     public String call() throws Exception {
         CloseableHttpClient httpclient = HttpClients.createDefault();
 
-        HttpGet httpget = new HttpGet(ADRESS_URL+SERVLET+request.toString());
+        HttpGet httpget = new HttpGet(ADRESS_URL+SERVLET+request);
         System.out.println(Thread.currentThread().getName());
          System.out.println("Executing request " + httpget.getRequestLine());
 

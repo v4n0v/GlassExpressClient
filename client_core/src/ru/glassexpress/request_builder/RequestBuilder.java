@@ -1,5 +1,8 @@
 package ru.glassexpress.request_builder;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
 public class RequestBuilder {
     StringBuilder req = new StringBuilder();
 
@@ -30,6 +33,11 @@ public class RequestBuilder {
 
     public RequestBuilder setRequest(String parameter, String value){
         req.append("&"+parameter+"="+value);
+//        try {
+//            req.append("&"+parameter+"="+ URLEncoder.encode(value, "UTF-8"));
+//                    } catch (UnsupportedEncodingException e) {
+//            e.printStackTrace();
+//        }
         return this;
     }
 

@@ -123,7 +123,7 @@ public class MainController extends BaseController {
 
         dataMap.setCarMarksList(getListOperator.getMarks());
         fillObservableList(marksList, adapter.idTitleObjToString(dataMap.getCarMarksList()));
-        if (marksList.size() > 0) {
+        if (dataMap.getCarMarksList()!=null && dataMap.getCarMarksList().size() > 0 ) {
             markListView.getSelectionModel().selectFirst();
 
             // формируется запрос на получение списка моделей
@@ -138,7 +138,7 @@ public class MainController extends BaseController {
         car.setMark(markListView.getSelectionModel().getSelectedItem());
         dataMap.setCarModelsList(getListOperator.getModels(car));
         fillObservableList(modelsList, adapter.idTitleObjToString(dataMap.getCarModelsList()));
-        if (modelsList.size() > 0) {
+        if (dataMap.getCarModelsList()!=null && dataMap.getCarModelsList().size() > 0) {
             modelListView.getSelectionModel().selectFirst();
             System.out.println("показать модели марки " + car.getMark());
 
@@ -156,7 +156,7 @@ public class MainController extends BaseController {
         IdTitleObj model = dataMap.getCarModelsList().get(modelListView.getSelectionModel().getSelectedIndex());
         dataMap.setGenerationObjList(getListOperator.getGenerations(model));
         fillObservableList(genList, adapter.generationObjToString(dataMap.getGenerationObjList()));
-        if (genList.size() > 0) {
+        if (dataMap.getGenerationObjList().size() > 0) {
             genListView.getSelectionModel().selectFirst();
             //currentModelGenerations = getListOperator.getComponents();
         } else {
@@ -327,6 +327,7 @@ public class MainController extends BaseController {
 
     public void showGoods() {
         List<GenerationObj> generationObjList= dataMap.getGenerationObjList();
+        glassObjects.clear();
         if (generationObjList!=null&&generationObjList.size()>0){
             glassObjects.addAll(getListOperator.getTableGoods(car));
         } else {

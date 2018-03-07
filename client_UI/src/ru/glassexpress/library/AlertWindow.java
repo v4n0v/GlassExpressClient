@@ -58,6 +58,7 @@ public class AlertWindow {
             dialog.setContentText(msg);
 
             Optional<String> result = dialog.showAndWait();
+
             if (result.isPresent()) {
                 String res = result.get();
                 return res;

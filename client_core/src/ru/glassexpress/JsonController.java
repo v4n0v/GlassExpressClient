@@ -19,8 +19,7 @@ public class JsonController {
 
     public BaseObject convertJsonToObject(String jsonResponse) {
         JsonObject jsonObj = (JsonObject) parser.parse(jsonResponse);
-//        String objClass = removeBrackets(jsonObj.get("objClass").toString());
-//        List<BaseObject> list = new ArrayList<>();
+
 
         return parseJson(jsonObj);
 
