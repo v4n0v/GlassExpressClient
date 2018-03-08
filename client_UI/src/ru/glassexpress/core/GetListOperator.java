@@ -1,22 +1,17 @@
-package ru.glassexpress.core.get_command;
+package ru.glassexpress.core;
 
 import javafx.collections.ObservableList;
-import ru.glassexpress.controllers.MainController;
+import ru.glassexpress.core.get_command.*;
 import ru.glassexpress.core.get_command.adapter.BaseObjectAdapter;
-import ru.glassexpress.data.DataMap;
-import ru.glassexpress.objects.BaseObject;
-import ru.glassexpress.objects.GenerationObj;
-import ru.glassexpress.objects.IdTitleObj;
-import ru.glassexpress.objects.GlassObject;
-import ru.glassexpress.request_builder.Request;
+import ru.glassexpress.objects.*;
 
 import java.util.List;
 
 public class GetListOperator implements GetListCommands {
 
     private ObservedCommand command;
-    Request request;
-    MainController mainController;
+ //   Request request;
+
     BaseObjectAdapter objectAdapter = new BaseObjectAdapter();
 
 
@@ -84,6 +79,12 @@ public class GetListOperator implements GetListCommands {
     public List<IdTitleObj> getGlassFactory() {
         command = new GetGlassFactoryCommand(null);
         return objectAdapter.baseObjToIdTitleObj(command.returnRecievedList());
+//        return objectAdapter.returnStringList(command.returnRecievedList());
+    }
+    public List<InsertClass> getInsertClass() {
+        command = new GetInsertClassCommand(null);
+//        return objectAdapter.baseObjToIdTitleObj(command.returnRecievedList());
+        return objectAdapter.returnInsertClassList(command.returnRecievedList());
 //        return objectAdapter.returnStringList(command.returnRecievedList());
     }
 }

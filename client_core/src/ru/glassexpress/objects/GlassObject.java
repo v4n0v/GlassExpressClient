@@ -281,7 +281,7 @@ public class GlassObject extends BaseObject {
         return new SimpleStringProperty(glassOptTitle);
     }
 
-    public StringProperty getTypeTilteProperty() {
+    public StringProperty getTypeTitleProperty() {
 
         return new SimpleStringProperty(glassTypeTitle);
     }

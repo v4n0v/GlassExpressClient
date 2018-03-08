@@ -4,10 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import ru.glassexpress.controllers.MainController;
 import ru.glassexpress.data.DataMap;
-import ru.glassexpress.objects.BaseObject;
-import ru.glassexpress.objects.GenerationObj;
-import ru.glassexpress.objects.IdTitleObj;
-import ru.glassexpress.objects.GlassObject;
+import ru.glassexpress.objects.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -120,6 +117,28 @@ public class BaseObjectAdapter {
         return null;
 
     }
+
+    public List<InsertClass> returnInsertClassList(List<BaseObject> inputList) {
+
+        if (inputList != null) {
+            List<InsertClass> resultList = new ArrayList<>();
+            for (int i = 0; i < inputList.size(); i++) {
+                InsertClass row = (InsertClass) inputList.get(i);
+                // row.setGlassFactoryTitle(getTitleById(mainController.getDataMap().getGlassFactoryList(), row.getGlassFactory()));
+
+                //currentModelGenerations.add(cars);
+                resultList.add(row);
+
+            }
+            return FXCollections.observableArrayList(resultList);
+
+        }
+        return null;
+
+    }
+
+
+
 
     String getTitleById(List<IdTitleObj> objs, int id){
         for (int i = 0; i < objs.size(); i++) {

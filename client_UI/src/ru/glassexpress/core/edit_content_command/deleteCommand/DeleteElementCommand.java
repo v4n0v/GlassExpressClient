@@ -15,12 +15,14 @@ public abstract class DeleteElementCommand {
     public DeleteElementCommand(int id) {
         this.id = id;
 
-        prepareRequest();
+
     }
 
     abstract void prepareRequest();
 
     boolean deleteElement() {
+        System.out.println("Готовим запрос");
+        prepareRequest();
         System.out.println("Удаляем модель");
         if (RequestController.isRequestAccepted(RequestController.recieveResponse(request)))
             return true;

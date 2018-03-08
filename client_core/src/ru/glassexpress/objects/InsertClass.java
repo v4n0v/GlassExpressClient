@@ -5,7 +5,7 @@ import ru.glassexpress.Prefs;
 
 public class InsertClass extends BaseObject{
     public InsertClass(String objectClass) {
-        super(Prefs.TARGET_INSERT_CLASS);
+        super("insert_class");
     }
 
     public int getId() {
@@ -59,10 +59,16 @@ public class InsertClass extends BaseObject{
     @Override
     public JsonElement toJSONObject() {
         obj1.addProperty("objClass", objectClass);
+        obj1.addProperty("id", id);
         obj1.addProperty("insertFront", insertFront);
         obj1.addProperty("insertRear", insertRear);
         obj1.addProperty("insertSide", insertSide);
         obj1.addProperty("toneFront", toneFront);
         return obj1;
+    }
+
+    @Override
+    public String toString() {
+        return String.valueOf(insertFront);
     }
 }

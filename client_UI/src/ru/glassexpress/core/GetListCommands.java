@@ -1,10 +1,8 @@
-package ru.glassexpress.core.get_command;
+package ru.glassexpress.core;
 
-import javafx.collections.ObservableList;
 import ru.glassexpress.objects.BaseObject;
 import ru.glassexpress.objects.GenerationObj;
 import ru.glassexpress.objects.IdTitleObj;
-import ru.glassexpress.request_builder.Request;
 
 import java.util.List;
 

@@ -60,7 +60,7 @@ public class JsonController {
                 return GSON.fromJson(jsonObj, GenerationObj.class);
             case "tab_goods_in_stock":
                 return GSON.fromJson(jsonObj, GlassObject.class);
-            case (Prefs.TARGET_INSERT_CLASS):
+            case "insert_class":
                 return GSON.fromJson(jsonObj, InsertClass.class);
             case "error":
                 return GSON.fromJson(jsonObj, ErrorObject.class);
@@ -76,26 +76,4 @@ public class JsonController {
 
 }
 
-interface FactoryMetod {
-    BaseObject createObject(String classObj);
-}
 
-
-class ObjectFactory implements FactoryMetod {
-
-    @Override
-    public BaseObject createObject(String classObj) {
-        BaseObject object = null;
-        switch (classObj) {
-            case "IdTitleObj":
-                object = new IdTitleObj();
-                break;
-            case "CarModel":
-                //object = new IdTitleObj(); break;
-                System.out.println("НЕ ГОТОВО ЕЩЕ");
-            default:
-                break;
-        }
-        return object;
-    }
-}

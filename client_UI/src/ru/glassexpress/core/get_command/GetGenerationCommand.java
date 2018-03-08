@@ -28,10 +28,10 @@ public class GetGenerationCommand extends ObservedCommand {
         }
     }
 
-    @Override
-    void fillObject(int i) {
+  //  @Override
+//    void fillObject(int i) {
 //        GenerationObj cars = (GenerationObj) components.get(i);
 //        //currentModelGenerations.add(cars);
 //        resultString.add((i+1)+". "+cars.toString());
-    }
+    //}
 }

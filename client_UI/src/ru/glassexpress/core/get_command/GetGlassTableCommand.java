@@ -22,8 +22,8 @@ public class GetGlassTableCommand extends ObservedCommand{
                 .build();
     }
 
-    @Override
-    void fillObject(int i) {
-        GlassObject tblRow = (GlassObject) components.get(i);
-    }
+//    @Override
+  //  void fillObject(int i) {
+//        GlassObject tblRow = (GlassObject) components.get(i);
+//    }
 }

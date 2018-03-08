@@ -64,6 +64,6 @@ public abstract class ObservedCommand {
     }
 
     // подготавливаем колонку, для переноса в обсерведлист
-    abstract void fillObject(int i);
+//    abstract void fillObject(int i);
 
 }

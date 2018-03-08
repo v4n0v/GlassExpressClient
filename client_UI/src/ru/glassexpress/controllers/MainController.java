@@ -1,16 +1,19 @@
 package ru.glassexpress.controllers;
 
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.CheckBoxTableCell;
 import ru.glassexpress.JsonController;
 import ru.glassexpress.URLConnection;
 import ru.glassexpress.core.edit_content_command.addCommand.AddOperator;
 import ru.glassexpress.core.edit_content_command.deleteCommand.DeleteOperator;
+import ru.glassexpress.core.edit_content_command.updCommand.UpdateOperator;
 import ru.glassexpress.core.get_command.ObservedCommand;
-import ru.glassexpress.core.get_command.GetListOperator;
+import ru.glassexpress.core.GetListOperator;
 import ru.glassexpress.core.get_command.adapter.BaseObjectAdapter;
 import ru.glassexpress.library.AlertWindow;
 import ru.glassexpress.objects.*;
@@ -56,7 +59,7 @@ public class MainController extends BaseController {
     GetListOperator getListOperator;
     AddOperator addOperator;
     DeleteOperator deleteOperator;
-
+    UpdateOperator updateOperator;
     private URLConnection urlConnection;
     private JsonController jsonController;
 
@@ -68,7 +71,7 @@ public class MainController extends BaseController {
     private ObservableList<String> genList = FXCollections.observableArrayList();
 
     //TODO организовать заполнение
-    private ObservableList<InsertClass> classList = FXCollections.observableArrayList();
+    private ObservableList<String> classList = FXCollections.observableArrayList();
 
     public ObservableList<String> getBodyTypeStringList() {
         return bodyTypeStringList;
@@ -103,6 +106,7 @@ public class MainController extends BaseController {
         getListOperator = new GetListOperator();
         deleteOperator = new DeleteOperator();
         addOperator = new AddOperator();
+        updateOperator=new UpdateOperator();
         // glassTypeList = new ArrayList<>();
 
 
@@ -114,16 +118,25 @@ public class MainController extends BaseController {
         // получаем список типов стекол, кузовов
 
         initTGTable();
+
+
         //ystem.out.println(dataMap.getBodyTypeList());
     }
+
+
 
     public void reconnect() {
         markListView.setItems(marksList);
         modelListView.setItems(modelsList);
         genListView.setItems(genList);
         bodyTypeListView.setItems(bodyTypeStringList);
-        fillMarksListView();
 
+
+        insertClassComboBox.setItems(classList);
+
+
+        fillMarksListView();
+// если получили список марок, то тянем остальные параметры и модели
         if (dataMap.getCarMarksList() != null) {
             dataMap.setGlassTypeList(getListOperator.getGlassTypes());
             if (dataMap.getGlassTypeList() != null) {
@@ -133,6 +146,31 @@ public class MainController extends BaseController {
 
                 fillObservableList(bodyTypeStringList, adapter.idTitleObjToString(dataMap.getBodyTypeList()));
             }
+        }
+    }
+
+    // получаем список для конкретной выбранныей машины
+    private void initInsertClass() {
+        // узнаем id выбранной машины
+        if (dataMap.getGenerationObjList()!=null&& dataMap.getGenerationObjList().size()>0) {
+            int id = dataMap.getGenerationObjList().get(genListView.getSelectionModel().getSelectedIndex()).getIdInsert();
+            // получаем список всех классов цен
+            List<InsertClass> list = dataMap.getInsertClassList();
+            if (list!=null) {
+                for (int i = 0; i < list.size(); i++) {
+                    if (dataMap.getInsertClassList().get(i).getId() == id) {
+                        insertClassComboBox.getSelectionModel().select(i);
+                    }
+                }
+            }
+        }
+    }
+
+    private void fillInsertClassList(List<InsertClass> insertClassList) {
+        classList.clear();
+        for (int i = 0; i < insertClassList.size(); i++) {
+            classList.addAll("Класс "+(i+1)+"-"+insertClassList.get(i).getInsertFront());
+
         }
     }
 
@@ -179,6 +217,14 @@ public class MainController extends BaseController {
         if (dataMap.getGenerationObjList().size() > 0) {
             genListView.getSelectionModel().selectFirst();
             //currentModelGenerations = getListOperator.getComponents();
+            // получаем список классов цен
+            dataMap.setInsertClassList(getListOperator.getInsertClass());
+            // заполняем ObservableList
+            fillInsertClassList(dataMap.getInsertClassList());
+            // получаем список для конкретной выбранныей машины
+            initInsertClass();
+            // заполянем лейблы с конкретными ценами
+            initPriceClassLabels();
         } else {
             System.out.println("пустой список поколений");
         }
@@ -332,28 +378,7 @@ public class MainController extends BaseController {
     }
 
 
-    void getMarkList() {
-
-    }
-
-    void getModelList() {
-
-    }
-
-    void fillGenerations() {
-
-
-    }
-
-
-    void getPhoto(Car car) {
-
-    }
-
-    void showGoods(Car car) {
-
-    }
-
+    // показываем список товаров
     public void showGoods() {
         List<GenerationObj> generationObjList = dataMap.getGenerationObjList();
         glassObjects.clear();
@@ -388,27 +413,29 @@ public class MainController extends BaseController {
     private TableColumn<GlassObject, String> colTGType;
     @FXML
     private TableColumn<GlassObject, Float> colTGInsertPrice;
-    @FXML
-    private TableColumn<GlassObject, Float> colTGPrice1;
+
     @FXML
     private TableColumn<GlassObject, Float> colTGPriceIn;
     @FXML
     private TableColumn<GlassObject, String> colTGBody;
 
+    @FXML
+    private TableColumn<GlassObject, String>colTGSelect;
+    // инициализация колонок таблицы
     private void initTGTable() {
-
-
         tblGoodsInStock.setEditable(false);
 
         colTGPriceIn.setVisible(false);
         colTGId.setCellValueFactory(cellData -> cellData.getValue().getIdProperty());
         colTGDesc.setCellValueFactory(cellData -> cellData.getValue().getDescProperty());
         colTGOption.setCellValueFactory(cellData -> cellData.getValue().getOptTitleProperty());
-        colTGType.setCellValueFactory(cellData -> cellData.getValue().getTypeTilteProperty());
+        colTGType.setCellValueFactory(cellData -> cellData.getValue().getTypeTitleProperty());
         colTGPrice.setCellValueFactory(cellData -> cellData.getValue().getPriceProperty());
         colTGInsertPrice.setCellValueFactory(cellData -> cellData.getValue().getInsertPriceProperty());
         colTGFactory.setCellValueFactory(cellData -> cellData.getValue().getFactoryTitle());
         colTGBody.setCellValueFactory(cellData -> cellData.getValue().getBodyTypeTitle());
+
+
         tblGoodsInStock.setItems(glassObjects);
     }
 
@@ -420,16 +447,19 @@ public class MainController extends BaseController {
 //
 //    }
 
-    public void addGlass() {
+
+    // открываем дилоговое окно добавления ного стекла в базу
+    public void openAddGlassDialog() {
+        // получаем список поколений текущей модели
         List<GenerationObj> generationObjList = dataMap.getGenerationObjList();
         if (generationObjList != null && generationObjList.size() > 0) {
+            // открываем окгно
             mainApp.initAddGlassLayout(getSelectedCarInfo());
-
-//        int d= dataMap.getGenerationObjList().get(genListView.getSelectionModel().getSelectedIndex()).getId();
+            //передаем в него параметры авто
             if (dataMap.getGenerationObjList() != null) {
                 aggGlassController.setCarId(dataMap.getGenerationObjList().get(genListView.getSelectionModel().getSelectedIndex()).getId());
             } else
-                System.out.println("выбире поколение");
+                System.out.println("выбиритее поколение");
         } else {
             AlertWindow.errorMessage("Укажите поколение авто");
         }
@@ -440,10 +470,12 @@ public class MainController extends BaseController {
         this.aggGlassController = aggGlassController;
     }
 
+    // втавляем новое стекло в базу
     public void insertGlass(GlassObject glassTableRow) {
         System.out.println("добавляю новое стекло в базу");
         if (addOperator.addGlassIsComplete(glassTableRow)) {
             //fillGenerationsListView();
+
             System.out.println("Добавлено в базу, все ок");
             AlertWindow.infoMessage("Добавлено в базу");
             //  dataMap.setGenerationObjList(getListOperator.getGenerations(car));
@@ -452,21 +484,21 @@ public class MainController extends BaseController {
         }
     }
 
-
+    // получаем название марки авто из datamap
     public String getSelectedMarkTitle() {
         if (dataMap.getCarMarksList() != null) {
-            String mark = dataMap.getCarMarksList().get(markListView.getSelectionModel().getSelectedIndex()).getTitle();
-            return mark;
+
+            return dataMap.getCarMarksList().get(markListView.getSelectionModel().getSelectedIndex()).getTitle();
         } else return null;
     }
-
+    // получаем название модели авто из datamap
     public String getSelectedModelTitle() {
         if (dataMap.getCarModelsList() != null) {
-            String model = dataMap.getCarModelsList().get(modelListView.getSelectionModel().getSelectedIndex()).getTitle();
-            return getSelectedMarkTitle() + " " + model;
+            return getSelectedMarkTitle() + " " + dataMap.getCarModelsList().get(modelListView.getSelectionModel().getSelectedIndex()).getTitle();
         } else return null;
     }
 
+    // получаем полное название авто из datamap
     public String getSelectedCarInfo() {
         if (dataMap.getGenerationObjList() != null) {
             int from = dataMap.getGenerationObjList().get(genListView.getSelectionModel().getSelectedIndex()).getYearFrom();
@@ -478,6 +510,7 @@ public class MainController extends BaseController {
         }
     }
 
+    // получаем id марки авто из datamap
     public Integer getSelectedMarkId() {
         Integer id = null;
         if (dataMap.getCarMarksList() != null) {
@@ -487,7 +520,7 @@ public class MainController extends BaseController {
 
         return id;
     }
-
+    // получаем id модели авто из datamap
     public Integer getSelectedModelId() {
         Integer id = null;
         if (dataMap.getCarModelsList() != null) {
@@ -496,7 +529,7 @@ public class MainController extends BaseController {
         }
         return id;
     }
-
+    // получаем id машины авто из datamap
     public Integer getSelectedCarId() {
         Integer id = null;
         if (dataMap.getGenerationObjList() != null) {
@@ -506,15 +539,62 @@ public class MainController extends BaseController {
         return id;
     }
 
+    // получаем объект марки авто из datamap
     public IdTitleObj getSelectedMarkObj() {
         return dataMap.getCarMarksList().get(markListView.getSelectionModel().getSelectedIndex());
     }
-
+    // получаем объект модели авто из datamap
     public IdTitleObj getSelectedModelObj() {
         return dataMap.getCarModelsList().get(modelListView.getSelectionModel().getSelectedIndex());
     }
-
+    // получаем объект авто из datamap
     public GenerationObj getSelectedCarObj() {
         return dataMap.getGenerationObjList().get(genListView.getSelectionModel().getSelectedIndex());
+    }
+
+
+    // получаю номер класса установки и вношу его в текущий автомобиль
+    public void saveInsertClass() {
+        // получаю ид класса установки
+        int id= dataMap.getInsertClassList().get(insertClassComboBox.getSelectionModel().getSelectedIndex()).getId();
+        // id авто
+        int carID = getSelectedCarId();
+        boolean isTrue = AlertWindow.confirmationWindow("Вы уверены?",
+                "Изменить класс установки " + getSelectedMarkTitle() + " " + getSelectedModelTitle() + "?\n"
+        +insertClassComboBox.getSelectionModel().getSelectedItem());
+        if (isTrue) {
+
+            // если нажата ok, обновляем
+            if (updateOperator.updAutoInsertClass(id, carID)) {
+                System.out.println("Класс установки обновлен");
+            } else {
+                System.out.println("Фиаско! не обновлено");
+            }
+        }
+
+
+
+    }
+
+    @FXML
+    Label frontInsertPriceLabel;
+    @FXML
+    Label rearInsertPriceLabel;
+    @FXML
+    Label sideInsertPriceLabel;
+//    @FXML
+//    GridPane insertPriceGrid;
+//
+    //
+    public void initPriceClassLabels() {
+        // получам интекс текущего класс установки
+        int index = insertClassComboBox.getSelectionModel().getSelectedIndex();
+//        if (!insertPriceGrid.isVisible()){
+//            insertPriceGrid.setVisible(true);
+//        }
+        // устанавливаем цены в ячейки
+        frontInsertPriceLabel.setText(String.valueOf(dataMap.getInsertClassList().get(index).getInsertFront()));
+        rearInsertPriceLabel.setText(String.valueOf(dataMap.getInsertClassList().get(index).getInsertRear()));
+        sideInsertPriceLabel.setText(String.valueOf(dataMap.getInsertClassList().get(index).getInsertSide()));
     }
 }

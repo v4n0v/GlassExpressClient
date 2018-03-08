@@ -9,9 +9,9 @@ public abstract class IDTitleObsevedCommand extends ObservedCommand{
         super(object);
     }
 
-    @Override
-    void fillObject(int i) {
-//        IdTitleObj mark = (IdTitleObj) components.get(i);
-//        resultString.add(mark.getTitle());
-    }
+//    @Override
+//    void fillObject(int i) {
+////        IdTitleObj mark = (IdTitleObj) components.get(i);
+////        resultString.add(mark.getTitle());
+//    }
 }

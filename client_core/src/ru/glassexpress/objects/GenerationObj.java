@@ -12,6 +12,16 @@ public class GenerationObj extends BaseObject{
     private int yearTo;
     private  int modelID;
 
+    public int getIdInsert() {
+        return idInsert;
+    }
+
+    public void setIdInsert(int idInsert) {
+        this.idInsert = idInsert;
+    }
+
+    private int idInsert;
+
     public int getId() {
         return id;
     }
@@ -70,7 +80,7 @@ public class GenerationObj extends BaseObject{
         obj1.addProperty("yearFrom", yearFrom);
         obj1.addProperty("yearTo", yearTo);
         obj1.addProperty("modelID", modelID);
-
+        obj1.addProperty("idInsert", idInsert);
 
 
         return obj1;
