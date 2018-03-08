@@ -1,11 +1,7 @@
 package ru.glassexpress.objects;
 
 import com.google.gson.JsonElement;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
-
-import java.util.List;
+import javafx.beans.property.*;
 
 public class GlassObject extends BaseObject {
 
@@ -27,6 +23,7 @@ public class GlassObject extends BaseObject {
     private String glassTypeTitle;
     private String glassOptTitle;
     private String carTitle;
+
 
     public int getBodyTypeId() {
         return bodyTypeId;
@@ -94,6 +91,7 @@ public class GlassObject extends BaseObject {
 
     public GlassObject() {
         super("tab_goods_in_stock");
+     //   select=new Checkbox();
     }
 
     public int getId() {
@@ -217,6 +215,19 @@ public class GlassObject extends BaseObject {
     private int countRemainder;
 
 
+private final BooleanProperty isSelected = new SimpleBooleanProperty();
+    public BooleanProperty isSelectedProperty() { return isSelected; }
+
+//    public boolean isSelected() {
+//        return isSelected;
+//    }
+//
+//    public void setSelected(boolean selected) {
+//        isSelected = selected;
+//    }
+////
+//     boolean isSelected;
+
     @Override
     public JsonElement toJSONObject() {
         obj1.addProperty("objClass", objectClass);
@@ -271,6 +282,12 @@ public class GlassObject extends BaseObject {
         return new SimpleObjectProperty<Integer>(countRemainder);
     }
 
+
+
+//    public ObservableValue<Checkbox> getSelectProperty() {
+//        return new SimpleObjectProperty<Checkbox>(select);
+//    }
+
     public StringProperty getDescProperty() {
 
         return new SimpleStringProperty(carTitle + " " + description);
@@ -296,4 +313,15 @@ public class GlassObject extends BaseObject {
         return new SimpleStringProperty(bodyTypeTitle);
     }
 
+//    public void setIsSelected(Boolean isSelected) {
+//        this.isSelected = isSelected;
+//    }
+//    public BooleanProperty getIsSelectedProperty() {
+//
+//        return new SimpleBooleanProperty(isSelected);
+//    }
+
+//    public BooleanProperty getIsSelected() {
+//        return isSelected;
+//    }
 }

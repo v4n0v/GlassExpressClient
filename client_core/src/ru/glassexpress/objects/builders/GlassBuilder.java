@@ -2,6 +2,8 @@ package ru.glassexpress.objects.builders;
 
 import ru.glassexpress.objects.GlassObject;
 
+import java.awt.*;
+
 public class GlassBuilder {
 
     public GlassBuilder setId(int id) {
@@ -129,6 +131,8 @@ public class GlassBuilder {
 
     public GlassObject build() {
         GlassObject table = new GlassObject();
+
+        //table.setSelect(new Checkbox());
         table.setId(id);
         table.setCarId(carId);
         table.setCarTitle(carTitle);

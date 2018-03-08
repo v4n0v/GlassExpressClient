@@ -1,12 +1,17 @@
 package ru.glassexpress.controllers;
 
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxTableCell;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.util.Callback;
 import ru.glassexpress.JsonController;
 import ru.glassexpress.URLConnection;
 import ru.glassexpress.core.edit_content_command.addCommand.AddOperator;
@@ -19,7 +24,9 @@ import ru.glassexpress.library.AlertWindow;
 import ru.glassexpress.objects.*;
 
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class MainController extends BaseController {
 
@@ -420,10 +427,14 @@ public class MainController extends BaseController {
     private TableColumn<GlassObject, String> colTGBody;
 
     @FXML
-    private TableColumn<GlassObject, String>colTGSelect;
+    private TableColumn<GlassObject,Boolean> colTGSelect;
     // инициализация колонок таблицы
+
+
+
     private void initTGTable() {
         tblGoodsInStock.setEditable(false);
+
 
         colTGPriceIn.setVisible(false);
         colTGId.setCellValueFactory(cellData -> cellData.getValue().getIdProperty());
@@ -431,21 +442,23 @@ public class MainController extends BaseController {
         colTGOption.setCellValueFactory(cellData -> cellData.getValue().getOptTitleProperty());
         colTGType.setCellValueFactory(cellData -> cellData.getValue().getTypeTitleProperty());
         colTGPrice.setCellValueFactory(cellData -> cellData.getValue().getPriceProperty());
+        colTGPriceIn.setCellValueFactory(cellData -> cellData.getValue().getPriceInProperty());
         colTGInsertPrice.setCellValueFactory(cellData -> cellData.getValue().getInsertPriceProperty());
         colTGFactory.setCellValueFactory(cellData -> cellData.getValue().getFactoryTitle());
         colTGBody.setCellValueFactory(cellData -> cellData.getValue().getBodyTypeTitle());
 
 
-        tblGoodsInStock.setItems(glassObjects);
-    }
+        colTGSelect.setCellValueFactory(cellData -> cellData.getValue().isSelectedProperty());
 
-//    public void buildCar() {
-//        System.out.println("заполняю объект Car");
-//        car.setGen((GenerationObj) dataMap.getGenerationObjList().get(genListView.getSelectionModel().getSelectedIndex()));
-//        car.setId(car.getGen().getModelID());
-//        System.out.println(car);
-//
-//    }
+
+        colTGSelect.setCellFactory( tc -> new CheckBoxTableCell<>());
+
+
+
+
+         tblGoodsInStock.setItems(glassObjects);
+        tblGoodsInStock.setEditable(true);
+    }
 
 
     // открываем дилоговое окно добавления ного стекла в базу
@@ -596,5 +609,24 @@ public class MainController extends BaseController {
         frontInsertPriceLabel.setText(String.valueOf(dataMap.getInsertClassList().get(index).getInsertFront()));
         rearInsertPriceLabel.setText(String.valueOf(dataMap.getInsertClassList().get(index).getInsertRear()));
         sideInsertPriceLabel.setText(String.valueOf(dataMap.getInsertClassList().get(index).getInsertSide()));
+    }
+
+
+    // создать новый заказ
+    public void openNewOrder(ActionEvent actionEvent) {
+        List<GlassObject> glasList = dataMap.getGlassList();
+        String selected ="";
+        for (int i = 0; i < glasList.size(); i++) {
+            BooleanProperty boo =  glasList.get(i).isSelectedProperty() ;
+            boolean aaa= boo.get();
+            System.out.println(aaa);
+        }
+
+
+        AlertWindow.infoMessage("Выбраны N: "+selected);
+    }
+
+    public void deleteSelectedGlass(ActionEvent actionEvent) {
+        AlertWindow.errorMessage("Сорян, братиш, пока не умею");
     }
 }
