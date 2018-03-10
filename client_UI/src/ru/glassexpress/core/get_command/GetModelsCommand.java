@@ -12,7 +12,7 @@ public class GetModelsCommand extends IDTitleObsevedCommand{
     }
 
     @Override
-    void buildRequest() {
+    public void buildRequest() {
         IdTitleObj car = (IdTitleObj) inputObject;
         request = new RequestBuilder().setMethod(Prefs.METHOD_GET)
                 .setAction(Prefs.ACTION_SELECT)

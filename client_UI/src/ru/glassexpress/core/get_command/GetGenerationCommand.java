@@ -14,7 +14,7 @@ public class GetGenerationCommand extends ObservedCommand {
     }
 
     @Override
-    void buildRequest() {
+    public void buildRequest() {
         if (inputObject!=null) {
             IdTitleObj car = (IdTitleObj) inputObject;
             request = new RequestBuilder().setMethod(Prefs.METHOD_POST)

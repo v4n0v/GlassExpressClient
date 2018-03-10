@@ -32,7 +32,7 @@ public class BaseObjectAdapter {
         return null;
     }
 
-    public List<IdTitleObj> baseObjToIdTitleObj(List<BaseObject> inputList){
+    public List<IdTitleObj> baseObjToIdTitleObj(List<BaseObject> inputList) {
         if (inputList != null) {
             List<IdTitleObj> resultList = new ArrayList<>();
             for (int i = 0; i < inputList.size(); i++) {
@@ -44,7 +44,8 @@ public class BaseObjectAdapter {
         }
         return null;
     }
-    public ObservableList<String> idTitleObjToString(List<IdTitleObj> inputList){
+
+    public ObservableList<String> idTitleObjToString(List<IdTitleObj> inputList) {
         if (inputList != null) {
             List<String> resultList = new ArrayList<>();
             for (int i = 0; i < inputList.size(); i++) {
@@ -57,12 +58,12 @@ public class BaseObjectAdapter {
         return null;
     }
 
-    public ObservableList<String> generationObjToString(List<GenerationObj> inputList){
+    public ObservableList<String> generationObjToString(List<GenerationObj> inputList) {
         if (inputList != null) {
             List<String> resultList = new ArrayList<>();
             for (int i = 0; i < inputList.size(); i++) {
                 GenerationObj obj = inputList.get(i);
-                resultList.add((i+1)+". "+obj.getYearFrom()+"-"+obj.getYearTo());
+                resultList.add((i + 1) + ". " + obj.getYearFrom() + "-" + obj.getYearTo());
             }
             return FXCollections.observableArrayList(resultList);
         }
@@ -99,13 +100,14 @@ public class BaseObjectAdapter {
         }
         return null;
     }
+
     public ObservableList<GlassObject> returnTableGLassList(ObservableList<BaseObject> inputList) {
 
         if (inputList != null) {
             List<GlassObject> resultList = new ArrayList<>();
             for (int i = 0; i < inputList.size(); i++) {
                 GlassObject row = (GlassObject) inputList.get(i);
-               // row.setGlassFactoryTitle(getTitleById(mainController.getDataMap().getGlassFactoryList(), row.getGlassFactory()));
+                // row.setGlassFactoryTitle(getTitleById(mainController.getDataMap().getGlassFactoryList(), row.getGlassFactory()));
 
                 //currentModelGenerations.add(cars);
                 resultList.add(row);
@@ -138,15 +140,24 @@ public class BaseObjectAdapter {
     }
 
 
-
-
-    String getTitleById(List<IdTitleObj> objs, int id){
+    String getTitleById(List<IdTitleObj> objs, int id) {
         for (int i = 0; i < objs.size(); i++) {
-            if (objs.get(i).getId()==id){
+            if (objs.get(i).getId() == id) {
                 return objs.get(i).getTitle();
             }
         }
         return null;
     }
 
+    public List<InsertClassElement> returnInsertClassElementList(ObservableList<BaseObject> inputList) {
+        if (inputList != null) {
+            List<InsertClassElement> resultList = new ArrayList<>();
+            for (int i = 0; i < inputList.size(); i++) {
+                InsertClassElement row = (InsertClassElement) inputList.get(i);
+                resultList.add(row);
+            }
+            return FXCollections.observableArrayList(resultList);
+        }
+        return null;
+    }
 }

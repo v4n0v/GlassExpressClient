@@ -10,7 +10,7 @@ public class GetGlassTypeCommand extends IDTitleObsevedCommand {
     }
 
     @Override
-    void buildRequest() {
+    public void buildRequest() {
         request = new RequestBuilder().setMethod(Prefs.METHOD_POST)
                 .setAction(Prefs.ACTION_SELECT)
                 .setTarget(Prefs.TARGET_GLASS_TYPE)

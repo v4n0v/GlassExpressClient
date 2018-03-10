@@ -1,6 +1,7 @@
 package ru.glassexpress.controllers;
 
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import ru.glassexpress.core.get_command.adapter.BaseObjectAdapter;
@@ -12,7 +13,7 @@ import java.util.concurrent.Callable;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class AddGlassController extends BaseController  {
+public class AddGlassController extends BaseController {
     @FXML
     RadioButton glueRB;
     @FXML
@@ -37,7 +38,6 @@ public class AddGlassController extends BaseController  {
     ComboBox<String> glassBodyComboBox;
 
 
-
     private BaseObjectAdapter adapter;
     private ObservableList<String> glassOptList;
     private ObservableList<String> glassFactoryList;
@@ -53,6 +53,7 @@ public class AddGlassController extends BaseController  {
 
     @Override
     public void init() {
+
 //        toggleGroup = new ToggleGroup();
 //        glueRB.setToggleGroup(toggleGroup);
 //        rubberRB.setToggleGroup(toggleGroup);
@@ -85,9 +86,9 @@ public class AddGlassController extends BaseController  {
         int glassFactoryIndex = glassFactoryComboBox.getSelectionModel().getSelectedIndex();
         int glassTypeIndex = glassTypeComboBox.getSelectionModel().getSelectedIndex();
         int bodyTypeIndex = glassBodyComboBox.getSelectionModel().getSelectedIndex();
-        if (!description.equals("") && !priceIn.equals("") && !price.equals("") &&
+        if (!priceIn.equals("") && !price.equals("") &&
                 !alert.equals("") & !insertPrice.equals("") &&
-             //   glassOptIndex != -1 && glassFactoryIndex != -1 && glassTypeIndex != -1 &&
+                //   glassOptIndex != -1 && glassFactoryIndex != -1 && glassTypeIndex != -1 &&
                 isNumeric(price) && isNumeric(priceIn)) {
 
             int insertMethod = 2;
@@ -132,4 +133,59 @@ public class AddGlassController extends BaseController  {
     }
 
 
+    public void addNewBodyType() {
+        String answer = AlertWindow.dialogWindow("Добавить тип кузова", "Введите название кузова авто ");
+        if (answer != null&& !answer.equals("")) {
+            boolean isTrue = AlertWindow.confirmationWindow("Вы уверены?", "Добавить новый тип " + answer + " в базу?");
+            if (isTrue) {
+                if (!answer.equals("")) {
+
+                }
+            }
+        } else {
+            AlertWindow.errorMessage("Полее ввода не заполнено!");
+        }
+    }
+
+    public void addNewFactory() {
+        String answer = AlertWindow.dialogWindow("Добавить поставщика", "Введите название завода");
+        if (answer != null && !answer.equals("")) {
+            boolean isTrue = AlertWindow.confirmationWindow("Вы уверены?", "Добавить новый завод " + answer + " в базу?");
+            if (isTrue) {
+                if (!answer.equals("")) {
+
+                }
+            }
+        } else {
+            AlertWindow.errorMessage("Полее ввода не заполнено!");
+        }
+    }
+
+    public void addNewGlassType() {
+        String answer = AlertWindow.dialogWindow("Добавить тип стекла", "Введите название типа стекла");
+        if (answer != null && !answer.equals("")) {
+            boolean isTrue = AlertWindow.confirmationWindow("Вы уверены?", "Добавить новый тип стекла " + answer + " в базу?");
+            if (isTrue) {
+                if (!answer.equals("")) {
+
+                }
+            }
+        } else {
+            AlertWindow.errorMessage("Полее ввода не заполнено!");
+        }
+    }
+
+    public void addNewGlassOption() {
+        String answer = AlertWindow.dialogWindow("Добавить свойство стекла", "Введите название свойства стекла");
+        if (answer != null&& !answer.equals("")) {
+            boolean isTrue = AlertWindow.confirmationWindow("Вы уверены?", "Добавить новое свойство стекла " + answer + " в базу?");
+            if (isTrue) {
+                if (!answer.equals("")) {
+
+                }
+            }
+        } else {
+            AlertWindow.errorMessage("Полее ввода не заполнено!");
+        }
+    }
 }

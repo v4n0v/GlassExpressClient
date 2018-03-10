@@ -1,9 +1,6 @@
 package ru.glassexpress.data;
 
-import ru.glassexpress.objects.GenerationObj;
-import ru.glassexpress.objects.IdTitleObj;
-import ru.glassexpress.objects.GlassObject;
-import ru.glassexpress.objects.InsertClass;
+import ru.glassexpress.objects.*;
 
 import java.util.List;
 
@@ -24,8 +21,19 @@ public class DataMap {
     private List<IdTitleObj> carMarksList;
     // список стекол
     private List<GlassObject> glassList;
-// список классов вклейки\установик
-private List<InsertClass> insertClassList;
+    // список классов вклейки\установик
+    private List<InsertClass> insertClassList;
+    private List<InsertClassElement> insertClassElementList;
+
+
+    public List<InsertClassElement> getInsertClassElementList() {
+        return insertClassElementList;
+    }
+
+    public void setInsertClassElementList(List<InsertClassElement> insertClassElementList) {
+        this.insertClassElementList = insertClassElementList;
+    }
+
 
     public List<InsertClass> getInsertClassList() {
         return insertClassList;
@@ -96,7 +104,6 @@ private List<InsertClass> insertClassList;
     }
 
 
-
     public List<IdTitleObj> getGlassFactoryList() {
         return glassFactoryList;
     }
@@ -108,6 +115,21 @@ private List<InsertClass> insertClassList;
 
     public void setGlassTableRow(GlassObject glassTableRow) {
         this.glassTableRow = glassTableRow;
+    }
+
+    public float getInsertClassPriceByGlassType(int inserClassId, int glassTypeId){
+        for (int i = 0; i < insertClassList.size(); i++) {
+            if (insertClassList.get(i).getId()==inserClassId){
+                if (glassTypeId==1)
+                    return insertClassList.get(i).getInsertFront();
+                if (glassTypeId==2)
+                    return insertClassList.get(i).getInsertRear();
+                if (glassTypeId==3||glassTypeId==4||glassTypeId==5||glassTypeId==6)
+                    return insertClassList.get(i).getInsertSide();
+            }
+        }
+
+        return 0;
     }
 
 

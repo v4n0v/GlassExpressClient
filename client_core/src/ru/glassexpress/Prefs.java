@@ -17,7 +17,7 @@ public class Prefs {
     public static final String TARGET_GENERATION = "generation" ;
     public static final String TARGET_TABLE_GOODS = "table_goods";
     public static final String TARGET_INSERT_CLASS = "insert_class";
-
+ public static final String TARGET_INSERT_CLASS_ELEMENT = "insert_class_";
     public final static String ERROR_RESPONSE= "FUCK OFF";
 
     public final static String ADD_MARK= "ADD_MARK";

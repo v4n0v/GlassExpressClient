@@ -87,4 +87,10 @@ public class GetListOperator implements GetListCommands {
         return objectAdapter.returnInsertClassList(command.returnRecievedList());
 //        return objectAdapter.returnStringList(command.returnRecievedList());
     }
+
+    public List<InsertClassElement> getInsertClassElements() {
+        command = new GetInsertClassElementCommand(null);
+//        return objectAdapter.baseObjToIdTitleObj(command.returnRecievedList());
+        return objectAdapter.returnInsertClassElementList(command.returnRecievedList());
+    }
 }

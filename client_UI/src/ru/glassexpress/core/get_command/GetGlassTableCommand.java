@@ -13,7 +13,7 @@ public class GetGlassTableCommand extends ObservedCommand{
 
 
     @Override
-    void buildRequest() {
+    public void buildRequest() {
         GenerationObj car = (GenerationObj) inputObject;
         request = new RequestBuilder().setMethod(Prefs.METHOD_POST)
                 .setAction(Prefs.ACTION_SELECT)

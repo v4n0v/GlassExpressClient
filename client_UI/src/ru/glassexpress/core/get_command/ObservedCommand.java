@@ -57,7 +57,7 @@ public abstract class ObservedCommand {
     }
 
 
-    abstract void buildRequest();
+    public abstract void buildRequest();
 
       void receiveObj(){
         serverObject = (Composite) RequestController.responseToObject(RequestController.recieveResponse(request));

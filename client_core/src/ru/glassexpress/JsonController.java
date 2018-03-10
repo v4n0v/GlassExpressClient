@@ -62,6 +62,8 @@ public class JsonController {
                 return GSON.fromJson(jsonObj, GlassObject.class);
             case "insert_class":
                 return GSON.fromJson(jsonObj, InsertClass.class);
+            case "insert_class_":
+                return GSON.fromJson(jsonObj, InsertClassElement.class);
             case "error":
                 return GSON.fromJson(jsonObj, ErrorObject.class);
             case "ok":
