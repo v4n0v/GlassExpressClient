@@ -1,6 +1,6 @@
 package ru.glassexpress.core.edit_content_command.updCommand;
 
-import ru.glassexpress.Prefs;
+import ru.glassexpress.core.data.Prefs;
 import ru.glassexpress.request_builder.RequestBuilder;
 
 public class UpdateInsertClassCommand extends UpdateElementCommand {

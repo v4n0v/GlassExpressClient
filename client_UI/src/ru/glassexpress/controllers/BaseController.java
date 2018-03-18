@@ -2,7 +2,7 @@ package ru.glassexpress.controllers;
 
 import javafx.stage.Stage;
 import ru.glassexpress.GEClient;
-import ru.glassexpress.data.DataMap;
+import ru.glassexpress.core.data.DataMap;
 
 
 abstract class BaseController {
@@ -37,6 +37,10 @@ abstract class BaseController {
     public void close() {
         stage.close();
     }
+    public void show() {
+        stage.show();
+    }
+
 
     abstract public void init();
 

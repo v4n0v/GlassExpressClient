@@ -1,11 +1,7 @@
 package ru.glassexpress.core.edit_content_command.deleteCommand;
 
-import ru.glassexpress.Prefs;
-import ru.glassexpress.core.edit_content_command.addCommand.AddElementCommand;
-import ru.glassexpress.objects.BaseObject;
+import ru.glassexpress.core.data.Prefs;
 import ru.glassexpress.request_builder.RequestBuilder;
-
-import java.util.zip.Deflater;
 
 public class DeleteGenerationCommand extends DeleteElementCommand {
 

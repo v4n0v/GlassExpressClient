@@ -3,7 +3,7 @@ package ru.glassexpress.core;
 import javafx.collections.ObservableList;
 import ru.glassexpress.core.get_command.*;
 import ru.glassexpress.core.get_command.adapter.BaseObjectAdapter;
-import ru.glassexpress.objects.*;
+import ru.glassexpress.core.objects.*;
 
 import java.util.List;
 

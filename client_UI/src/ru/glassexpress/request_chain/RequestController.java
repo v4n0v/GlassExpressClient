@@ -1,15 +1,14 @@
 package ru.glassexpress.request_chain;
 
-import ru.glassexpress.ConnectionManager;
-import ru.glassexpress.JsonController;
-import ru.glassexpress.Prefs;
-import ru.glassexpress.URLConnection;
+import ru.glassexpress.core.ConnectionManager;
+import ru.glassexpress.core.JsonController;
+import ru.glassexpress.core.data.Prefs;
+import ru.glassexpress.core.URLConnection;
 import ru.glassexpress.library.AlertWindow;
-import ru.glassexpress.objects.BaseObject;
-import ru.glassexpress.objects.Composite;
+import ru.glassexpress.core.objects.BaseObject;
+import ru.glassexpress.core.objects.Composite;
 import ru.glassexpress.request_builder.Request;
 
-import java.net.URLEncoder;
 import java.util.List;
 
 

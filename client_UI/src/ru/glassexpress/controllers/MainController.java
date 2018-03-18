@@ -1,32 +1,35 @@
 package ru.glassexpress.controllers;
 
 import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxTableCell;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.util.Callback;
-import ru.glassexpress.JsonController;
-import ru.glassexpress.URLConnection;
+import javafx.stage.Stage;
+import ru.glassexpress.core.JsonController;
+import ru.glassexpress.core.StringValidator;
+import ru.glassexpress.core.data.Log2File;
+import ru.glassexpress.core.data.Prefs;
+import ru.glassexpress.core.URLConnection;
+import ru.glassexpress.core.GetListOperator;
 import ru.glassexpress.core.edit_content_command.addCommand.AddOperator;
 import ru.glassexpress.core.edit_content_command.deleteCommand.DeleteOperator;
+
 import ru.glassexpress.core.edit_content_command.updCommand.UpdateOperator;
 import ru.glassexpress.core.get_command.ObservedCommand;
-import ru.glassexpress.core.GetListOperator;
 import ru.glassexpress.core.get_command.adapter.BaseObjectAdapter;
 import ru.glassexpress.library.AlertWindow;
-import ru.glassexpress.objects.*;
+import ru.glassexpress.core.objects.*;
+import ru.glassexpress.core.objects.builders.GlassBuilder;
 
-
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
+import java.util.logging.Level;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 
 public class MainController extends BaseController {
 
@@ -79,6 +82,7 @@ public class MainController extends BaseController {
 
     //TODO организовать заполнение
     private ObservableList<String> classList = FXCollections.observableArrayList();
+    private Stage loginStage;
 
     public ObservableList<String> getBodyTypeStringList() {
         return bodyTypeStringList;
@@ -86,7 +90,7 @@ public class MainController extends BaseController {
 
     private ObservableList<String> bodyTypeStringList = FXCollections.observableArrayList();
 
-    private AddGlassController aggGlassController;
+    private AddGlassController addGlassController;
     @FXML
     Button delGenerationButton;
     @FXML
@@ -105,6 +109,7 @@ public class MainController extends BaseController {
     // инициализация конроллера, вызывается при открытии приложения
     @Override
     public void init() {
+        Log2File.writeLog("Инициализация главного окна");
         initTGTable();
         urlConnection = URLConnection.getInstance();
         jsonController = JsonController.getInstance();
@@ -113,7 +118,7 @@ public class MainController extends BaseController {
         getListOperator = new GetListOperator();
         deleteOperator = new DeleteOperator();
         addOperator = new AddOperator();
-        updateOperator=new UpdateOperator();
+        updateOperator = new UpdateOperator();
         // glassTypeList = new ArrayList<>();
 
 
@@ -121,18 +126,19 @@ public class MainController extends BaseController {
         isFrontRadio.setToggleGroup(radioGroup);
         isRearRadio.setToggleGroup(radioGroup);
 
-        reconnect();
+     //   reconnect();
         // получаем список типов стекол, кузовов
 
-        initTGTable();
+//        initTGTable();
 
 
         //ystem.out.println(dataMap.getBodyTypeList());
     }
 
 
-
     public void reconnect() {
+
+        Log2File.writeLog("reconnect");
         markListView.setItems(marksList);
         modelListView.setItems(modelsList);
         genListView.setItems(genList);
@@ -159,11 +165,11 @@ public class MainController extends BaseController {
     // получаем список для конкретной выбранныей машины
     private void initInsertClass() {
         // узнаем id выбранной машины
-        if (dataMap.getGenerationObjList()!=null&& dataMap.getGenerationObjList().size()>0) {
+        if (dataMap.getGenerationObjList() != null && dataMap.getGenerationObjList().size() > 0) {
             int id = dataMap.getGenerationObjList().get(genListView.getSelectionModel().getSelectedIndex()).getIdInsert();
             // получаем список всех классов цен
             List<InsertClass> list = dataMap.getInsertClassList();
-            if (list!=null) {
+            if (list != null) {
                 for (int i = 0; i < list.size(); i++) {
                     if (dataMap.getInsertClassList().get(i).getId() == id) {
                         insertClassComboBox.getSelectionModel().select(i);
@@ -176,28 +182,32 @@ public class MainController extends BaseController {
     private void fillInsertClassList(List<InsertClass> insertClassList) {
         classList.clear();
         for (int i = 0; i < insertClassList.size(); i++) {
-            classList.addAll("Класс "+(i+1)+"-"+insertClassList.get(i).getInsertFront());
+            classList.addAll("Класс " + (i + 1) + "-" + insertClassList.get(i).getInsertFront());
 
         }
     }
 
     // получаем данные с сервера и заполняем ListView марок автомобилей
     private void fillMarksListView() {
-
+        Log2File.writeLog("Запрос марок авто");
         dataMap.setCarMarksList(getListOperator.getMarks());
         fillObservableList(marksList, adapter.idTitleObjToString(dataMap.getCarMarksList()));
         if (dataMap.getCarMarksList() != null && dataMap.getCarMarksList().size() > 0) {
             markListView.getSelectionModel().selectFirst();
 
             // формируется запрос на получение списка моделей
-
+//            System.out.println(dataMap.getCarModelsList().size());
+            Log2File.writeLog("Список марок получен. Кол-во = " + dataMap.getCarMarksList().size());
             fillModelsListView();
+        } else {
+            Log2File.writeLog("Список марок авто пуст");
         }
     }
 
+
     // получаем данные с сервера и заполняем ListView моделей автомобилей, выбранной марки
     public void fillModelsListView() {
-
+        Log2File.writeLog("Запрос моделей авто");
         // car.setMark(markListView.getSelectionModel().getSelectedItem());
         markListView.getSelectionModel().getSelectedIndex();
 
@@ -206,35 +216,37 @@ public class MainController extends BaseController {
         if (dataMap.getCarModelsList() != null && dataMap.getCarModelsList().size() > 0) {
             modelListView.getSelectionModel().selectFirst();
             //   System.out.println("показать модели марки " + car.getMark());
-
+            Log2File.writeLog("Список моделей получен. Кол-во = " + dataMap.getCarModelsList().size());
             fillGenerationsListView();
+        } else {
+            Log2File.writeLog("Список моделей авто пуст");
         }
     }
 
 //    private List<BaseObject> currentModelGenerations = new ArrayList<>();
 
     public void fillGenerationsListView() {
+        Log2File.writeLog("Запрос поколений авто");
 
-        System.out.println("Запрос поколений авто");
 
-        //car.setModel(modelListView.getSelectionModel().getSelectedItem());
         IdTitleObj model = dataMap.getCarModelsList().get(modelListView.getSelectionModel().getSelectedIndex());
         dataMap.setGenerationObjList(getListOperator.getGenerations(model));
+
         fillObservableList(genList, adapter.generationObjToString(dataMap.getGenerationObjList()));
         if (dataMap.getGenerationObjList().size() > 0) {
             genListView.getSelectionModel().selectFirst();
-            //currentModelGenerations = getListOperator.getComponents();
             // получаем список классов цен
-            dataMap.setInsertClassList(getListOperator.getInsertClass());
-            dataMap.setInsertClassElementList(getListOperator.getInsertClassElements());
-            // заполняем ObservableList
-            fillInsertClassList(dataMap.getInsertClassList());
-            // получаем список для конкретной выбранныей машины
-            initInsertClass();
-            // заполянем лейблы с конкретными ценами
-            initPriceClassLabels();
+            //dataMap.setInsertClassList(getListOperator.getInsertClass());
+            Log2File.writeLog("Список поколений получен. Кол-во = " + dataMap.getGenerationObjList().size());
+//            // заполняем ObservableList
+//            fillInsertClassList(dataMap.getInsertClassList());
+//            // получаем список для конкретной выбранныей машины
+//            initInsertClass();
+//            // заполянем лейблы с конкретными ценами
+//            initPriceClassLabels();
+            showGoods();
         } else {
-            System.out.println("пустой список поколений");
+            Log2File.writeLog("Список поколений авто пуст");
         }
     }
 
@@ -244,40 +256,46 @@ public class MainController extends BaseController {
         list.clear();
         if (source != null)
             list.addAll(source);
-        System.out.println("список марок обновлен");
+
     }
 
 
     void addMark(String mark) {
-        System.out.println("Добавляем марку");
+        Log2File.writeLog("Добавляем марку авто");
 
-        if (addOperator.addMarkIsComplete(mark))
+        if (addOperator.addMarkIsComplete(mark)) {
             fillMarksListView();
-        else {
-            System.out.println("Фиаско!" + mark + " не добавлено");
+            Log2File.writeLog("Марка авто " + mark + " успешно добавлена");
+        } else {
+
+            Log2File.writeLog(Level.WARNING, "Фиаско!" + mark + " не добавлено");
+
         }
 
     }
 
 
     void addModel(String model) {
-        System.out.println("Добавляем модель");
+        Log2File.writeLog("Добавляем модель авто");
+
         if (addOperator.addModelIsComplete(model, getSelectedMarkObj())) {
             fillModelsListView();
+            Log2File.writeLog("Модель авто " + getSelectedMarkObj().getTitle() + " успешно добавлена");
         } else {
-            System.out.println("Фиаско!" + getSelectedMarkObj().getTitle() + " " + model + " не добавлено");
+            Log2File.writeLog(Level.WARNING, "Фиаско!" + getSelectedMarkObj().getTitle() + " " + model + " не добавлено");
         }
 
 
     }
 
     private void addGeneration(String answer) {
-
+        Log2File.writeLog("Добавляем поколение авто");
         if (addOperator.addGenerationIsComplete(answer, getSelectedModelObj())) {
             fillGenerationsListView();
-            //  dataMap.setGenerationObjList(getListOperator.getGenerations(car));
+            Log2File.writeLog("Поколение авто " + getSelectedMarkTitle() + " " + getSelectedModelTitle() + " " + answer + " успешно добавлена");
+
         } else {
-            System.out.println("Фиаско!" + getSelectedMarkTitle() + " " + getSelectedModelTitle() + " " + answer + " не добавлено");
+            Log2File.writeLog(Level.WARNING, "Фиаско!" + getSelectedMarkTitle() + " " + getSelectedModelTitle() + " " + answer + " не добавлено");
         }
     }
 
@@ -312,7 +330,7 @@ public class MainController extends BaseController {
         if ((Button) keyEvent.getSource() == addMarkButton) {
 
             String answer = AlertWindow.dialogWindow("Добавить новую марку авто", "Выыедите марку авто");
-            if (answer != null&& !answer.equals("")) {
+            if (answer != null && !answer.equals("")) {
                 boolean isTrue = AlertWindow.confirmationWindow("Вы уверены?", "Добавить марку " + answer + " в базу?");
                 if (isTrue) {
                     if (!answer.equals("")) {
@@ -327,7 +345,7 @@ public class MainController extends BaseController {
         } else if ((Button) keyEvent.getSource() == addModelButton) {
 
             String answer = AlertWindow.dialogWindow("Добавить новую модель авто", "Введите модель марки " + getSelectedMarkTitle());
-            if (answer != null&& !answer.equals("")) {
+            if (answer != null && !answer.equals("")) {
                 boolean isTrue = AlertWindow.confirmationWindow("Вы уверены?", "Добавить " + getSelectedMarkTitle() + " " + answer + " в базу?");
                 if (isTrue) {
                     if (!answer.equals("")) {
@@ -341,14 +359,22 @@ public class MainController extends BaseController {
 
         } else if ((Button) keyEvent.getSource() == addGenerationButton) {
 
-            String answer = AlertWindow.dialogWindow("Добавить поколение авто " + getSelectedMarkTitle() + " " + getSelectedModelTitle(), "Введите введите годы в формате (ХХХХ-ХХХХ) ");
-            if (answer != null&& !answer.equals("")) {
+            String answer = AlertWindow.dialogWindow("Добавить поколение авто " + getSelectedMarkTitle() + " " + getSelectedModelTitle(), "Введите введите годы в формате (ХХХХ-ХХХХ)\n" +
+                    "Если авто все еще выпускается, введите только\nгод начала производства ХХХХ ");
+            if (answer != null && !answer.equals("")) {
                 boolean isTrue = AlertWindow.confirmationWindow("Вы уверены?", "Добавить поколение " +
                         getSelectedMarkTitle() + " " + getSelectedModelTitle() + " " + answer + " в базу?");
                 if (isTrue) {
                     if (!answer.equals("")) {
-                        addGeneration(answer);
-                        System.out.println("добавить поколение авто " + getSelectedModelTitle() + " " + answer);
+                        if (StringValidator.isYearsInputCorrect(answer) || StringValidator.isSingleYearInputCorrect(answer)) {
+                            if (StringValidator.isSingleYearInputCorrect(answer)) {
+                                answer += "-9999";
+                            }
+                            addGeneration(answer);
+                            System.out.println("добавить поколение авто " + getSelectedModelTitle() + " " + answer);
+                        } else {
+                            AlertWindow.errorMessage("Проверьте правильность написания!");
+                        }
                     }
                 }
             } else {
@@ -393,19 +419,49 @@ public class MainController extends BaseController {
     }
 
 
+
+
     // показываем список товаров
     public void showGoods() {
+
         List<GenerationObj> generationObjList = dataMap.getGenerationObjList();
         glassObjects.clear();
         if (generationObjList != null && generationObjList.size() > 0) {
+
+            //   List<GlassObject> glasses=getListOperator.getTableGoods(getSelectedCarObj());
             dataMap.setGlassList(getListOperator.getTableGoods(getSelectedCarObj()));
 
+            GlassObject glass = new GlassBuilder()
+                    .setCarTitle("")
+                    .setDescription("свое стекло")
+                    .setInsertPrice(Prefs.DEFAULT_INSERT_PRICE + 500)
+                    .build();
+
+            dataMap.getGlassList().add(glass);
+            // заполняем поле свойства стекол
+
+
             // заполняем цену установки исходя из класса машины
-            for (int i = 0; i < dataMap.getGlassList().size(); i++) {
-                int inserClassId = getSelectedCarObj().getIdInsert();
-                int glassTypeId = dataMap.getGlassList().get(i).getGlassTypeId();
-                dataMap.getGlassList().get(i).setInsertPrice(dataMap.getInsertClassPriceByGlassType(inserClassId, glassTypeId));
+
+//          for (int i = 0; i < dataMap.getGlassList().size(); i++) {
+//                int inserClassId = getSelectedCarObj().getIdInsert();
+//                int glassTypeId = dataMap.getGlassList().get(i).getGlassTypeId();
+//                dataMap.getGlassList().get(i).setInsertPrice(dataMap.getInsertClassPriceByGlassType(inserClassId, glassTypeId));
+//          }
+            for (int i = 0; i < dataMap.getGlassList().size() - 1; i++) {
+                Composite optList = (Composite) JsonController.getInstance().convertJsonToObject(getDataMap().getGlassList().get(i).getOptListString());
+                List<IdTitleObj> list = adapter.baseObjToIdTitleObj(optList.getComponents());
+                String params = "";
+                for (int j = 0; j < list.size(); j++) {
+                    params += list.get(j) + "\n";
+                }
+
+                dataMap.getGlassList().get(i).setOptList(list);
+                dataMap.getGlassList().get(i).setParametrList(params);
+                System.out.println("параметров: " + list.size());
             }
+
+
             glassObjects.addAll(dataMap.getGlassList());
         } else {
             AlertWindow.errorMessage("Укажите поколение авто");
@@ -415,6 +471,33 @@ public class MainController extends BaseController {
         //initTGTable();
 
     }
+
+
+    void showOptList() {
+        String optList;
+        // получаю список стекол
+        List<GlassObject> list = dataMap.getGlassList();
+        // список опций стекла
+        List<IdTitleObj> optListIdTitle = dataMap.getGlassOptList();
+        List<List<String>> insideList = new ArrayList<>();
+        for (int i = 0; i < list.size(); i++) {
+            // получаю строку с опциями для каждого стекла
+            String s = list.get(i).getOptListString();
+            String[] sa = s.split("i");
+            String s1 = "";
+
+            for (int j = 0; j < optListIdTitle.size(); j++) {
+                for (int k = 0; k < sa.length; k++) {
+                    if (optListIdTitle.get(j).getId() == Integer.parseInt(sa[k])) {
+                        s1 += optListIdTitle.get(j).getTitle() + "\n";
+                    }
+
+                }
+            }
+            list.get(i).setOptListString(s1);
+        }
+    }
+
 
     // таблица стекол на складе
     private ObservableList<GlassObject> glassObjects = FXCollections.observableArrayList();
@@ -442,9 +525,8 @@ public class MainController extends BaseController {
     private TableColumn<GlassObject, String> colTGBody;
 
     @FXML
-    private TableColumn<GlassObject,Boolean> colTGSelect;
+    private TableColumn<GlassObject, Boolean> colTGSelect;
     // инициализация колонок таблицы
-
 
 
     private void initTGTable() {
@@ -454,7 +536,7 @@ public class MainController extends BaseController {
         colTGPriceIn.setVisible(false);
         colTGId.setCellValueFactory(cellData -> cellData.getValue().getIdProperty());
         colTGDesc.setCellValueFactory(cellData -> cellData.getValue().getDescProperty());
-        colTGOption.setCellValueFactory(cellData -> cellData.getValue().getOptTitleProperty());
+        colTGOption.setCellValueFactory(cellData -> cellData.getValue().getParameterListTitle());
         colTGType.setCellValueFactory(cellData -> cellData.getValue().getTypeTitleProperty());
         colTGPrice.setCellValueFactory(cellData -> cellData.getValue().getPriceProperty());
         colTGPriceIn.setCellValueFactory(cellData -> cellData.getValue().getPriceInProperty());
@@ -465,13 +547,9 @@ public class MainController extends BaseController {
 
         colTGSelect.setCellValueFactory(cellData -> cellData.getValue().isSelectedProperty());
 
+        colTGSelect.setCellFactory(tc -> new CheckBoxTableCell<>());
 
-        colTGSelect.setCellFactory( tc -> new CheckBoxTableCell<>());
-
-
-
-
-         tblGoodsInStock.setItems(glassObjects);
+        tblGoodsInStock.setItems(glassObjects);
         tblGoodsInStock.setEditable(true);
     }
 
@@ -483,9 +561,10 @@ public class MainController extends BaseController {
         if (generationObjList != null && generationObjList.size() > 0) {
             // открываем окгно
             mainApp.initAddGlassLayout(getSelectedCarInfo());
+            addGlassController.setState(AddGlassController.State.ADD);
             //передаем в него параметры авто
             if (dataMap.getGenerationObjList() != null) {
-                aggGlassController.setCarId(dataMap.getGenerationObjList().get(genListView.getSelectionModel().getSelectedIndex()).getId());
+                addGlassController.setCarId(dataMap.getGenerationObjList().get(genListView.getSelectionModel().getSelectedIndex()).getId());
             } else
                 System.out.println("выбиритее поколение");
         } else {
@@ -494,9 +573,10 @@ public class MainController extends BaseController {
     }
 
 
-    public void setAggGlassController(AddGlassController aggGlassController) {
-        this.aggGlassController = aggGlassController;
+    public void setAddGlassController(AddGlassController addGlassController) {
+        this.addGlassController = addGlassController;
     }
+
 
     // втавляем новое стекло в базу
     public void insertGlass(GlassObject glassTableRow) {
@@ -514,21 +594,22 @@ public class MainController extends BaseController {
 
     // получаем название марки авто из datamap
     public String getSelectedMarkTitle() {
-        if (dataMap.getCarMarksList() != null && dataMap.getCarMarksList().size()>0) {
+        if (dataMap.getCarMarksList() != null && dataMap.getCarMarksList().size() > 0) {
 
             return dataMap.getCarMarksList().get(markListView.getSelectionModel().getSelectedIndex()).getTitle();
         } else return null;
     }
+
     // получаем название модели авто из datamap
     public String getSelectedModelTitle() {
-        if (dataMap.getCarModelsList() != null &&  dataMap.getCarModelsList().size()>0) {
+        if (dataMap.getCarModelsList() != null && dataMap.getCarModelsList().size() > 0) {
             return getSelectedMarkTitle() + " " + dataMap.getCarModelsList().get(modelListView.getSelectionModel().getSelectedIndex()).getTitle();
         } else return null;
     }
 
     // получаем полное название авто из datamap
     public String getSelectedCarInfo() {
-        if (dataMap.getGenerationObjList() != null &&  dataMap.getGenerationObjList().size()>0) {
+        if (dataMap.getGenerationObjList() != null && dataMap.getGenerationObjList().size() > 0) {
             int from = dataMap.getGenerationObjList().get(genListView.getSelectionModel().getSelectedIndex()).getYearFrom();
             int to = dataMap.getGenerationObjList().get(genListView.getSelectionModel().getSelectedIndex()).getYearTo();
 
@@ -541,26 +622,28 @@ public class MainController extends BaseController {
     // получаем id марки авто из datamap
     public Integer getSelectedMarkId() {
         Integer id = null;
-        if (dataMap.getCarMarksList() != null &&  dataMap.getCarMarksList().size()>0 ) {
+        if (dataMap.getCarMarksList() != null && dataMap.getCarMarksList().size() > 0) {
             id = dataMap.getCarMarksList().get(markListView.getSelectionModel().getSelectedIndex()).getId();
 
         }
 
         return id;
     }
+
     // получаем id модели авто из datamap
     public Integer getSelectedModelId() {
         Integer id = null;
-        if (dataMap.getCarModelsList() != null && dataMap.getCarModelsList().size()>0 ) {
+        if (dataMap.getCarModelsList() != null && dataMap.getCarModelsList().size() > 0) {
             id = dataMap.getCarModelsList().get(modelListView.getSelectionModel().getSelectedIndex()).getId();
             //return getSelectedMarkTitle() + " " + model;
         }
         return id;
     }
+
     // получаем id машины авто из datamap
     public Integer getSelectedCarId() {
         Integer id = null;
-        if (dataMap.getGenerationObjList() != null  && dataMap.getGenerationObjList().size()>0  ) {
+        if (dataMap.getGenerationObjList() != null && dataMap.getGenerationObjList().size() > 0) {
             id = dataMap.getGenerationObjList().get(genListView.getSelectionModel().getSelectedIndex()).getId();
 
         }
@@ -571,10 +654,12 @@ public class MainController extends BaseController {
     public IdTitleObj getSelectedMarkObj() {
         return dataMap.getCarMarksList().get(markListView.getSelectionModel().getSelectedIndex());
     }
+
     // получаем объект модели авто из datamap
     public IdTitleObj getSelectedModelObj() {
         return dataMap.getCarModelsList().get(modelListView.getSelectionModel().getSelectedIndex());
     }
+
     // получаем объект авто из datamap
     public GenerationObj getSelectedCarObj() {
         return dataMap.getGenerationObjList().get(genListView.getSelectionModel().getSelectedIndex());
@@ -584,19 +669,19 @@ public class MainController extends BaseController {
     // получаю номер класса установки и вношу его в текущий автомобиль
     public void saveInsertClass() {
         // получаю ид класса установки
-        int id= dataMap.getInsertClassList().get(insertClassComboBox.getSelectionModel().getSelectedIndex()).getId();
+        int id = dataMap.getInsertClassList().get(insertClassComboBox.getSelectionModel().getSelectedIndex()).getId();
         // id авто
         int carID = getSelectedCarId();
         boolean isTrue = AlertWindow.confirmationWindow("Вы уверены?",
                 "Изменить класс установки " + getSelectedMarkTitle() + " " + getSelectedModelTitle() + "?\n"
-        +insertClassComboBox.getSelectionModel().getSelectedItem());
+                        + insertClassComboBox.getSelectionModel().getSelectedItem());
         if (isTrue) {
             // если нажата ok, обновляем
             if (updateOperator.updAutoInsertClass(id, carID)) {
                 // обновил класс установки в объекте в dataMap
                 getSelectedCarObj().setIdInsert(id);
                 // если уже открыты  доступные товары, то предлогает обновить список
-                if (dataMap.getGlassList()!=null && dataMap.getGlassList().size()>0) {
+                if (dataMap.getGlassList() != null && dataMap.getGlassList().size() > 0) {
                     isTrue = AlertWindow.confirmationWindow("Класс установки изменен",
                             "Обновить данные таблицы товаров?");
                     if (isTrue) {
@@ -610,7 +695,6 @@ public class MainController extends BaseController {
         }
 
 
-
     }
 
     @FXML
@@ -619,33 +703,35 @@ public class MainController extends BaseController {
     Label rearInsertPriceLabel;
     @FXML
     Label sideInsertPriceLabel;
-//    @FXML
+
+    //    @FXML
 //    GridPane insertPriceGrid;
 //
     //
     public void initPriceClassLabels() {
         // получам интекс текущего класс установки
-        int index = insertClassComboBox.getSelectionModel().getSelectedIndex();
-//        if (!insertPriceGrid.isVisible()){
-//            insertPriceGrid.setVisible(true);
-//        }
-        // устанавливаем цены в ячейки
-        frontInsertPriceLabel.setText(String.valueOf(dataMap.getInsertClassList().get(index).getInsertFront()));
-        rearInsertPriceLabel.setText(String.valueOf(dataMap.getInsertClassList().get(index).getInsertRear()));
-        sideInsertPriceLabel.setText(String.valueOf(dataMap.getInsertClassList().get(index).getInsertSide()));
+//        int index = insertClassComboBox.getSelectionModel().getSelectedIndex();
+////        if (!insertPriceGrid.isVisible()){
+////            insertPriceGrid.setVisible(true);
+////        }
+//        // устанавливаем цены в ячейки
+//        frontInsertPriceLabel.setText(String.valueOf(dataMap.getInsertClassList().get(index).getInsertFront()));
+//        rearInsertPriceLabel.setText(String.valueOf(dataMap.getInsertClassList().get(index).getInsertRear()));
+//        sideInsertPriceLabel.setText(String.valueOf(dataMap.getInsertClassList().get(index).getInsertSide()));
     }
 
 
     // создать новый заказ
     public void openNewOrder(ActionEvent actionEvent) {
         List<GlassObject> glasList = dataMap.getGlassList();
-        String selected ="";
-        if (glasList!=null && glasList.size()>0) {
+        String selected = "";
+        if (glasList != null && glasList.size() > 0) {
             for (int i = 0; i < glasList.size(); i++) {
                 BooleanProperty boo = glasList.get(i).isSelectedProperty();
                 boolean aaa = boo.get();
-                if (aaa) selected+=glasList.get(i).getId()+" ";
-              //  System.out.println(aaa);
+                if (aaa) selected += glasList.get(i).getId() + " ";
+
+                //  System.out.println(aaa);
             }
             if (!selected.equals("")) {
                 AlertWindow.infoMessage("Выбраны N: " + selected);
@@ -660,6 +746,136 @@ public class MainController extends BaseController {
     }
 
     public void deleteSelectedGlass(ActionEvent actionEvent) {
-        AlertWindow.errorMessage("Сорян, братиш, пока не умею");
+        List<GlassObject> glasList = dataMap.getGlassList();
+        List<Integer> idToDeleleList = null;
+        String selected = "";
+
+
+        int checked = 0;
+        if (glasList != null && glasList.size() > 0) {
+            for (int i = 0; i < glasList.size(); i++) {
+
+                BooleanProperty isSelected = glasList.get(i).isSelectedProperty();
+                if (isSelected.get()) {
+                    checked++;
+                }
+            }
+        }
+
+        if (checked > 0) {
+
+
+            boolean isTrue = AlertWindow.confirmationWindow("Вы уверены?", "Удалить выбранные стекла из базы?");
+            if (isTrue) {
+                if (glasList != null && glasList.size() > 0) {
+                    for (int i = 0; i < glasList.size(); i++) {
+
+                        BooleanProperty isSelected = glasList.get(i).isSelectedProperty();
+
+                        if (isSelected.get()) {
+                            if (glasList.get(i).getId() == 0) {
+                                AlertWindow.errorMessage("Стекло клиента можно только установить. Ну или разбить :)");
+                                return;
+                            }
+
+                            if (idToDeleleList == null) idToDeleleList = new ArrayList<>();
+                            deleteOperator.deleteGlassIsComplete(glasList.get(i).getId());
+                            idToDeleleList.add(glasList.get(i).getId());
+                            //glassObjects.remove(i);
+                        }
+                    }
+                    if (idToDeleleList != null && idToDeleleList.size() > 0) {
+                        deleteFromGlassListByid(idToDeleleList);
+                    }
+                } else {
+                    AlertWindow.errorMessage("Список товаров пуст");
+                }
+            }
+            // AlertWindow.errorMessage("Сорян, братиш, пока не умею");
+        }else {
+            AlertWindow.errorMessage("Выбирите стекло");
+        }
+
     }
+    void deleteFromGlassListByid(List<Integer> id) {
+        for (int i = 0; i < glassObjects.size(); i++) {
+            for (int j = 0; j < id.size(); j++) {
+                if (glassObjects.get(i).getId() == id.get(j)) {
+                    glassObjects.remove(i);
+                }
+            }
+        }
+    }
+
+
+    public void delGen(ActionEvent actionEvent) {
+        boolean isTrue = AlertWindow.confirmationWindow("Вы уверены?", "Удалить поколение " + getSelectedMarkTitle() + " " + getSelectedModelTitle() + " " + " из базы?");
+        if (isTrue) {
+            int id = dataMap.getGenerationObjList().get(genListView.getSelectionModel().getSelectedIndex()).getId();
+            deleteGeneration(id);
+            System.out.println("удалить поколение авто " + getSelectedModelTitle());
+        }
+    }
+
+    public void editGlass(ActionEvent actionEvent) {
+        List<GlassObject> glasList = dataMap.getGlassList();
+        if (glasList != null && glasList.size() > 0) {
+
+            int pos = tblGoodsInStock.getSelectionModel().getFocusedIndex();
+            GlassObject glass = glassObjects.get(pos);
+            if (glass.getId() != 0) {
+
+                int glassOptId = glass.getGlassOptionId();
+                int glassTypeId = glass.getGlassTypeId();
+                int glassFactoryID = glass.getGlassFactoryId();
+                int glassBodyTypeId = glass.getBodyTypeId();
+
+                String desc = glass.getDescription();
+                String price = String.valueOf(glass.getPrice());
+                String priceIns = String.valueOf(glass.getInsertPrice());
+                String alert = String.valueOf(glass.getAlert());
+                String pricein = String.valueOf(glass.getPriceIn());
+
+                mainApp.initAddGlassLayout(getSelectedCarInfo());
+                addGlassController.setState(AddGlassController.State.EDIT);
+                if (dataMap.getGenerationObjList() != null) {
+                    addGlassController.setCarId(dataMap.getGenerationObjList().get(genListView.getSelectionModel().getSelectedIndex()).getId());
+                } else
+                    System.out.println("выбиритее поколение");
+
+                addGlassController.updGlass(glassOptId, glassTypeId, glassFactoryID, glassBodyTypeId,
+                        desc, price, priceIns, alert, pricein, glass.getId());
+            } else {
+                AlertWindow.errorMessage("Нельзя отредактирровать стекло клиента");
+            }
+//            addGlassController.show();
+        } else {
+            AlertWindow.errorMessage("Список товаров пуст");
+        }
+
+    }
+
+    public void updGlass(GlassObject glassPrepared) {
+        System.out.println("добавляю новое стекло в базу");
+        if (updateOperator.editGlassIsComplete(glassPrepared)) {
+            //fillGenerationsListView();
+            showGoods();
+            System.out.println("Запись обновлена базу, все ок");
+            AlertWindow.infoMessage("Добавлено в базу");
+            Log2File.writeLog("Запись обновлена id=" + glassPrepared.getId());
+            //  dataMap.setGenerationObjList(getListOperator.getGenerations(car));
+        } else {
+            System.out.println("Фиаско! не добавлено");
+            Log2File.writeLog("Запись не обновлена id=" + glassPrepared.getId());
+        }
+    }
+
+    public void setLoginStage(Stage loginStage) {
+        this.loginStage = loginStage;
+    }
+
+    public void loginHide() {
+        loginStage.close();
+    }
+
 }

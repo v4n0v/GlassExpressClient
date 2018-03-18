@@ -2,8 +2,8 @@ package ru.glassexpress.core.get_command;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import ru.glassexpress.objects.BaseObject;
-import ru.glassexpress.objects.Composite;
+import ru.glassexpress.core.objects.BaseObject;
+import ru.glassexpress.core.objects.Composite;
 import ru.glassexpress.request_builder.Request;
 import ru.glassexpress.request_chain.RequestController;
 

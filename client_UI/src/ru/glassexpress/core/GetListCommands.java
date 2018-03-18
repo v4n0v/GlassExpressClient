@@ -1,8 +1,8 @@
 package ru.glassexpress.core;
 
-import ru.glassexpress.objects.BaseObject;
-import ru.glassexpress.objects.GenerationObj;
-import ru.glassexpress.objects.IdTitleObj;
+import ru.glassexpress.core.objects.BaseObject;
+import ru.glassexpress.core.objects.GenerationObj;
+import ru.glassexpress.core.objects.IdTitleObj;
 
 import java.util.List;
 

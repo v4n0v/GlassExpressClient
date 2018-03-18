@@ -2,9 +2,7 @@ package ru.glassexpress.core.get_command.adapter;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import ru.glassexpress.controllers.MainController;
-import ru.glassexpress.data.DataMap;
-import ru.glassexpress.objects.*;
+import ru.glassexpress.core.objects.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,28 +61,13 @@ public class BaseObjectAdapter {
             List<String> resultList = new ArrayList<>();
             for (int i = 0; i < inputList.size(); i++) {
                 GenerationObj obj = inputList.get(i);
-                resultList.add((i + 1) + ". " + obj.getYearFrom() + "-" + obj.getYearTo());
+                resultList.add((i + 1) + ". " + obj);
             }
             return FXCollections.observableArrayList(resultList);
         }
         return null;
     }
 
-
-//    public ObservableList<String> returnGenerationList(ObservableList<BaseObject> inputList) {
-//
-//        if (inputList != null) {
-//            List<String> resultList = new ArrayList<>();
-//            for (int i = 0; i < inputList.size(); i++) {
-//                GenerationObj cars = (GenerationObj) inputList.get(i);
-//                //currentModelGenerations.add(cars);
-//                resultList.add((i + 1) + ". " + cars.toString());
-//
-//            }
-//            return FXCollections.observableArrayList(resultList);
-//        }
-//        return null;
-//    }
 
     public List<GenerationObj> returnGenerationList(ObservableList<BaseObject> inputList) {
 
@@ -107,7 +90,7 @@ public class BaseObjectAdapter {
             List<GlassObject> resultList = new ArrayList<>();
             for (int i = 0; i < inputList.size(); i++) {
                 GlassObject row = (GlassObject) inputList.get(i);
-                // row.setGlassFactoryTitle(getTitleById(mainController.getDataMap().getGlassFactoryList(), row.getGlassFactory()));
+                // row.setGlassFactoryTitle(getTitleById(mainController.getDataMap().getGlassFactoryList(), row.getGlassFactoryId()));
 
                 //currentModelGenerations.add(cars);
                 resultList.add(row);
@@ -126,7 +109,7 @@ public class BaseObjectAdapter {
             List<InsertClass> resultList = new ArrayList<>();
             for (int i = 0; i < inputList.size(); i++) {
                 InsertClass row = (InsertClass) inputList.get(i);
-                // row.setGlassFactoryTitle(getTitleById(mainController.getDataMap().getGlassFactoryList(), row.getGlassFactory()));
+                // row.setGlassFactoryTitle(getTitleById(mainController.getDataMap().getGlassFactoryList(), row.getGlassFactoryId()));
 
                 //currentModelGenerations.add(cars);
                 resultList.add(row);

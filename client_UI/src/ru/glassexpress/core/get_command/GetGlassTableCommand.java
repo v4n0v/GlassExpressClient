@@ -1,7 +1,7 @@
 package ru.glassexpress.core.get_command;
 
-import ru.glassexpress.Prefs;
-import ru.glassexpress.objects.*;
+import ru.glassexpress.core.data.Prefs;
+import ru.glassexpress.core.objects.*;
 import ru.glassexpress.request_builder.RequestBuilder;
 
 public class GetGlassTableCommand extends ObservedCommand{

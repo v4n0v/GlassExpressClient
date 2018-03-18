@@ -1,11 +1,7 @@
 package ru.glassexpress.core.edit_content_command.deleteCommand;
 
-import ru.glassexpress.objects.BaseObject;
-import ru.glassexpress.objects.Composite;
 import ru.glassexpress.request_builder.Request;
 import ru.glassexpress.request_chain.RequestController;
-
-import java.util.List;
 
 public abstract class DeleteElementCommand {
     Request request;
@@ -23,7 +19,7 @@ public abstract class DeleteElementCommand {
     boolean deleteElement() {
         System.out.println("Готовим запрос");
         prepareRequest();
-        System.out.println("Удаляем модель");
+        System.out.println("Удаляем элемент "+request.getTarget());
         if (RequestController.isRequestAccepted(RequestController.recieveResponse(request)))
             return true;
 

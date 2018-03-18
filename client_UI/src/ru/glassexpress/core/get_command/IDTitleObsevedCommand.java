@@ -1,8 +1,6 @@
 package ru.glassexpress.core.get_command;
 
-import ru.glassexpress.objects.BaseObject;
-import ru.glassexpress.objects.IdTitleObj;
-import ru.glassexpress.request_builder.Request;
+import ru.glassexpress.core.objects.BaseObject;
 
 public abstract class IDTitleObsevedCommand extends ObservedCommand{
     public IDTitleObsevedCommand(BaseObject object) {

@@ -1,6 +1,8 @@
 package ru.glassexpress.core.edit_content_command.addCommand;
 
-import ru.glassexpress.objects.BaseObject;
+import ru.glassexpress.core.edit_content_command.updCommand.UpdateGlassCommand;
+import ru.glassexpress.core.objects.BaseObject;
+import ru.glassexpress.core.objects.GlassObject;
 
 public class AddOperator  implements AddCommands{
     AddElementCommand comand;
@@ -29,4 +31,6 @@ public class AddOperator  implements AddCommands{
         comand=new AddGlassCommand(baseObject);
         return comand.addElement(null);
     }
+
+
 }

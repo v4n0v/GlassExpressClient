@@ -1,7 +1,7 @@
 package ru.glassexpress.core.edit_content_command;
 
-import ru.glassexpress.objects.BaseObject;
-import ru.glassexpress.objects.Composite;
+import ru.glassexpress.core.objects.BaseObject;
+import ru.glassexpress.core.objects.Composite;
 import ru.glassexpress.request_builder.Request;
 import ru.glassexpress.request_chain.RequestController;
 

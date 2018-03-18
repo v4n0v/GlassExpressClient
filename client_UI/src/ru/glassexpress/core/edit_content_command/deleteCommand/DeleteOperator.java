@@ -1,8 +1,5 @@
 package ru.glassexpress.core.edit_content_command.deleteCommand;
 
-import ru.glassexpress.core.edit_content_command.addCommand.AddGeneratonCommand;
-import ru.glassexpress.objects.BaseObject;
-
 public class DeleteOperator {
     DeleteElementCommand comand;
 
@@ -18,6 +15,12 @@ public class DeleteOperator {
 
     public boolean deleteMarkIsComplete(int id) {
         comand=new DeleteMarkCommand(id);
+        return comand.deleteElement();
+    }
+
+
+    public boolean deleteGlassIsComplete(int id) {
+        comand=new DeleteGlassCommand(id);
         return comand.deleteElement();
     }
 }

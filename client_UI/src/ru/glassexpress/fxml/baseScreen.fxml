@@ -82,6 +82,7 @@
                                 <Button layoutX="1236.0" layoutY="751.0" mnemonicParsing="false" onAction="#openAddGlassDialog" text="Добавить " AnchorPane.bottomAnchor="2.0" AnchorPane.rightAnchor="0.0" />
                                 <Button layoutX="1261.0" layoutY="760.0" mnemonicParsing="false" onAction="#openNewOrder" text="Оформить заказ" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" />
                                 <Button layoutX="1228.0" layoutY="701.0" mnemonicParsing="false" onAction="#deleteSelectedGlass" text="Удалить" AnchorPane.bottomAnchor="2.0" AnchorPane.rightAnchor="92.0" />
+                        <Button layoutX="1108.0" layoutY="701.0" mnemonicParsing="false" onAction="#editGlass" text="Редактировать" AnchorPane.bottomAnchor="2.0" AnchorPane.rightAnchor="172.0" />
                             </children>
                             <padding>
                                 <Insets top="5.0" />
@@ -118,6 +119,7 @@
                                         <RadioButton layoutX="942.0" layoutY="16.0" mnemonicParsing="false" text="з. левое" GridPane.columnIndex="6" />
                                     </children>
                                 </GridPane>
+
                                 <TableView layoutX="144.0" layoutY="81.0" prefHeight="593.0" prefWidth="1398.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
                                     <columns>
                                         <TableColumn prefWidth="96.0" text="ID" />
@@ -264,20 +266,20 @@
                         <HBox>
                             <children>
                                 <Button fx:id="addGenerationButton" mnemonicParsing="false" onAction="#showAddTitleModal" prefHeight="25.0" prefWidth="223.0" text="+" />
-                                <Button fx:id="delGenerationButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="223.0" text="-" />
+                                <Button fx:id="delGenerationButton" mnemonicParsing="false" onAction="#delGen" prefHeight="25.0" prefWidth="223.0" text="-" />
                             </children>
                         </HBox>
                     </children>
                 </VBox>
             </children>
         </GridPane>
-        <ComboBox fx:id="insertClassComboBox" layoutX="704.0" layoutY="65.0" onHiding="#initPriceClassLabels" prefWidth="150.0" promptText="Класс установки" />
-        <Button layoutX="704.0" layoutY="100.0" mnemonicParsing="false" onAction="#saveInsertClass" prefHeight="25.0" prefWidth="150.0" text="Сохранить" />
+        <ComboBox fx:id="insertClassComboBox" disable="true" layoutX="704.0" layoutY="65.0" onHiding="#initPriceClassLabels" prefWidth="150.0" promptText="Класс установки" />
+        <Button disable="true" layoutX="704.0" layoutY="100.0" mnemonicParsing="false" onAction="#saveInsertClass" prefHeight="25.0" prefWidth="150.0" text="Сохранить" />
         <Separator layoutX="695.0" layoutY="80.0" orientation="VERTICAL" prefHeight="230.0" prefWidth="10.0" AnchorPane.leftAnchor="665.0" AnchorPane.topAnchor="50.0" />
         <Separator layoutX="190.0" layoutY="24.0" prefHeight="6.0" prefWidth="1199.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
         <Separator layoutX="149.0" layoutY="306.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="290.0" />
         <Separator layoutX="890.0" layoutY="80.0" orientation="VERTICAL" prefHeight="230.0" prefWidth="10.0" AnchorPane.leftAnchor="860.0" AnchorPane.topAnchor="50.0" />
-        <GridPane fx:id="insertPriceGrid" layoutX="690.0" layoutY="136.0" prefHeight="90.0" prefWidth="181.0">
+        <GridPane fx:id="insertPriceGrid" layoutX="690.0" layoutY="136.0" prefHeight="90.0" prefWidth="181.0" visible="false">
             <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
