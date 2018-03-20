@@ -31,7 +31,7 @@ public abstract class ObservedCommand {
         return components;
     }
 
-
+    protected String key;
 
     public ObservedCommand(BaseObject inputObject) {
         this.inputObject=inputObject;

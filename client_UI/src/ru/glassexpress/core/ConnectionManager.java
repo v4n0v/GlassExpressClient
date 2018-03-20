@@ -21,8 +21,8 @@ import java.util.logging.Level;
 public class ConnectionManager implements Callable<String>{
     private String responseBody;
     String request;
-//     static final String ADRESS_URL = "http://localhost:8080";
-    static final String ADRESS_URL = "http://glass-express.jelastic.regruhosting.ru";
+     static final String ADRESS_URL = "http://localhost:8080";
+//    static final String ADRESS_URL = "http://glass-express.jelastic.regruhosting.ru";
     static final String SERVLET = "/controller";
 
     private ConnectionManager() {

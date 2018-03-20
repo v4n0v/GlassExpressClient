@@ -34,12 +34,22 @@ public class Request {
     }
 
     String method;
+    String key;
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
+
     String target;
     String action;
     String body;
 
     @Override
     public String toString() {
-        return  "?target="+target+"&action="+action+"&target="+target+body.toString();
+        return  "?target="+target+"&action="+action+"?key"+key+body.toString();
     }
 }

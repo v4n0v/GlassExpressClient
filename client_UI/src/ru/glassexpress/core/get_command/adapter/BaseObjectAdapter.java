@@ -143,4 +143,19 @@ public class BaseObjectAdapter {
         }
         return null;
     }
+
+    public UserObject returnUser(ObservableList<BaseObject> inputList) {
+
+        if (inputList != null) {
+            System.out.println("UserObject input size = "+inputList.size());
+            UserObject result = (UserObject)inputList.get(0);
+//            for (int i = 0; i < inputList.size(); i++) {
+//                InsertClassElement row = (InsertClassElement) inputList.get(i);
+//                resultList.add(row);
+//            }
+            return result;
+        }
+        return null;
+    }
+
 }

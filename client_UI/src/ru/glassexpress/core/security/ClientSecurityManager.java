@@ -2,6 +2,7 @@ package ru.glassexpress.core.security;
 
 import ru.glassexpress.GEClient;
 import ru.glassexpress.controllers.MainController;
+import ru.glassexpress.core.objects.UserObject;
 import ru.glassexpress.library.AlertWindow;
 
 import java.io.File;
@@ -9,11 +10,13 @@ import java.util.List;
 import java.util.logging.Logger;
 
 public class ClientSecurityManager {
-    {
+
+    UserObject user;
+    public ClientSecurityManager(UserObject user) {
+        this.user=user;
         sqlLoginManager=new SQLLoginManager();
+        sqlLoginManager.init();
     }
-
-
 
     private final Logger logger = Logger.getLogger("Filebox.ClientManager");
     SQLLoginManager sqlLoginManager;
@@ -56,12 +59,17 @@ public class ClientSecurityManager {
     }
 
 
+    public String getKey(String login, String pass){
+        return sqlLoginManager.getKey(login, pass.hashCode());
+    }
+
     public boolean isUserValid(String login, String pass) {
 
-        sqlLoginManager.isLoginAndPassCorrect(login, pass.hashCode());
-        AlertWindow.infoMessage("Скоро, уже почти");
+        ///File asss = new File("111.txt");
+        ///asss.mkdir();
 
-        return true;
+
+        return sqlLoginManager.isLoginAndPassCorrect(login, pass.hashCode());
 
     }
 

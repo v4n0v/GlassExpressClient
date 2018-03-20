@@ -15,6 +15,7 @@ public class Prefs {
     public final static String TARGET_MARK = "mark";
     public static final String TARGET_MODEL = "model" ;
     public static final String TARGET_GENERATION = "generation" ;
+    public static final String TARGET_USER = "user" ;
     public static final String TARGET_TABLE_GOODS = "table_goods";
     public static final String TARGET_INSERT_CLASS = "insert_class";
  public static final String TARGET_INSERT_CLASS_ELEMENT = "insert_class_";

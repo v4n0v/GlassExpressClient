@@ -65,7 +65,13 @@ public class MainController extends BaseController {
     @FXML
     RadioButton isRearRadio;
 
+    public UserObject getUser() {
+        return user;
+    }
 
+
+
+    UserObject user;
     GetListOperator getListOperator;
     AddOperator addOperator;
     DeleteOperator deleteOperator;
@@ -111,6 +117,8 @@ public class MainController extends BaseController {
     public void init() {
         Log2File.writeLog("Инициализация главного окна");
         initTGTable();
+        user = new UserObject();
+
         urlConnection = URLConnection.getInstance();
         jsonController = JsonController.getInstance();
         // car = new Car();
@@ -878,4 +886,7 @@ public class MainController extends BaseController {
         loginStage.close();
     }
 
+    public void setUser(UserObject user) {
+        this.user = user;
+    }
 }

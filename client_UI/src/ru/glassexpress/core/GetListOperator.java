@@ -9,6 +9,8 @@ import java.util.List;
 
 public class GetListOperator implements GetListCommands {
 
+
+
     private ObservedCommand command;
  //   Request request;
 
@@ -19,14 +21,6 @@ public class GetListOperator implements GetListCommands {
         return command.getComponents();
     }
 
-//    @Override
-//    public ObservableList<String> getMarks(BaseObject object) {
-//        command = new GetMarksCommand(object);
-//
-//        //return command.returnRecievedList();
-//        return objectAdapter.returnStringList(command.returnRecievedList());
-//    }
-
     public List<IdTitleObj> getGlassTypes( ) {
         command = new GetGlassTypeCommand(null);
 
@@ -34,12 +28,6 @@ public class GetListOperator implements GetListCommands {
 //        return objectAdapter.returnStringList(command.returnRecievedList());
     }
 
-//    @Override
-//    public ObservableList<String> getModels(BaseObject object) {
-//
-//        command = new GetModelsCommand(object);
-//        return objectAdapter.returnStringList(command.returnRecievedList());
-//    }
     public List<IdTitleObj> getModels(BaseObject object) {
 
         command = new GetModelsCommand(object);
@@ -88,9 +76,17 @@ public class GetListOperator implements GetListCommands {
 //        return objectAdapter.returnStringList(command.returnRecievedList());
     }
 
+
     public List<InsertClassElement> getInsertClassElements() {
         command = new GetInsertClassElementCommand(null);
 //        return objectAdapter.baseObjToIdTitleObj(command.returnRecievedList());
         return objectAdapter.returnInsertClassElementList(command.returnRecievedList());
+    }
+
+
+    public UserObject getUserByKey(UserObject user) {
+        command = new GetUserByKeyCommand(user);
+//        return objectAdapter.baseObjToIdTitleObj(command.returnRecievedList());
+        return objectAdapter.returnUser(command.returnRecievedList());
     }
 }

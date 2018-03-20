@@ -21,8 +21,6 @@ public class RequestController {
 
     public static String recieveResponse(Request request) {
         connectionManager = ConnectionManager.getInstance();
-       // connectionManager.setRequest(request.toString());
-       // urlConnection = URLConnection.getInstance();
 
         String jsonResponse = null;
         try {

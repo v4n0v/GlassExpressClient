@@ -6,7 +6,7 @@ public class SQLLoginManager implements LoginManager {
 
     private Connection connection;
     private Statement statement;
-
+    PreparedStatement ps;
     // подгружаем БД
     @Override
     public void init() {
@@ -14,7 +14,7 @@ public class SQLLoginManager implements LoginManager {
 
         try {
             Class.forName("org.sqlite.JDBC");
-            connection = DriverManager.getConnection("jdbc:sqlite:users.db");
+            connection = DriverManager.getConnection("jdbc:sqlite:user_client.db");
             statement = connection.createStatement();
 
             statement.execute("CREATE TABLE IF NOT EXISTS  users (" +
@@ -32,10 +32,13 @@ public class SQLLoginManager implements LoginManager {
     // проверяем логин\пароль,
     @Override
     public boolean isLoginAndPassCorrect(String login, int pass) {
-        try (PreparedStatement ps = connection.prepareStatement("SELECT * FROM users WHERE login=? AND passHash=? ;")) {
 
+        try {
+            ps = connection.prepareStatement("SELECT * FROM users WHERE login=? AND passHash=? ;");
             ps.setString(1, login);
             ps.setInt(2, pass);
+
+
             try (ResultSet resultSet = ps.executeQuery()) {
                 return resultSet.next();
             } catch (SQLException e) {
@@ -46,13 +49,39 @@ public class SQLLoginManager implements LoginManager {
         }
 
     }
+
+    public String getKey(String login, int pass) {
+        String s=null;
+        try {
+            ps = connection.prepareStatement("SELECT * FROM users WHERE login=? AND passHash=? ;");
+            ps.setString(1, login);
+            ps.setInt(2, pass);
+
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                System.out.println("row"+rs.getRow()+"\n" +
+                        "id="+rs.getInt("id_user")+
+                "\nlogin="+rs.getString("login")+
+                "\nkey"+rs.getString("user_key"));
+
+                rs.getString("user_key");
+              return   rs.getString("user_key");
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+
+        }
+    return null;
+    }
+
     // лобавляем пользователя
     @Override
     public void addNewUser(String login, String mail,  int passHash) {
 
         try {
             connection.setAutoCommit(false);
-            PreparedStatement ps = connection.prepareStatement("INSERT INTO users (login , mail, passHash, space) VALUES (?, ?, ?, ?) ");
+            PreparedStatement ps = connection.prepareStatement("INSERT INTO users (login, passHash, key) VALUES (?, ?, ?) ");
             ps.setString(1, login);
             ps.setString(2, mail);
       //   ps.setString(3, pass);

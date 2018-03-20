@@ -10,7 +10,7 @@ public class RequestBuilder {
     String target;
     String action;
     String body;
-
+    String key;
     public RequestBuilder setMethod(String method){
         //req.append(method);
         this.method=method;
@@ -25,9 +25,14 @@ public class RequestBuilder {
         return this;
     }
 
-    public RequestBuilder setTarget(String target){
-     //   req.append(target);
+      public RequestBuilder setTarget(String target){
+        //   req.append(target);
         this.target=target;
+        return this;
+    }
+    public RequestBuilder setKey(String key){
+        //   req.append(target);
+        this.key=key;
         return this;
     }
 
@@ -57,6 +62,7 @@ public class RequestBuilder {
         request.setMethod(method);
         request.setAction(action);
         request.setTarget(target);
+        request.setKey(key);
         request.setBody(req.toString());
 
         return  request;
