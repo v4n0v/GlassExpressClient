@@ -5,10 +5,9 @@ import ru.glassexpress.core.objects.*;
 import ru.glassexpress.request_builder.RequestBuilder;
 
 public class GetGlassTableCommand extends ObservedCommand{
-    public GetGlassTableCommand(BaseObject inputObject) {
-        super(inputObject);
+    public GetGlassTableCommand(BaseObject inputObject, String key) {
+        super(inputObject, key);
     }
-
 
 
 
@@ -18,6 +17,8 @@ public class GetGlassTableCommand extends ObservedCommand{
         request = new RequestBuilder().setMethod(Prefs.METHOD_POST)
                 .setAction(Prefs.ACTION_SELECT)
                 .setTarget(Prefs.TARGET_TABLE_GOODS)
+                .setKey(key)
+
                 .setRequest("car", String.valueOf(car.getId()))
                 .build();
     }

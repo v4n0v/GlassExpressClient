@@ -33,8 +33,9 @@ public abstract class ObservedCommand {
 
     protected String key;
 
-    public ObservedCommand(BaseObject inputObject) {
+    public ObservedCommand(BaseObject inputObject,String key) {
         this.inputObject=inputObject;
+        this.key=key;
         buildRequest();
     }
 

@@ -5,15 +5,12 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import ru.glassexpress.controllers.AddGlassController;
-import ru.glassexpress.controllers.LoginController;
-import ru.glassexpress.controllers.MainController;
-import ru.glassexpress.controllers.MenuController;
+import ru.glassexpress.controllers.*;
 import ru.glassexpress.core.data.Log2File;
 import ru.glassexpress.core.data.DataMap;
 
@@ -32,7 +29,7 @@ public class GEClient extends Application {
     }
 
     private Stage primaryStage;
-    private AnchorPane rootLayout;
+    private BorderPane rootLayout;
 
 
 
@@ -62,9 +59,13 @@ public class GEClient extends Application {
             loader.setLocation(GEClient.class.getResource("fxml/root.fxml"));
             Log2File.writeLog("rootLayout.fxml подгружен");
 
-            rootLayout = (AnchorPane) loader.load();
+            rootLayout = (BorderPane) loader.load();
             menuController = loader.getController();
+            menuController.setMainApp(this);
+            menuController.setStage(primaryStage);
+            menuController.init();
             rootLayout.setMinWidth(1140d);
+
             // Отображаем сцену, содержащую корневой макет.
             Scene scene = new Scene(rootLayout);
             primaryStage.setScene(scene);
@@ -99,15 +100,46 @@ public class GEClient extends Application {
             controller.setMainApp(this);
             mainController.setLoginStage(loginStage);
             controller.setStage(loginStage);
-
+            controller.init();
             loginStage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
     }
+    AddAdminController addAdminController;
+    public void initAddAdminLayout() {
+        try {
+            // новое окно логина
+            Stage addAdminStage = new Stage();
+            FXMLLoader loaderLog = new FXMLLoader();
+            loaderLog.setLocation(GEClient.class.getResource("fxml/addUserLogin.fxml"));
+            VBox loginRootElement = (VBox) loaderLog.load();
+            Scene sceneLog = new Scene(loginRootElement);
 
+            // получаем ссылку у контроллера окна
+            // controller.
 
+            // loginStage.getIcons().add(new Image(logoPath));
+            addAdminStage.setTitle("Добавить администратора");
+         //   addAdminStage.setOnCloseRequest((event) -> primaryStage.close());
+            //   setStyleToStage(currentStyleCSS, sceneLog);
+            addAdminStage.setResizable(false);
+            addAdminStage.setScene(sceneLog);
+            addAdminStage.initModality(Modality.WINDOW_MODAL);
+            addAdminStage.initOwner(primaryStage);
+            addAdminController = loaderLog.getController();
+            addAdminController.setMainController(mainController);
+            addAdminController.setMainApp(this);
+           // mainController.setLoginStage(addEmpStage);
+            addAdminController.setStage(addAdminStage);
+            addAdminController.init();
+            addAdminStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
     public void initMainLayout() {
         try {
             // Загружаем сведения об адресатах.
@@ -120,16 +152,16 @@ public class GEClient extends Application {
             mainController = loader.getController();
             // Помещаем сведения об адресатах в центр корневого макета.
             menuController.setMainController(mainController);
-
+            rootLayout.setCenter(modelAdd);
             ObservableList<Node>childrens = rootLayout.getChildren();
 
-
-            AnchorPane.setLeftAnchor(modelAdd, 0d);
-            AnchorPane.setRightAnchor(modelAdd, 0d);
-
-            AnchorPane.setTopAnchor(modelAdd, 0d);
-            AnchorPane.setBottomAnchor(modelAdd, 0d);
-            childrens.add(modelAdd);
+//
+//            AnchorPane.setLeftAnchor(modelAdd, 0d);
+//            AnchorPane.setRightAnchor(modelAdd, 0d);
+//
+//            AnchorPane.setTopAnchor(modelAdd, 0d);
+//            AnchorPane.setBottomAnchor(modelAdd, 0d);
+          //  childrens.add(modelAdd);
 //            AnchorPane container = (AnchorPane) childrens.get(1);
 //            container.modelAdd;
 
@@ -156,13 +188,7 @@ public class GEClient extends Application {
 
            Log2File.writeLog("addCarLayout подгружен");
             AnchorPane modelAdd = (AnchorPane) loader.load();
-           // Scene scene = new Scene(modelAdd);
 
-//            GridPane gp = (GridPane) modelAdd.getChildren().get(0);
-//            HBox hb = (HBox) gp.getChildren().get(7);
-//            hb.getChildren().add(new CheckBox());
-//            ComboBox boxOpt = (ComboBox) hb.getChildren().get(0);
-        //    addGlassStage.setScene(scene);
             addGlassController = loader.getController();
             addGlassStage.setTitle("Добавить стекло "+selectedCar);
             // Помещаем сведения об адресатах в центр корневого макета.
@@ -193,4 +219,65 @@ public class GEClient extends Application {
     }
 
 
+    public void initAddEmpLayout(String login, String pass, String key) {
+        try {
+            // новое окно логина
+            Stage addEmpStage = new Stage();
+            FXMLLoader loaderLog = new FXMLLoader();
+            loaderLog.setLocation(GEClient.class.getResource("fxml/addUserEmp.fxml"));
+            VBox loginRootElement = (VBox) loaderLog.load();
+            Scene sceneLog = new Scene(loginRootElement);
+
+            addEmpStage.setTitle("Добавить cотрудника");
+          //  addEmpStage.setOnCloseRequest((event) -> primaryStage.close());
+            //   setStyleToStage(currentStyleCSS, sceneLog);
+            addEmpStage.setResizable(false);
+            addEmpStage.setScene(sceneLog);
+            addEmpStage.initModality(Modality.WINDOW_MODAL);
+            addEmpStage.initOwner(primaryStage);
+
+
+            AddEmpController controller = loaderLog.getController();
+            controller.setMainController(mainController);
+            controller.setParams(login, pass, key);
+            controller.setMainApp(this);
+            controller.setStage(addEmpStage);
+            controller.init();
+            addEmpStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void initOrderConfirmLayout() {
+        try {
+            // новое окно логина
+            Stage orderConfirmStage = new Stage();
+            FXMLLoader loaderLog = new FXMLLoader();
+            loaderLog.setLocation(GEClient.class.getResource("fxml/orderConfirmLayout.fxml"));
+            AnchorPane orderRootElement = (AnchorPane) loaderLog.load();
+            Scene sceneLog = new Scene(orderRootElement);
+
+            orderConfirmStage.setTitle("Оформить каказ");
+            //  addEmpStage.setOnCloseRequest((event) -> primaryStage.close());
+            //   setStyleToStage(currentStyleCSS, sceneLog);
+            orderConfirmStage.setResizable(false);
+            orderConfirmStage.setScene(sceneLog);
+            orderConfirmStage.initModality(Modality.WINDOW_MODAL);
+            orderConfirmStage.initOwner(primaryStage);
+
+
+            OrderConfirmController controller = loaderLog.getController();
+            controller.setMainController(mainController);
+
+            controller.setMainApp(this);
+            controller.setStage(orderConfirmStage);
+            controller.init();
+            orderConfirmStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
 }

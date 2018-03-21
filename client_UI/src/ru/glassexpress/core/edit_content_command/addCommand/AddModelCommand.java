@@ -7,8 +7,8 @@ import ru.glassexpress.request_builder.RequestBuilder;
 
 public class AddModelCommand extends AddElementCommand{
 
-    public AddModelCommand(String answer, BaseObject baseObject) {
-        super(answer, baseObject);
+    public AddModelCommand(String answer, BaseObject baseObject, String key) {
+        super(answer, baseObject, key);
 
 
     }
@@ -19,6 +19,7 @@ public class AddModelCommand extends AddElementCommand{
         request=new RequestBuilder().setMethod(Prefs.METHOD_GET)
                 .setTarget(Prefs.TARGET_MODEL)
                 .setAction(Prefs.ACTION_INSERT)
+                .setKey(key)
                 .setRequest("mark", car.getTitle())
                 .setRequest("model", answer)
                 .build();

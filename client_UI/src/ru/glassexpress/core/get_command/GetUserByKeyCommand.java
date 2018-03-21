@@ -7,20 +7,21 @@ import ru.glassexpress.core.objects.UserObject;
 import ru.glassexpress.request_builder.RequestBuilder;
 
 public class GetUserByKeyCommand extends ObservedCommand {
-    public GetUserByKeyCommand(BaseObject inputObject) {
-        super(inputObject);
+    public GetUserByKeyCommand(String key) {
+        super(null, key);
     }
 
     @Override
     public void buildRequest() {
-        if (inputObject!=null) {
+
             UserObject usr = (UserObject) inputObject;
             request = new RequestBuilder().setMethod(Prefs.METHOD_POST)
                     .setAction(Prefs.ACTION_SELECT)
                     .setTarget(Prefs.TARGET_USER)
-                    .setRequest("key", usr.getKey())
+                    .setKey(key)
+
                     .build();
 
-        }
+
     }
 }

@@ -8,10 +8,9 @@ import ru.glassexpress.request_builder.RequestBuilder;
 public class GetInsertClassElementCommand extends ObservedCommand {
 
 
-    public GetInsertClassElementCommand(BaseObject inputObject) {
-        super(inputObject);
+    public GetInsertClassElementCommand(BaseObject inputObject, String key) {
+        super(inputObject, key);
     }
-
     @Override
     public void buildRequest() {
 
@@ -19,6 +18,8 @@ public class GetInsertClassElementCommand extends ObservedCommand {
             request = new RequestBuilder().setMethod(Prefs.METHOD_POST)
                     .setAction(Prefs.ACTION_SELECT)
                     .setTarget(Prefs.TARGET_INSERT_CLASS_ELEMENT)
+                    .setKey(key)
+
                     .setBlankRequest()
                     .build();
         }

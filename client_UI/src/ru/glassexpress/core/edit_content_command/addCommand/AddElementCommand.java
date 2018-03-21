@@ -11,10 +11,11 @@ public abstract class AddElementCommand {
     BaseObject baseObject;
     protected Request request;
 
-
-    public AddElementCommand(String answer, BaseObject baseObject) {
+    protected String key;
+    public AddElementCommand(String answer, BaseObject baseObject, String key) {
         this.baseObject=baseObject;
         this.answer = answer;
+        this.key=key;
         prepareRequest();
     }
 

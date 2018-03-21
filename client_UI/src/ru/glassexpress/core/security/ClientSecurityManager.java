@@ -3,23 +3,22 @@ package ru.glassexpress.core.security;
 import ru.glassexpress.GEClient;
 import ru.glassexpress.controllers.MainController;
 import ru.glassexpress.core.objects.UserObject;
-import ru.glassexpress.library.AlertWindow;
 
 import java.io.File;
 import java.util.List;
 import java.util.logging.Logger;
 
 public class ClientSecurityManager {
-
+    SQLConnectionManager sqlConnectionManager;
     UserObject user;
     public ClientSecurityManager(UserObject user) {
         this.user=user;
-        sqlLoginManager=new SQLLoginManager();
-        sqlLoginManager.init();
+        sqlConnectionManager =SQLConnectionManager.getInstance();
+        sqlConnectionManager.init();
     }
 
     private final Logger logger = Logger.getLogger("Filebox.ClientManager");
-    SQLLoginManager sqlLoginManager;
+
 
 
  //   public State state = State.NOT_CONNECTED;
@@ -60,7 +59,7 @@ public class ClientSecurityManager {
 
 
     public String getKey(String login, String pass){
-        return sqlLoginManager.getKey(login, pass.hashCode());
+        return sqlConnectionManager.getKey(login, pass.hashCode());
     }
 
     public boolean isUserValid(String login, String pass) {
@@ -69,7 +68,7 @@ public class ClientSecurityManager {
         ///asss.mkdir();
 
 
-        return sqlLoginManager.isLoginAndPassCorrect(login, pass.hashCode());
+        return sqlConnectionManager.isLoginAndPassCorrect(login, pass.hashCode());
 
     }
 

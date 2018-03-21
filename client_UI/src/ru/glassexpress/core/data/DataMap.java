@@ -19,6 +19,37 @@ public class DataMap {
     private List<GenerationObj> generationObjList;
     // список марок
     private List<IdTitleObj> carMarksList;
+    // список салонов
+    private List<IdTitleObj> salonsList;
+    // список должностей
+    private List<IdTitleObj> positionsList;
+    // список прав доступа
+    private List<IdTitleObj> permissionsList;
+
+    public List<IdTitleObj> getSalonsList() {
+        return salonsList;
+    }
+
+    public void setSalonsList(List<IdTitleObj> salonsList) {
+        this.salonsList = salonsList;
+    }
+
+    public List<IdTitleObj> getPositionsList() {
+        return positionsList;
+    }
+
+    public void setPositionsList(List<IdTitleObj> positionsList) {
+        this.positionsList = positionsList;
+    }
+
+    public List<IdTitleObj> getPermissionsList() {
+        return permissionsList;
+    }
+
+    public void setPermissionsList(List<IdTitleObj> permissionsList) {
+        this.permissionsList = permissionsList;
+    }
+
     // список стекол
     private List<GlassObject> glassList;
     // список классов вклейки\установик

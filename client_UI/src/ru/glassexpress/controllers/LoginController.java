@@ -1,10 +1,12 @@
 package ru.glassexpress.controllers;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import ru.glassexpress.core.GetListOperator;
+import ru.glassexpress.core.data.Log2File;
 import ru.glassexpress.core.objects.UserObject;
 import ru.glassexpress.core.security.ClientSecurityManager;
 import ru.glassexpress.core.StringValidator;
@@ -43,8 +45,8 @@ public class LoginController extends BaseController {
                     if (key!=null){
                         // устанавливаем соединение, закрываем окно
                         mainController.getUser().setKey(key);
-                        GetListOperator operator = new GetListOperator();
-                        UserObject user = operator.getUserByKey(mainController.getUser());
+                        GetListOperator operator = new GetListOperator(mainController.getUser().getKey());
+                        UserObject user = operator.getUserByKey();
                         user.setKey(key);
                         mainController.setUser(user);
 
@@ -69,6 +71,7 @@ public class LoginController extends BaseController {
 
     @Override
     public void init() {
-
+        Log2File.writeLog("Иинициализация окна аутентификации");
     }
+
 }

@@ -23,7 +23,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1091.0" prefWidth="1419.0" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.glassexpress.controllers.MainController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1091.0" prefWidth="1419.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.glassexpress.controllers.MainController">
     <children>
         <TabPane layoutX="247.0" layoutY="39.0" prefHeight="950.0" prefWidth="1154.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="300.0">
             <tabs>
@@ -298,6 +298,10 @@
                 <Label fx:id="sideInsertPriceLabel" layoutX="100.0" layoutY="48.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             </children>
         </GridPane>
+      <Label layoutX="894.0" layoutY="56.0" text="Пользователь:" />
+      <Label fx:id="nameLabel" layoutX="895.0" layoutY="73.0" text="Имя Фамилия" />
+      <Label layoutX="895.0" layoutY="104.0" text="Салон" />
+      <Label fx:id="salonLabel" layoutX="896.0" layoutY="120.0" text="Название салона" />
     </children>
     <padding>
         <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />

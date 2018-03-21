@@ -7,8 +7,8 @@ import ru.glassexpress.request_builder.RequestBuilder;
 
 public class AddGlassCommand extends AddElementCommand{
 
-    public AddGlassCommand(BaseObject baseObject) {
-        super(null, baseObject);
+    public AddGlassCommand(BaseObject baseObject, String key) {
+        super(null, baseObject, key);
     }
 
     @Override
@@ -18,6 +18,7 @@ public class AddGlassCommand extends AddElementCommand{
         request=new RequestBuilder().setMethod(Prefs.METHOD_GET)
                 .setTarget(Prefs.TARGET_GLASS)
                 .setAction(Prefs.ACTION_INSERT)
+                .setKey(key)
                 .setRequest("id_car", String.valueOf(glass.getCarId()))
                 .setRequest("id_glass_type", String.valueOf(glass.getGlassTypeId()))
                 .setRequest("id_glass_opt", String.valueOf(glass.getGlassOptionId()))

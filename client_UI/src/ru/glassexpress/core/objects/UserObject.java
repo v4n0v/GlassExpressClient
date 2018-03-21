@@ -105,4 +105,9 @@ public class UserObject extends BaseObject{
         obj1.addProperty("permission", permission);
         return obj1;
     }
+
+    @Override
+    public String toString() {
+        return "name = "+name+", last name = "+lastName+"\npos = "+positionId+"\nsalon = "+salonId+"\npermis = "+permission;
+    }
 }

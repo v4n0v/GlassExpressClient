@@ -4,9 +4,8 @@ import ru.glassexpress.core.data.Prefs;
 import ru.glassexpress.request_builder.RequestBuilder;
 
 public class AddMarkCommand extends AddElementCommand{
-    public AddMarkCommand(String answer) {
-        super(answer, null
-        );
+    public AddMarkCommand(String answer, String key) {
+        super(answer, null, key);
     }
 
     @Override
@@ -14,6 +13,7 @@ public class AddMarkCommand extends AddElementCommand{
         request = new RequestBuilder().setMethod(Prefs.METHOD_GET)
                 .setTarget(Prefs.TARGET_MARK)
                 .setAction(Prefs.ACTION_INSERT)
+                .setKey(key)
                 .setRequest("mark", answer)
                 .build();
     }

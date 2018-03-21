@@ -6,8 +6,8 @@ import ru.glassexpress.core.objects.IdTitleObj;
 import ru.glassexpress.request_builder.RequestBuilder;
 
 public class AddGeneratonCommand extends AddElementCommand {
-    public AddGeneratonCommand(String generation, BaseObject baseObject) {
-        super(generation, baseObject);
+    public AddGeneratonCommand(String generation, BaseObject baseObject, String key) {
+        super(generation, baseObject, key);
     }
 
     @Override
@@ -18,6 +18,7 @@ public class AddGeneratonCommand extends AddElementCommand {
         request = new RequestBuilder().setMethod(Prefs.METHOD_POST)
                 .setTarget(Prefs.TARGET_GENERATION)
                 .setAction(Prefs.ACTION_INSERT)
+                .setKey(key)
                 //   .setRequest("mark", car.getMark())
                 .setRequest("model", String.valueOf(car.getId()))
                 .setRequest("yearFrom", gen[0])

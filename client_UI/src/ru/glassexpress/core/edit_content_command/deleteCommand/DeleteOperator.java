@@ -1,7 +1,12 @@
 package ru.glassexpress.core.edit_content_command.deleteCommand;
 
 public class DeleteOperator {
+    private final String key;
     DeleteElementCommand comand;
+
+    public DeleteOperator(String key) {
+        this.key=key;
+    }
 
     public boolean deleteGenerationIsComplete(int id) {
         comand=new DeleteGenerationCommand(id);

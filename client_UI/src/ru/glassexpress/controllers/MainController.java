@@ -34,6 +34,8 @@ import java.util.regex.Pattern;
 public class MainController extends BaseController {
 
 
+    public Label nameLabel;
+    public Label salonLabel;
     @FXML
     ComboBox<String> bodyTypeListView;
 
@@ -123,10 +125,7 @@ public class MainController extends BaseController {
         jsonController = JsonController.getInstance();
         // car = new Car();
         adapter = new BaseObjectAdapter();
-        getListOperator = new GetListOperator();
-        deleteOperator = new DeleteOperator();
-        addOperator = new AddOperator();
-        updateOperator = new UpdateOperator();
+
         // glassTypeList = new ArrayList<>();
 
 
@@ -145,7 +144,10 @@ public class MainController extends BaseController {
 
 
     public void reconnect() {
-
+        getListOperator = new GetListOperator(user.getKey());
+        deleteOperator = new DeleteOperator(user.getKey());
+        addOperator = new AddOperator(user.getKey());
+        updateOperator = new UpdateOperator(user.getKey());
         Log2File.writeLog("reconnect");
         markListView.setItems(marksList);
         modelListView.setItems(modelsList);
@@ -164,8 +166,14 @@ public class MainController extends BaseController {
                 dataMap.setBodyTypeList(getListOperator.getBodyTypes());
                 dataMap.setGlassOptList(getListOperator.getGlassOptions());
                 dataMap.setGlassFactoryList(getListOperator.getGlassFactory());
+                dataMap.setSalonsList(getListOperator.getSalons());
+                dataMap.setPositionsList(getListOperator.getPositions());
+                dataMap.setPermissionsList(getListOperator.getPermissions());
 
                 fillObservableList(bodyTypeStringList, adapter.idTitleObjToString(dataMap.getBodyTypeList()));
+                nameLabel.setText(user.getName()+" "+user.getLastName());
+                int salonPos = dataMap.getPosById(dataMap.getSalonsList(), user.getSalonId());
+                salonLabel.setText(dataMap.getSalonsList().get(salonPos).getTitle());
             }
         }
     }
@@ -742,6 +750,7 @@ public class MainController extends BaseController {
                 //  System.out.println(aaa);
             }
             if (!selected.equals("")) {
+                mainApp.initOrderConfirmLayout();
                 AlertWindow.infoMessage("Выбраны N: " + selected);
             } else {
                 AlertWindow.errorMessage("Выбирите товар");

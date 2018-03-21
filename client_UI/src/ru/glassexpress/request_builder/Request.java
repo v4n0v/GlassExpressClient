@@ -50,6 +50,6 @@ public class Request {
 
     @Override
     public String toString() {
-        return  "?target="+target+"&action="+action+"?key"+key+body.toString();
+        return  "?target="+target+"&action="+action+"&key="+key+body.toString();
     }
 }

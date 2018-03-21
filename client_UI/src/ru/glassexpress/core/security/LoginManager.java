@@ -6,6 +6,6 @@ public interface LoginManager {
 
     boolean isLoginAndPassCorrect(String login, int pass) ;
 
-    void addNewUser(String login, String mail, int passHash);
+    void addNewUser(String login, String pass, String  key);
     void dispose();
 }
