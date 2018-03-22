@@ -13,9 +13,11 @@ import javafx.stage.Stage;
 import ru.glassexpress.controllers.*;
 import ru.glassexpress.core.data.Log2File;
 import ru.glassexpress.core.data.DataMap;
+import ru.glassexpress.core.objects.GlassObject;
 
 
 import java.io.IOException;
+import java.util.List;
 
 public class GEClient extends Application {
 
@@ -250,7 +252,7 @@ public class GEClient extends Application {
 
     }
 
-    public void initOrderConfirmLayout() {
+    public void initOrderConfirmLayout(List<GlassObject> cart) {
         try {
             // новое окно логина
             Stage orderConfirmStage = new Stage();
@@ -270,7 +272,7 @@ public class GEClient extends Application {
 
             OrderConfirmController controller = loaderLog.getController();
             controller.setMainController(mainController);
-
+            controller.setSelectedGlass(cart);
             controller.setMainApp(this);
             controller.setStage(orderConfirmStage);
             controller.init();

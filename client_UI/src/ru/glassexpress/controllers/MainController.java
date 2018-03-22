@@ -72,7 +72,6 @@ public class MainController extends BaseController {
     }
 
 
-
     UserObject user;
     GetListOperator getListOperator;
     AddOperator addOperator;
@@ -118,7 +117,7 @@ public class MainController extends BaseController {
     @Override
     public void init() {
         Log2File.writeLog("Инициализация главного окна");
-        initTGTable();
+
         user = new UserObject();
 
         urlConnection = URLConnection.getInstance();
@@ -133,7 +132,7 @@ public class MainController extends BaseController {
         isFrontRadio.setToggleGroup(radioGroup);
         isRearRadio.setToggleGroup(radioGroup);
 
-     //   reconnect();
+        //   reconnect();
         // получаем список типов стекол, кузовов
 
 //        initTGTable();
@@ -144,6 +143,7 @@ public class MainController extends BaseController {
 
 
     public void reconnect() {
+        initTGTable();
         getListOperator = new GetListOperator(user.getKey());
         deleteOperator = new DeleteOperator(user.getKey());
         addOperator = new AddOperator(user.getKey());
@@ -171,7 +171,7 @@ public class MainController extends BaseController {
                 dataMap.setPermissionsList(getListOperator.getPermissions());
 
                 fillObservableList(bodyTypeStringList, adapter.idTitleObjToString(dataMap.getBodyTypeList()));
-                nameLabel.setText(user.getName()+" "+user.getLastName());
+                nameLabel.setText(user.getName() + " " + user.getLastName());
                 int salonPos = dataMap.getPosById(dataMap.getSalonsList(), user.getSalonId());
                 salonLabel.setText(dataMap.getSalonsList().get(salonPos).getTitle());
             }
@@ -435,8 +435,6 @@ public class MainController extends BaseController {
     }
 
 
-
-
     // показываем список товаров
     public void showGoods() {
 
@@ -496,21 +494,21 @@ public class MainController extends BaseController {
         // список опций стекла
         List<IdTitleObj> optListIdTitle = dataMap.getGlassOptList();
         List<List<String>> insideList = new ArrayList<>();
-        for (int i = 0; i < list.size(); i++) {
+        for (GlassObject aList : list) {
             // получаю строку с опциями для каждого стекла
-            String s = list.get(i).getOptListString();
+            String s = aList.getOptListString();
             String[] sa = s.split("i");
-            String s1 = "";
+            StringBuilder s1 = new StringBuilder();
 
-            for (int j = 0; j < optListIdTitle.size(); j++) {
-                for (int k = 0; k < sa.length; k++) {
-                    if (optListIdTitle.get(j).getId() == Integer.parseInt(sa[k])) {
-                        s1 += optListIdTitle.get(j).getTitle() + "\n";
+            for (IdTitleObj anOptListIdTitle : optListIdTitle) {
+                for (String aSa : sa) {
+                    if (anOptListIdTitle.getId() == Integer.parseInt(aSa)) {
+                        s1.append(anOptListIdTitle.getTitle()).append("\n");
                     }
 
                 }
             }
-            list.get(i).setOptListString(s1);
+            aList.setOptListString(s1.toString());
         }
     }
 
@@ -546,10 +544,13 @@ public class MainController extends BaseController {
 
 
     private void initTGTable() {
-        tblGoodsInStock.setEditable(false);
+       // tblGoodsInStock.setEditable(false);
 
-
-        colTGPriceIn.setVisible(false);
+        if (user.getPermission()==1){
+            colTGPriceIn.setVisible(true);
+        } else {
+            colTGPriceIn.setVisible(false);
+        }
         colTGId.setCellValueFactory(cellData -> cellData.getValue().getIdProperty());
         colTGDesc.setCellValueFactory(cellData -> cellData.getValue().getDescProperty());
         colTGOption.setCellValueFactory(cellData -> cellData.getValue().getParameterListTitle());
@@ -566,7 +567,7 @@ public class MainController extends BaseController {
         colTGSelect.setCellFactory(tc -> new CheckBoxTableCell<>());
 
         tblGoodsInStock.setItems(glassObjects);
-        tblGoodsInStock.setEditable(true);
+       tblGoodsInStock.setEditable(true);
     }
 
 
@@ -609,7 +610,7 @@ public class MainController extends BaseController {
     }
 
     // получаем название марки авто из datamap
-    public String getSelectedMarkTitle() {
+    private String getSelectedMarkTitle() {
         if (dataMap.getCarMarksList() != null && dataMap.getCarMarksList().size() > 0) {
 
             return dataMap.getCarMarksList().get(markListView.getSelectionModel().getSelectedIndex()).getTitle();
@@ -617,14 +618,14 @@ public class MainController extends BaseController {
     }
 
     // получаем название модели авто из datamap
-    public String getSelectedModelTitle() {
+    private String getSelectedModelTitle() {
         if (dataMap.getCarModelsList() != null && dataMap.getCarModelsList().size() > 0) {
             return getSelectedMarkTitle() + " " + dataMap.getCarModelsList().get(modelListView.getSelectionModel().getSelectedIndex()).getTitle();
         } else return null;
     }
 
     // получаем полное название авто из datamap
-    public String getSelectedCarInfo() {
+    private String getSelectedCarInfo() {
         if (dataMap.getGenerationObjList() != null && dataMap.getGenerationObjList().size() > 0) {
             int from = dataMap.getGenerationObjList().get(genListView.getSelectionModel().getSelectedIndex()).getYearFrom();
             int to = dataMap.getGenerationObjList().get(genListView.getSelectionModel().getSelectedIndex()).getYearTo();
@@ -740,17 +741,21 @@ public class MainController extends BaseController {
     // создать новый заказ
     public void openNewOrder(ActionEvent actionEvent) {
         List<GlassObject> glasList = dataMap.getGlassList();
-        String selected = "";
+        StringBuilder selected = new StringBuilder();
         if (glasList != null && glasList.size() > 0) {
-            for (int i = 0; i < glasList.size(); i++) {
-                BooleanProperty boo = glasList.get(i).isSelectedProperty();
-                boolean aaa = boo.get();
-                if (aaa) selected += glasList.get(i).getId() + " ";
+            List<GlassObject> cart = new ArrayList<>();
+            for (GlassObject glassObject : glasList) {
+                BooleanProperty boo = glassObject.isSelectedProperty();
+
+                if ( boo.get()){
+                    selected.append(glassObject.getId()).append(" ");
+                    cart.add(glassObject);
+                }
 
                 //  System.out.println(aaa);
             }
-            if (!selected.equals("")) {
-                mainApp.initOrderConfirmLayout();
+            if (!selected.toString().equals("")) {
+                mainApp.initOrderConfirmLayout(cart);
                 AlertWindow.infoMessage("Выбраны N: " + selected);
             } else {
                 AlertWindow.errorMessage("Выбирите товар");
@@ -770,9 +775,8 @@ public class MainController extends BaseController {
 
         int checked = 0;
         if (glasList != null && glasList.size() > 0) {
-            for (int i = 0; i < glasList.size(); i++) {
-
-                BooleanProperty isSelected = glasList.get(i).isSelectedProperty();
+            for (GlassObject aGlasList : glasList) {
+                BooleanProperty isSelected = aGlasList.isSelectedProperty();
                 if (isSelected.get()) {
                     checked++;
                 }
@@ -785,19 +789,19 @@ public class MainController extends BaseController {
             boolean isTrue = AlertWindow.confirmationWindow("Вы уверены?", "Удалить выбранные стекла из базы?");
             if (isTrue) {
                 if (glasList != null && glasList.size() > 0) {
-                    for (int i = 0; i < glasList.size(); i++) {
+                    for (GlassObject aGlasList : glasList) {
 
-                        BooleanProperty isSelected = glasList.get(i).isSelectedProperty();
+                        BooleanProperty isSelected = aGlasList.isSelectedProperty();
 
                         if (isSelected.get()) {
-                            if (glasList.get(i).getId() == 0) {
+                            if (aGlasList.getId() == 0) {
                                 AlertWindow.errorMessage("Стекло клиента можно только установить. Ну или разбить :)");
                                 return;
                             }
 
                             if (idToDeleleList == null) idToDeleleList = new ArrayList<>();
-                            deleteOperator.deleteGlassIsComplete(glasList.get(i).getId());
-                            idToDeleleList.add(glasList.get(i).getId());
+                            deleteOperator.deleteGlassIsComplete(aGlasList.getId());
+                            idToDeleleList.add(aGlasList.getId());
                             //glassObjects.remove(i);
                         }
                     }
@@ -808,16 +812,17 @@ public class MainController extends BaseController {
                     AlertWindow.errorMessage("Список товаров пуст");
                 }
             }
-            // AlertWindow.errorMessage("Сорян, братиш, пока не умею");
-        }else {
+
+        } else {
             AlertWindow.errorMessage("Выбирите стекло");
         }
 
     }
-    void deleteFromGlassListByid(List<Integer> id) {
+
+    private void deleteFromGlassListByid(List<Integer> id) {
         for (int i = 0; i < glassObjects.size(); i++) {
-            for (int j = 0; j < id.size(); j++) {
-                if (glassObjects.get(i).getId() == id.get(j)) {
+            for (Integer anId : id) {
+                if (glassObjects.get(i).getId() == anId) {
                     glassObjects.remove(i);
                 }
             }

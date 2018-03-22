@@ -2,6 +2,7 @@ package ru.glassexpress.core;
 
 import com.google.gson.*;
 import ru.glassexpress.core.objects.*;
+import ru.glassexpress.library.AlertWindow;
 
 // класс обработчик входящих JSON
 public class JsonController {
@@ -20,8 +21,14 @@ public class JsonController {
     public BaseObject convertJsonToObject(String jsonResponse) {
         JsonObject jsonObj = (JsonObject) parser.parse(jsonResponse);
 
+        BaseObject obj = parseJson(jsonObj);
 
-        return parseJson(jsonObj);
+//        if (ErrorObject.class.isInstance(obj)){
+//            ErrorObject err = (ErrorObject) obj ;
+//            AlertWindow.errorMessage(err.getObjectClass());
+//            return null;
+//        }
+        return obj;
 
     }
 

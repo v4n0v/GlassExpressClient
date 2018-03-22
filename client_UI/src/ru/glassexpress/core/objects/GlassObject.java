@@ -45,10 +45,10 @@ public class GlassObject extends BaseObject {
     }
 
     private String optListString;
+
     public void setOptList(List<IdTitleObj> optList) {
         this.optList = optList;
     }
-
 
 
     public int getBodyTypeId() {
@@ -60,11 +60,9 @@ public class GlassObject extends BaseObject {
     }
 
 
-
     public void setBodyTypeTitle(String bodyTypeTitle) {
         this.bodyTypeTitle = bodyTypeTitle;
     }
-
 
 
     public String getInsertMethodTitle() {
@@ -108,7 +106,6 @@ public class GlassObject extends BaseObject {
     }
 
 
-
     public GlassObject() {
         super("tab_goods_in_stock");
         //   select=new Checkbox();
@@ -122,8 +119,6 @@ public class GlassObject extends BaseObject {
     public void setOptListString(String optListString) {
         this.optListString = optListString;
     }
-
-
 
 
     public int getId() {
@@ -274,7 +269,7 @@ public class GlassObject extends BaseObject {
         obj1.addProperty("glassFactoryId", glassFactoryId);
         obj1.addProperty("glassFactoryTitle", glassFactoryTitle);
         obj1.addProperty("insertMethod", insertMethod);
-        obj1.addProperty("optListString",optListString);
+        obj1.addProperty("optListString", optListString);
         obj1.addProperty("insertMethodTitle", insertMethodTitle);
         obj1.addProperty("insertBodyType", bodyTypeId);
         obj1.addProperty("insertBodyTypeTitle", bodyTypeTitle);
@@ -347,7 +342,14 @@ public class GlassObject extends BaseObject {
         return new SimpleStringProperty(parametrList);
     }
 
-//    public void setIsSelected(Boolean isSelected) {
+    @Override
+    public String toString() {
+        if (bodyTypeTitle != null && carTitle != null)
+            return carTitle + " " + bodyTypeTitle + " " + glassFactoryTitle;
+        else
+            return "Cтекло";
+    }
+    //    public void setIsSelected(Boolean isSelected) {
 //        this.isSelected = isSelected;
 //    }
 //    public BooleanProperty getIsSelectedProperty() {
