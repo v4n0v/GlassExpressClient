@@ -141,10 +141,12 @@ public class OrderConfirmController extends BaseController {
         priceCol.setCellValueFactory(cellData -> cellData.getValue().getPriceFloatProperty());
 
         // таблица услуг
+        tableServiceCart.setEditable(true);
         tableServiceCart.setItems(cartService);
-        tableCart.setEditable(true);
         serviceTitleCol.setCellValueFactory(cellData -> cellData.getValue().getTitleStringProperty());
+
         countServiceCol.setCellValueFactory(cellData -> cellData.getValue().getCountProperty().asObject());
+        countServiceCol.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
        servicePriceCol.setCellValueFactory(cellData -> cellData.getValue().getPriceFloatProperty());
 
     }

@@ -92,7 +92,6 @@ public class MainController extends BaseController {
     private ObservableList<String> modelsList = FXCollections.observableArrayList();
     private ObservableList<String> genList = FXCollections.observableArrayList();
 
-    //TODO организовать заполнение
     private ObservableList<String> classList = FXCollections.observableArrayList();
     private Stage loginStage;
 
