@@ -54,7 +54,7 @@ public class SQLConnectionManager implements LoginManager {
 //            }
 //        }
 
-
+//TODO придумать что делать с локальной базой
 
         try {
 
