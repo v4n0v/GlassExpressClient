@@ -24,7 +24,7 @@ public class ConnectionManager implements Callable<String>{
      static final String ADRESS_URL = "http://localhost:8080";
 //     static final String ADRESS_URL = "http://ge-servlet-glass-express.1d35.starter-us-east-1.openshiftapps.com/";
 
-//    static final String ADRESS_URL = "http://glass-express.jelastic.regruhosting.ru";
+   //static final String ADRESS_URL = "http://glass-express.jelastic.regruhosting.ru";
     static final String SERVLET = "/controller";
 
     private ConnectionManager() {

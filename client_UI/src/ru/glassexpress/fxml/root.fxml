@@ -12,7 +12,7 @@
             <Menu mnemonicParsing="false" text="Файл">
                <items>
                   <MenuItem mnemonicParsing="false" onAction="#refresh" text="Подключиться" />
-                  <MenuItem mnemonicParsing="false" text="Сменить пользователя" />
+                  <MenuItem mnemonicParsing="false" onAction="#logoOut" text="Сменить пользователя" />
                   <MenuItem mnemonicParsing="false" onAction="#exit" text="Выход" />
                </items>
             </Menu>

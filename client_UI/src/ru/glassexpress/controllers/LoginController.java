@@ -39,24 +39,27 @@ public class LoginController extends BaseController {
                 securityManager.setPassword(pass);
 
                 // проверяем наличие пользователя
-               // if (securityManager.isUserValid(login, pass)){
-                    // получаем ключ
-                    String key  = securityManager.getKey(login, pass);
-                    if (key!=null){
-                        // устанавливаем соединение, закрываем окно
-                        mainController.getUser().setKey(key);
-                        GetListOperator operator = new GetListOperator(mainController.getUser().getKey());
-                        UserObject user = operator.getUserByKey();
+                // if (securityManager.isUserValid(login, pass)){
+                // получаем ключ
+                String key = securityManager.getKey(login, pass);
+                if (key != null) {
+                    // устанавливаем соединение, закрываем окно
+                    mainController.getUser().setKey(key);
+                    GetListOperator operator = new GetListOperator(mainController.getUser().getKey());
+                    UserObject user = operator.getUserByKey();
+                    if (user != null) {
                         user.setKey(key);
                         mainController.setUser(user);
-                      //  mainController.initPermission();
+                        //  mainController.initPermission();
                         mainController.reconnect();
                         close();
-                 //   }
+                    }else{
+                        AlertWindow.errorMessage("Пользователя не получены. Сервер не отвечает.");
+
+                    }
 
 
-
-                } else{
+                } else {
                     AlertWindow.errorMessage("Неверный логин\\пароль");
                 }
 
