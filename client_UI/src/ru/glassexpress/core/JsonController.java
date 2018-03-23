@@ -73,6 +73,8 @@ public class JsonController {
                 return GSON.fromJson(jsonObj, InsertClassElement.class);
             case "user":
                 return GSON.fromJson(jsonObj, UserObject.class);
+            case "service":
+                return GSON.fromJson(jsonObj, ServiceObject.class);
 
             case "error":
                 return GSON.fromJson(jsonObj, ErrorObject.class);

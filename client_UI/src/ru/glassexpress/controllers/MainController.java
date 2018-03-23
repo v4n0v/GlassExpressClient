@@ -80,6 +80,11 @@ public class MainController extends BaseController {
     private URLConnection urlConnection;
     private JsonController jsonController;
 
+    public void setMenuController(MenuController menuController) {
+        this.menuController = menuController;
+    }
+
+    MenuController menuController;
     ObservedCommand command;
 
     private ObservableList<String> marksList = FXCollections.observableArrayList();
@@ -123,7 +128,7 @@ public class MainController extends BaseController {
         urlConnection = URLConnection.getInstance();
         jsonController = JsonController.getInstance();
         // car = new Car();
-        adapter = new BaseObjectAdapter();
+        adapter =  BaseObjectAdapter.getInsance();
 
         // glassTypeList = new ArrayList<>();
 
@@ -169,13 +174,34 @@ public class MainController extends BaseController {
                 dataMap.setSalonsList(getListOperator.getSalons());
                 dataMap.setPositionsList(getListOperator.getPositions());
                 dataMap.setPermissionsList(getListOperator.getPermissions());
-
+                dataMap.setServices(getListOperator.getServices());
                 fillObservableList(bodyTypeStringList, adapter.idTitleObjToString(dataMap.getBodyTypeList()));
                 nameLabel.setText(user.getName() + " " + user.getLastName());
                 int salonPos = dataMap.getPosById(dataMap.getSalonsList(), user.getSalonId());
                 salonLabel.setText(dataMap.getSalonsList().get(salonPos).getTitle());
             }
         }
+         initPermission();
+    }
+
+    public Button editGlassButton;
+    public Button deleteGlassButton;
+
+    public void initPermission() {
+        boolean isDiasbled;
+        if (user.getPermission()!= 1) {
+            isDiasbled = true;
+        } else {
+            isDiasbled = false;
+        }
+        deleteGlassButton.setDisable(isDiasbled);
+        colTGPriceIn.setVisible(isDiasbled);
+        delMarkButton.setDisable(isDiasbled);
+        delGenerationButton.setDisable(isDiasbled);
+        delModelButton.setDisable(isDiasbled);
+        editGlassButton.setDisable(isDiasbled);
+        menuController.initPermission();
+
     }
 
     // получаем список для конкретной выбранныей машины
@@ -544,13 +570,9 @@ public class MainController extends BaseController {
 
 
     private void initTGTable() {
-       // tblGoodsInStock.setEditable(false);
+        // tblGoodsInStock.setEditable(false);
 
-        if (user.getPermission()==1){
-            colTGPriceIn.setVisible(true);
-        } else {
-            colTGPriceIn.setVisible(false);
-        }
+
         colTGId.setCellValueFactory(cellData -> cellData.getValue().getIdProperty());
         colTGDesc.setCellValueFactory(cellData -> cellData.getValue().getDescProperty());
         colTGOption.setCellValueFactory(cellData -> cellData.getValue().getParameterListTitle());
@@ -567,7 +589,7 @@ public class MainController extends BaseController {
         colTGSelect.setCellFactory(tc -> new CheckBoxTableCell<>());
 
         tblGoodsInStock.setItems(glassObjects);
-       tblGoodsInStock.setEditable(true);
+        tblGoodsInStock.setEditable(true);
     }
 
 
@@ -747,7 +769,7 @@ public class MainController extends BaseController {
             for (GlassObject glassObject : glasList) {
                 BooleanProperty boo = glassObject.isSelectedProperty();
 
-                if ( boo.get()){
+                if (boo.get()) {
                     selected.append(glassObject.getId()).append(" ");
                     cart.add(glassObject);
                 }
@@ -756,7 +778,7 @@ public class MainController extends BaseController {
             }
             if (!selected.toString().equals("")) {
                 mainApp.initOrderConfirmLayout(cart);
-                AlertWindow.infoMessage("Выбраны N: " + selected);
+          //      AlertWindow.infoMessage("Выбраны N: " + selected);
             } else {
                 AlertWindow.errorMessage("Выбирите товар");
             }

@@ -27,7 +27,7 @@
                   <MenuItem mnemonicParsing="false" text="Еще какоенить окно" />
                </items>
             </Menu>
-            <Menu mnemonicParsing="false" text="Пользователи">
+            <Menu fx:id="menuUsers" mnemonicParsing="false" text="Пользователи">
                <items>
                   <MenuItem mnemonicParsing="false" onAction="#addAdmin" text="Добавить админимтратора" />
                   <MenuItem mnemonicParsing="false" onAction="#addEmp" text="Добавить сотрудника" />

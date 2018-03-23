@@ -347,7 +347,7 @@ public class GlassObject extends BaseObject {
         if (bodyTypeTitle != null && carTitle != null)
             return carTitle + " " + bodyTypeTitle + " " + glassFactoryTitle;
         else
-            return "Cтекло";
+            return "Cтекло клиента";
     }
     //    public void setIsSelected(Boolean isSelected) {
 //        this.isSelected = isSelected;

@@ -172,6 +172,7 @@ public class GEClient extends Application {
             mainController.setMainApp(this);
             mainController.setStage(carsSelectStage);
             mainController.setDataMap(dataMap);
+            mainController.setMenuController(menuController);
             //clientController.setCarsController(mainController);
             mainController.init();
             carsSelectStage.setOnCloseRequest((event) -> primaryStage.close());
@@ -207,6 +208,7 @@ public class GEClient extends Application {
             addGlassStage.setScene(new Scene(modelAdd));
             mainController.setStage(addGlassStage);
             mainController.setAddGlassController(addGlassController);
+
             //clientController.setCarsController(mainController);
             addGlassController.init();
             //addGlassStage.setOnCloseRequest((event) -> primaryStage.close());
@@ -261,7 +263,7 @@ public class GEClient extends Application {
             AnchorPane orderRootElement = (AnchorPane) loaderLog.load();
             Scene sceneLog = new Scene(orderRootElement);
 
-            orderConfirmStage.setTitle("Оформить каказ");
+            orderConfirmStage.setTitle("Оформить заказ");
             //  addEmpStage.setOnCloseRequest((event) -> primaryStage.close());
             //   setStyleToStage(currentStyleCSS, sceneLog);
             orderConfirmStage.setResizable(false);
@@ -274,6 +276,7 @@ public class GEClient extends Application {
             controller.setMainController(mainController);
             controller.setSelectedGlass(cart);
             controller.setMainApp(this);
+            controller.setDataMap(dataMap);
             controller.setStage(orderConfirmStage);
             controller.init();
             orderConfirmStage.show();

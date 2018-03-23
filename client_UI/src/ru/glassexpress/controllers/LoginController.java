@@ -49,7 +49,7 @@ public class LoginController extends BaseController {
                         UserObject user = operator.getUserByKey();
                         user.setKey(key);
                         mainController.setUser(user);
-
+                      //  mainController.initPermission();
                         mainController.reconnect();
                         close();
                  //   }

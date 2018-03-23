@@ -81,8 +81,8 @@
                                 </TableView>
                                 <Button layoutX="1236.0" layoutY="751.0" mnemonicParsing="false" onAction="#openAddGlassDialog" text="Добавить " AnchorPane.bottomAnchor="2.0" AnchorPane.rightAnchor="0.0" />
                                 <Button layoutX="1261.0" layoutY="760.0" mnemonicParsing="false" onAction="#openNewOrder" text="Оформить заказ" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" />
-                                <Button layoutX="1228.0" layoutY="701.0" mnemonicParsing="false" onAction="#deleteSelectedGlass" text="Удалить" AnchorPane.bottomAnchor="2.0" AnchorPane.rightAnchor="92.0" />
-                        <Button layoutX="1108.0" layoutY="701.0" mnemonicParsing="false" onAction="#editGlass" text="Редактировать" AnchorPane.bottomAnchor="2.0" AnchorPane.rightAnchor="172.0" />
+                                <Button fx:id="deleteGlassButton" layoutX="1228.0" layoutY="701.0" mnemonicParsing="false" onAction="#deleteSelectedGlass" text="Удалить" AnchorPane.bottomAnchor="2.0" AnchorPane.rightAnchor="92.0" />
+                                <Button fx:id="editGlassButton" layoutX="1108.0" layoutY="701.0" mnemonicParsing="false" onAction="#editGlass" text="Редактировать" AnchorPane.bottomAnchor="2.0" AnchorPane.rightAnchor="172.0" />
                             </children>
                             <padding>
                                 <Insets top="5.0" />

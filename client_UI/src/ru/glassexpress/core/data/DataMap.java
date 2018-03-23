@@ -1,5 +1,6 @@
 package ru.glassexpress.core.data;
 
+import javafx.collections.ObservableList;
 import ru.glassexpress.core.objects.*;
 
 import java.util.List;
@@ -25,6 +26,10 @@ public class DataMap {
     private List<IdTitleObj> positionsList;
     // список прав доступа
     private List<IdTitleObj> permissionsList;
+
+
+    // список услуг
+    private List<ServiceObject> services;
 
     public List<IdTitleObj> getSalonsList() {
         return salonsList;
@@ -148,6 +153,8 @@ public class DataMap {
         this.glassTableRow = glassTableRow;
     }
 
+
+    //TODO пееренсти в адаптер
     public float getInsertClassPriceByGlassType(int inserClassId, int glassTypeId){
         for (int i = 0; i < insertClassList.size(); i++) {
             if (insertClassList.get(i).getId()==inserClassId){
@@ -180,5 +187,14 @@ public class DataMap {
         }
         return -1;
     }
+
+    public void setServices(List<ServiceObject> services) {
+        this.services = services;
+    }
+
+    public ObservableList<ServiceObject> getServices() {
+        return (ObservableList<ServiceObject>) services;
+    }
+
 
 }

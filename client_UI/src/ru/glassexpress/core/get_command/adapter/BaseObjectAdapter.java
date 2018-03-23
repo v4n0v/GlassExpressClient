@@ -9,13 +9,19 @@ import java.util.List;
 
 public class BaseObjectAdapter {
 
+    public static BaseObjectAdapter getInsance() {
+        if (adapter==null) return new BaseObjectAdapter();
+        return adapter;
+    }
 
-    public BaseObjectAdapter() {
+    static BaseObjectAdapter adapter;
+
+    private BaseObjectAdapter() {
 
     }
 
 
-    public ObservableList<String> returnStringList(ObservableList<BaseObject> inputList) {
+    public static ObservableList<String> returnStringList(ObservableList<BaseObject> inputList) {
 
         if (inputList != null) {
             List<String> resultList = new ArrayList<>();
@@ -158,4 +164,28 @@ public class BaseObjectAdapter {
         return null;
     }
 
+    public  List<ServiceObject> returnServicesList(List<BaseObject> services) {
+        if (services != null) {
+            List<ServiceObject> resultList = new ArrayList<>();
+            for (BaseObject service : services) {
+                ServiceObject obj= (ServiceObject) service;
+                resultList.add(obj);
+            }
+            return FXCollections.observableArrayList(resultList);
+        }
+        return null;
+    }
+
+
+    public ObservableList<String> returnServicesStringList(List<ServiceObject> services) {
+        if (services != null) {
+            List<String> resultList = new ArrayList<>();
+            for (ServiceObject service : services) {
+
+                resultList.add(service.getTitle());
+            }
+            return FXCollections.observableArrayList(resultList);
+        }
+        return null;
+    }
 }

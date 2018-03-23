@@ -74,7 +74,7 @@ public class AddGlassController extends BaseController {
 
         initButton();
         Log2File.writeLog("Инициализация окна добавления новго стекла");
-        adapter = new BaseObjectAdapter();
+        adapter = BaseObjectAdapter.getInsance();
         glassOptList = adapter.idTitleObjToString(dataMap.getGlassOptList());
         glassFactoryList = adapter.idTitleObjToString(dataMap.getGlassFactoryList());
         glassTypeList = adapter.idTitleObjToString(dataMap.getGlassTypeList());

@@ -33,7 +33,7 @@ public class AddEmpController extends BaseController {
         Log2File.writeLog("Иинициализация окна добавления сотрудника");
         // инициализация формы
         dataMap = mainController.getDataMap();
-        adapter = new BaseObjectAdapter();
+        adapter = BaseObjectAdapter.getInsance();
         salonsList = adapter.idTitleObjToString(dataMap.getSalonsList());
         permisList = adapter.idTitleObjToString(dataMap.getPermissionsList());
         posList = adapter.idTitleObjToString(dataMap.getPositionsList());

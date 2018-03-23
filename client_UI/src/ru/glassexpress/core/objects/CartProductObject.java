@@ -3,12 +3,29 @@ package ru.glassexpress.core.objects;
 import com.google.gson.JsonElement;
 import javafx.beans.property.*;
 
-public class CartElementObject extends BaseObject {
-    public CartElementObject(GlassObject glass) {
-        super("cart");
+public class CartProductObject extends BaseObject {
+    public CartProductObject(GlassObject glass) {
+        super("cartProduct");
         this.glass=glass;
+        this.count=new SimpleIntegerProperty();
+        this.isInsert = new SimpleBooleanProperty();
+        this.count.setValue(1);
+
+    }
+    private final BooleanProperty isInsert;
+
+
+    private GlassObject glass;
+
+    public int getCountValue() {
+        return count.get();
     }
 
+    public IntegerProperty getCountProperty() {
+        return count;
+    }
+
+    private final IntegerProperty count;
 
     public GlassObject getGlass() {
         return glass;
@@ -18,15 +35,7 @@ public class CartElementObject extends BaseObject {
         this.glass = glass;
     }
 
-    private final BooleanProperty isTone = new SimpleBooleanProperty();
 
-    public boolean isIsTone() {
-        return isTone.get();
-    }
-
-    public BooleanProperty isToneProperty() {
-        return isTone;
-    }
 
     public boolean isIsInsert() {
         return isInsert.get();
@@ -36,14 +45,12 @@ public class CartElementObject extends BaseObject {
         return isInsert;
     }
 
-    private final BooleanProperty isInsert = new SimpleBooleanProperty();
 
-    GlassObject glass;
 
 
     @Override
     public JsonElement toJSONObject() {
-        obj1.addProperty("objectClass", objectClass);
+        obj1.addProperty("objClass", objectClass);
         return obj1;
     }
 
@@ -57,5 +64,8 @@ public class CartElementObject extends BaseObject {
         return new SimpleObjectProperty<Float>(glass.getPrice());
     }
 
-
+//    public SimpleObjectProperty<Integer> getCountValue() {
+//
+//        return new SimpleObjectProperty<Integer>(count);
+//    }
 }
