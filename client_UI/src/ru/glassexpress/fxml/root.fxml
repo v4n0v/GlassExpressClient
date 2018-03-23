@@ -5,9 +5,11 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="1140.0" prefWidth="1425.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.glassexpress.controllers.MenuController">
-   <top>
-      <MenuBar BorderPane.alignment="CENTER">
+
+<?import javafx.scene.layout.AnchorPane?>
+<AnchorPane prefHeight="1140.0" prefWidth="1425.0" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.glassexpress.controllers.MenuController">
+   <children>
+      <MenuBar layoutX="10.0" layoutY="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <menus>
             <Menu mnemonicParsing="false" text="Файл">
                <items>
@@ -40,6 +42,6 @@
             </Menu>
          </menus>
       </MenuBar>
-   </top>
-
-</BorderPane>
+      <AnchorPane fx:id="container" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0" />
+   </children>
+</AnchorPane>

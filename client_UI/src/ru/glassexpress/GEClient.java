@@ -31,7 +31,7 @@ public class GEClient extends Application {
     }
 
     private Stage primaryStage;
-    private BorderPane rootLayout;
+    private AnchorPane rootLayout;
 
 
 
@@ -61,7 +61,7 @@ public class GEClient extends Application {
             loader.setLocation(GEClient.class.getResource("fxml/root.fxml"));
             Log2File.writeLog("rootLayout.fxml подгружен");
 
-            rootLayout = (BorderPane) loader.load();
+            rootLayout = (AnchorPane) loader.load();
             menuController = loader.getController();
             menuController.setMainApp(this);
             menuController.setStage(primaryStage);
@@ -154,16 +154,16 @@ public class GEClient extends Application {
             mainController = loader.getController();
             // Помещаем сведения об адресатах в центр корневого макета.
             menuController.setMainController(mainController);
-            rootLayout.setCenter(modelAdd);
+
             ObservableList<Node>childrens = rootLayout.getChildren();
 
-//
-//            AnchorPane.setLeftAnchor(modelAdd, 0d);
-//            AnchorPane.setRightAnchor(modelAdd, 0d);
-//
-//            AnchorPane.setTopAnchor(modelAdd, 0d);
-//            AnchorPane.setBottomAnchor(modelAdd, 0d);
-          //  childrens.add(modelAdd);
+
+            AnchorPane.setLeftAnchor(modelAdd, 0d);
+            AnchorPane.setRightAnchor(modelAdd, 0d);
+
+            AnchorPane.setTopAnchor(modelAdd, 15d);
+            AnchorPane.setBottomAnchor(modelAdd, 0d);
+            childrens.add(modelAdd);
 //            AnchorPane container = (AnchorPane) childrens.get(1);
 //            container.modelAdd;
 
