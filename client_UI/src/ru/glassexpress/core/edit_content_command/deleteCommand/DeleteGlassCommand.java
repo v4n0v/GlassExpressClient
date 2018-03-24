@@ -4,8 +4,8 @@ import ru.glassexpress.core.data.Prefs;
 import ru.glassexpress.request_builder.RequestBuilder;
 
 public class DeleteGlassCommand extends DeleteElementCommand {
-    public DeleteGlassCommand(int id) {
-        super(id);
+    public DeleteGlassCommand(int id, String key) {
+        super(id, key);
     }
 
     @Override

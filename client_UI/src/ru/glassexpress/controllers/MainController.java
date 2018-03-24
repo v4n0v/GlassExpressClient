@@ -188,13 +188,16 @@ public class MainController extends BaseController {
 
     public void initPermission() {
         boolean isDiasbled;
+        boolean isVisible;
         if (user.getPermission()!= 1) {
             isDiasbled = true;
+            isVisible=false;
         } else {
             isDiasbled = false;
+            isVisible=true;
         }
         deleteGlassButton.setDisable(isDiasbled);
-        colTGPriceIn.setVisible(isDiasbled);
+        colTGPriceIn.setVisible(isVisible);
         delMarkButton.setDisable(isDiasbled);
         delGenerationButton.setDisable(isDiasbled);
         delModelButton.setDisable(isDiasbled);
@@ -715,7 +718,7 @@ public class MainController extends BaseController {
                         + insertClassComboBox.getSelectionModel().getSelectedItem());
         if (isTrue) {
             // если нажата ok, обновляем
-            if (updateOperator.updAutoInsertClass(id, carID)) {
+            if (updateOperator.updAutoInsertClass(id, carID, user.getKey())) {
                 // обновил класс установки в объекте в dataMap
                 getSelectedCarObj().setIdInsert(id);
                 // если уже открыты  доступные товары, то предлогает обновить список
@@ -900,7 +903,7 @@ public class MainController extends BaseController {
 
     public void updGlass(GlassObject glassPrepared) {
         System.out.println("добавляю новое стекло в базу");
-        if (updateOperator.editGlassIsComplete(glassPrepared)) {
+        if (updateOperator.editGlassIsComplete(glassPrepared,user.getKey())) {
             //fillGenerationsListView();
             showGoods();
             System.out.println("Запись обновлена базу, все ок");

@@ -8,8 +8,8 @@ public class UpdateGlassCommand extends UpdateElementCommand {
 
     GlassObject glass;
 
-    public UpdateGlassCommand(GlassObject glass) {
-        super(glass.getId());
+    public UpdateGlassCommand(GlassObject glass, String key) {
+        super(glass.getId(),key);
         this.glass = glass;
     }
 
@@ -19,6 +19,7 @@ public class UpdateGlassCommand extends UpdateElementCommand {
         request=new RequestBuilder().setMethod(Prefs.METHOD_GET)
                 .setTarget(Prefs.TARGET_GLASS)
                 .setAction(Prefs.ACTION_UPD)
+                .setKey(key)
                 .setRequest("id_car", String.valueOf(glass.getCarId()))
                 .setRequest("id_glass_type", String.valueOf(glass.getGlassTypeId()))
                 .setRequest("id_glass_opt", String.valueOf(glass.getGlassOptionId()))

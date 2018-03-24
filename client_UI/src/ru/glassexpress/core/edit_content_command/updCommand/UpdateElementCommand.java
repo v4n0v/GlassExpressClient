@@ -7,10 +7,10 @@ public abstract class UpdateElementCommand {
     Request request;
 
     int id;
-
-    public UpdateElementCommand(int id) {
+    String key;
+    public UpdateElementCommand(int id, String key) {
         this.id = id;
-
+        this.key=key;
     }
 
     abstract void prepareRequest();

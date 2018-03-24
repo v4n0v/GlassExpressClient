@@ -8,8 +8,8 @@ public class UpdateInsertClassCommand extends UpdateElementCommand {
     private int autoId;
 
 
-    public UpdateInsertClassCommand(int id, int autoId) {
-       super(id);
+    public UpdateInsertClassCommand(int id, int autoId,String key) {
+       super(id, key);
         this.autoId = autoId;
     }
 

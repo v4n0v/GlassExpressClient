@@ -5,8 +5,8 @@ import ru.glassexpress.request_builder.RequestBuilder;
 
 public class DeleteMarkCommand extends DeleteElementCommand {
 
-    public DeleteMarkCommand(int id) {
-        super(id);
+    public DeleteMarkCommand(int id, String key) {
+        super(id, key);
     }
 
     @Override
@@ -15,6 +15,7 @@ public class DeleteMarkCommand extends DeleteElementCommand {
                 .setMethod(Prefs.METHOD_POST)
                 .setTarget(Prefs.TARGET_MARK)
                 .setAction(Prefs.ACTION_DELETE)
+                .setKey(key)
                 .setRequest("id", String.valueOf(id))
                 .build();
     }

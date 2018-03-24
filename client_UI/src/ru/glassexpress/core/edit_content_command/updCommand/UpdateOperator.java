@@ -12,13 +12,13 @@ public class UpdateOperator {
         this.key=key;
     }
 
-    public boolean updAutoInsertClass(int idClass,int autoId) {
-        comand=new UpdateInsertClassCommand(idClass, autoId);
+    public boolean updAutoInsertClass(int idClass,int autoId, String key) {
+        comand=new UpdateInsertClassCommand(idClass, autoId, key);
         return comand.updateElement();
     }
 
-    public boolean editGlassIsComplete(GlassObject glassPrepared) {
-        comand=new UpdateGlassCommand(glassPrepared);
+    public boolean editGlassIsComplete(GlassObject glassPrepared, String key) {
+        comand=new UpdateGlassCommand(glassPrepared, key);
         return  comand.updateElement();
     }
 

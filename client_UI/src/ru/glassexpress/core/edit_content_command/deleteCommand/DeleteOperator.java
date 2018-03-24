@@ -9,23 +9,23 @@ public class DeleteOperator {
     }
 
     public boolean deleteGenerationIsComplete(int id) {
-        comand=new DeleteGenerationCommand(id);
+        comand=new DeleteGenerationCommand(id, key);
         return comand.deleteElement();
     }
 
     public boolean deleteModelIsComplete(int id) {
-        comand=new DeleteModelCommand(id);
+        comand=new DeleteModelCommand(id, key);
         return comand.deleteElement();
     }
 
     public boolean deleteMarkIsComplete(int id) {
-        comand=new DeleteMarkCommand(id);
+        comand=new DeleteMarkCommand(id,key);
         return comand.deleteElement();
     }
 
 
     public boolean deleteGlassIsComplete(int id) {
-        comand=new DeleteGlassCommand(id);
+        comand=new DeleteGlassCommand(id,key);
         return comand.deleteElement();
     }
 }

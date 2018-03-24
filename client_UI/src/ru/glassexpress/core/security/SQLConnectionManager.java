@@ -1,7 +1,8 @@
 package ru.glassexpress.core.security;
 
 import javafx.util.StringConverter;
-import ru.glassexpress.Log2File;
+
+import ru.glassexpress.core.data.Log2File;
 import ru.glassexpress.library.AlertWindow;
 
 import java.io.File;

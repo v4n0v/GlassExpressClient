@@ -6,11 +6,11 @@ import ru.glassexpress.request_chain.RequestController;
 public abstract class DeleteElementCommand {
     Request request;
     int id;
+String key;
 
-
-    public DeleteElementCommand(int id) {
+    public DeleteElementCommand(int id, String key) {
         this.id = id;
-
+this.key=key;
 
     }
 
