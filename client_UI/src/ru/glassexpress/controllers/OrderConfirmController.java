@@ -147,7 +147,8 @@ public class OrderConfirmController extends BaseController {
 
         countServiceCol.setCellValueFactory(cellData -> cellData.getValue().getCountProperty().asObject());
         countServiceCol.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
-       servicePriceCol.setCellValueFactory(cellData -> cellData.getValue().getPriceFloatProperty());
+
+        servicePriceCol.setCellValueFactory(cellData -> cellData.getValue().getPriceFloatProperty());
 
     }
 

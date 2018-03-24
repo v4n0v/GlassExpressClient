@@ -45,10 +45,10 @@ public class AddAdminController extends BaseController {
         login=login.replace(" ","");
 
         pass1 = fieldPass1.getText();
-        pass1=login.replace(" ","");
+        pass1=pass1.replace(" ","");
 
         pass2 = fieldPass2.getText();
-        pass2=login.replace(" ","");
+        pass2=pass2.replace(" ","");
 
         if (StringValidator.isLoginCorrect(login) && StringValidator.isPassCorrect(pass1) && StringValidator.isPassCorrect(pass2)
               && login.length()>2 && pass1.length()>2 && pass2.length()>2) {

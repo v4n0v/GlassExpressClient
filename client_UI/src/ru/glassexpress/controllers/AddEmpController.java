@@ -67,7 +67,10 @@ public class AddEmpController extends BaseController {
                     newUser.setLastName(fieldLastName.getText());
                     newUser.setSalonId(dataMap.getSalonsList().get(salonsComboBox.getSelectionModel().getSelectedIndex()).getId());
                     newUser.setPermission(dataMap.getPermissionsList().get(permisComboBox.getSelectionModel().getSelectedIndex()).getId());
-                    newUser.setPositionId(dataMap.getPermissionsList().get(posComboBox.getSelectionModel().getSelectedIndex()).getId());
+                    newUser.setPositionId(dataMap.getPositionsList().get(posComboBox.getSelectionModel().getSelectedIndex()).getId());
+                    newUser.setLogin(login);
+
+                    newUser.setPassHash(pass.hashCode());
                     newUser.setKey(key);
                     // добавляем пользователя на сервер
                     if (addOperator.addUserIsComplete(newUser)) {

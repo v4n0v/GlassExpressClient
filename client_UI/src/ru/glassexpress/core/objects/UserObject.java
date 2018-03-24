@@ -4,6 +4,10 @@ import com.google.gson.JsonElement;
 
 public class UserObject extends BaseObject{
 
+    private String login;
+    private int pasHash;
+    private int passHash;
+
     public UserObject () {
         super("user");
 
@@ -93,6 +97,7 @@ public class UserObject extends BaseObject{
     private int permission;
     private String key;
 
+
     @Override
     public JsonElement toJSONObject() {
         obj1.addProperty("id", id);
@@ -109,5 +114,21 @@ public class UserObject extends BaseObject{
     @Override
     public String toString() {
         return "name = "+name+", last name = "+lastName+"\npos = "+positionId+"\nsalon = "+salonId+"\npermis = "+permission;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public int getPasHash() {
+        return pasHash;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public void setPassHash(int passHash) {
+        this.passHash = passHash;
     }
 }

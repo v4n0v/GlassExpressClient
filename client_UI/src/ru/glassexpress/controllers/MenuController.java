@@ -37,12 +37,12 @@ public class MenuController extends BaseController {
     public void initPermission() {
         boolean visible;
 
-            if (mainController.getUser().getPermission() != 1) {
+            if (mainController.getUser().getPermission() == 1) {
                 visible = true;
             } else {
                 visible = false;
             }
-            menuUsers.setDisable(visible);
+            menuUsers.setVisible(visible);
 
     }
 

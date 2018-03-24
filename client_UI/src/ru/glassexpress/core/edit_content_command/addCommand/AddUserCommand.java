@@ -24,6 +24,8 @@ public class AddUserCommand extends AddElementCommand {
                 .setRequest("id_salon",String.valueOf(user.getSalonId()))
                 .setRequest("key_user", String.valueOf(user.getKey().hashCode()))
                 .setRequest("id_permission", String.valueOf(user.getPositionId()))
+                .setRequest("login", user.getLogin())
+                .setRequest("passHash", String.valueOf(user.getPasHash()))
                 .build();
     }
 }
