@@ -1,6 +1,6 @@
 package ru.glassexpress.core.get_command;
 
-import ru.glassexpress.core.data.Prefs;
+import ru.glassexpress.library.Resources;
 import ru.glassexpress.core.objects.*;
 import ru.glassexpress.request_builder.RequestBuilder;
 
@@ -14,9 +14,9 @@ public class GetGlassTableCommand extends ObservedCommand{
     @Override
     public void buildRequest() {
         GenerationObj car = (GenerationObj) inputObject;
-        request = new RequestBuilder().setMethod(Prefs.METHOD_POST)
-                .setAction(Prefs.ACTION_SELECT)
-                .setTarget(Prefs.TARGET_TABLE_GOODS)
+        request = new RequestBuilder().setMethod(Resources.METHOD_POST)
+                .setAction(Resources.ACTION_SELECT)
+                .setTarget(Resources.TARGET_TABLE_GOODS)
                 .setKey(key)
 
                 .setRequest("car", String.valueOf(car.getId()))

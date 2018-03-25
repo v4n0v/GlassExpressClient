@@ -1,6 +1,6 @@
 package ru.glassexpress.core.get_command;
 
-import ru.glassexpress.core.data.Prefs;
+import ru.glassexpress.library.Resources;
 import ru.glassexpress.core.objects.BaseObject;
 import ru.glassexpress.core.objects.IdTitleObj;
 import ru.glassexpress.request_builder.RequestBuilder;
@@ -13,9 +13,9 @@ public class GetGenerationCommand extends ObservedCommand {
     public void buildRequest() {
         if (inputObject!=null) {
             IdTitleObj car = (IdTitleObj) inputObject;
-            request = new RequestBuilder().setMethod(Prefs.METHOD_POST)
-                    .setAction(Prefs.ACTION_SELECT)
-                    .setTarget(Prefs.TARGET_GENERATION)
+            request = new RequestBuilder().setMethod(Resources.METHOD_POST)
+                    .setAction(Resources.ACTION_SELECT)
+                    .setTarget(Resources.TARGET_GENERATION)
                     .setKey(key)
                     // .setRequest("mark", markListView.getSelectionModel().getSelectedItem())
                     .setRequest("model", String.valueOf(car.getId()))

@@ -1,6 +1,6 @@
 package ru.glassexpress.core.edit_content_command.updCommand;
 
-import ru.glassexpress.core.data.Prefs;
+import ru.glassexpress.library.Resources;
 import ru.glassexpress.core.objects.GlassObject;
 import ru.glassexpress.request_builder.RequestBuilder;
 
@@ -16,9 +16,9 @@ public class UpdateGlassCommand extends UpdateElementCommand {
     @Override
     void prepareRequest() {
 
-        request=new RequestBuilder().setMethod(Prefs.METHOD_GET)
-                .setTarget(Prefs.TARGET_GLASS)
-                .setAction(Prefs.ACTION_UPD)
+        request=new RequestBuilder().setMethod(Resources.METHOD_GET)
+                .setTarget(Resources.TARGET_GLASS)
+                .setAction(Resources.ACTION_UPD)
                 .setKey(key)
                 .setRequest("id_car", String.valueOf(glass.getCarId()))
                 .setRequest("id_glass_type", String.valueOf(glass.getGlassTypeId()))

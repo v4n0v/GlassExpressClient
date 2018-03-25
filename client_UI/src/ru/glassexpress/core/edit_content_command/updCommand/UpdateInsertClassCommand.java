@@ -1,6 +1,6 @@
 package ru.glassexpress.core.edit_content_command.updCommand;
 
-import ru.glassexpress.core.data.Prefs;
+import ru.glassexpress.library.Resources;
 import ru.glassexpress.request_builder.RequestBuilder;
 
 public class UpdateInsertClassCommand extends UpdateElementCommand {
@@ -17,9 +17,9 @@ public class UpdateInsertClassCommand extends UpdateElementCommand {
     @Override
     void prepareRequest() {
         request = new RequestBuilder()
-                .setMethod(Prefs.METHOD_POST)
-                .setTarget(Prefs.TARGET_INSERT_CLASS)
-                .setAction(Prefs.ACTION_UPD)
+                .setMethod(Resources.METHOD_POST)
+                .setTarget(Resources.TARGET_INSERT_CLASS)
+                .setAction(Resources.ACTION_UPD)
                 .setRequest("id", String.valueOf(id))
                 .setRequest("autoId", String.valueOf(autoId))
                 .build();

@@ -5,7 +5,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import ru.glassexpress.core.data.Log2File;
-import ru.glassexpress.core.data.Prefs;
+import ru.glassexpress.library.Resources;
 
 import ru.glassexpress.core.get_command.adapter.BaseObjectAdapter;
 import ru.glassexpress.library.AlertWindow;
@@ -90,7 +90,7 @@ public class AddGlassController extends BaseController {
 
 //        float defInsertPrice = dataMap.getInsertClassList().get(3).getInsertFront();
 //        insertPriceTextField.setText(String.valueOf(defInsertPrice));
-        insertPriceTextField.setText(String.valueOf(Prefs.DEFAULT_INSERT_PRICE));
+        insertPriceTextField.setText(String.valueOf(Resources.DEFAULT_INSERT_PRICE));
 
 
         optMultipleList = FXCollections.observableArrayList();

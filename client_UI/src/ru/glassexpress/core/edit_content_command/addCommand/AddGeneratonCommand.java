@@ -1,6 +1,6 @@
 package ru.glassexpress.core.edit_content_command.addCommand;
 
-import ru.glassexpress.core.data.Prefs;
+import ru.glassexpress.library.Resources;
 import ru.glassexpress.core.objects.BaseObject;
 import ru.glassexpress.core.objects.IdTitleObj;
 import ru.glassexpress.request_builder.RequestBuilder;
@@ -15,9 +15,9 @@ public class AddGeneratonCommand extends AddElementCommand {
         answer = answer.replace(" ", "");
         String[] gen = answer.split("-");
         IdTitleObj car = (IdTitleObj) baseObject;
-        request = new RequestBuilder().setMethod(Prefs.METHOD_POST)
-                .setTarget(Prefs.TARGET_GENERATION)
-                .setAction(Prefs.ACTION_INSERT)
+        request = new RequestBuilder().setMethod(Resources.METHOD_POST)
+                .setTarget(Resources.TARGET_GENERATION)
+                .setAction(Resources.ACTION_INSERT)
                 .setKey(key)
                 //   .setRequest("mark", car.getMark())
                 .setRequest("model", String.valueOf(car.getId()))

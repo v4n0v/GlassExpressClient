@@ -1,6 +1,6 @@
 package ru.glassexpress.core.edit_content_command.deleteCommand;
 
-import ru.glassexpress.core.data.Prefs;
+import ru.glassexpress.library.Resources;
 import ru.glassexpress.request_builder.RequestBuilder;
 
 public class DeleteMarkCommand extends DeleteElementCommand {
@@ -12,9 +12,9 @@ public class DeleteMarkCommand extends DeleteElementCommand {
     @Override
     void prepareRequest() {
         request = new RequestBuilder()
-                .setMethod(Prefs.METHOD_POST)
-                .setTarget(Prefs.TARGET_MARK)
-                .setAction(Prefs.ACTION_DELETE)
+                .setMethod(Resources.METHOD_POST)
+                .setTarget(Resources.TARGET_MARK)
+                .setAction(Resources.ACTION_DELETE)
                 .setKey(key)
                 .setRequest("id", String.valueOf(id))
                 .build();

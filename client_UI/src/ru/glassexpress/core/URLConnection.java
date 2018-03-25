@@ -1,7 +1,7 @@
 package ru.glassexpress.core;
 
 
-import ru.glassexpress.core.data.Prefs;
+import ru.glassexpress.library.Resources;
 import ru.glassexpress.request_builder.Request;
 
 import java.io.BufferedReader;
@@ -50,7 +50,7 @@ public class URLConnection {
                         response.append(inputLine);
                     }
 
-                    if (response.equals(Prefs.ERROR_RESPONSE)) {
+                    if (response.equals(Resources.ERROR_RESPONSE)) {
                         errorMessage();
                     }
                     in.close();

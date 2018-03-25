@@ -12,6 +12,9 @@ import ru.glassexpress.core.objects.UserObject;
 //import ru.glassexpress.core.security.ClientSecurityManager;
 import ru.glassexpress.core.StringValidator;
 import ru.glassexpress.library.AlertWindow;
+import ru.glassexpress.library.Resources;
+
+import java.text.SimpleDateFormat;
 
 
 public class LoginController extends BaseController {
@@ -57,8 +60,17 @@ public class LoginController extends BaseController {
                         if (user != null) {
                             user.setKey(keyObj.getTitle());
                             mainController.setUser(user);
-                            //  mainController.initPermission();
-                            mainController.reconnect();
+
+                            // получаем из базы последний день, открытый этим администратором
+                            long lastDay = getLastOpenedDay();
+                            long date = System.currentTimeMillis();
+                            // если адиминстратор уже заполнял форму дня, тогда открываем приложенеие,
+                            // иначе заполнять форму, добавлять сотрудников дня
+                            if (!isDayAlreadyOpened(date, lastDay)){
+                                mainApp.initGoodMorningLayout(user);
+                            } else {
+                                mainController.initPermission();
+                            }
                             close();
                         } else {
                             AlertWindow.errorMessage("Пользователя не получены. Сервер не отвечает.");
@@ -82,6 +94,32 @@ public class LoginController extends BaseController {
     @Override
     public void init() {
         Log2File.writeLog("Иинициализация окна аутентификации");
+    }
+
+    private static boolean isDayAlreadyOpened(long currentDateMillis, long dbDateMillis) {
+
+        if (currentDateMillis == 0 || dbDateMillis == 0) {
+            return false;
+        }
+
+        SimpleDateFormat formatter = new SimpleDateFormat(Resources.DATE_PATTERN_SIMPLE);
+        formatter.setLenient(false);
+        String value1 = formatter.format(currentDateMillis);
+        String value2 = formatter.format(dbDateMillis);
+
+        if (!value1.equals(value2)){
+            return false;
+        }
+//        try {
+//            formatter.parse(value);
+//        } catch (ParseException e) {
+//            return false;
+//        }
+        return true;
+    }
+
+    private long getLastOpenedDay() {
+        return 0;
     }
 
 }

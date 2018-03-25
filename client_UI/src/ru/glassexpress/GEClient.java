@@ -14,6 +14,7 @@ import ru.glassexpress.controllers.*;
 import ru.glassexpress.core.data.Log2File;
 import ru.glassexpress.core.data.DataMap;
 import ru.glassexpress.core.objects.GlassObject;
+import ru.glassexpress.core.objects.UserObject;
 
 
 import java.io.IOException;
@@ -253,7 +254,37 @@ public class GEClient extends Application {
         }
 
     }
+    public void initGoodMorningLayout(UserObject user) {
+        try {
+            // новое окно логина
+            Stage goodMorningStage = new Stage();
+            FXMLLoader loaderLog = new FXMLLoader();
+            loaderLog.setLocation(GEClient.class.getResource("fxml/goodMorningLayout.fxml"));
+            AnchorPane dayRootElement = (AnchorPane) loaderLog.load();
+            Scene sceneLog = new Scene(dayRootElement);
 
+            goodMorningStage.setTitle("C добрыйм утром! Сегодня нас ждет прекрасный день!");
+            //  addEmpStage.setOnCloseRequest((event) -> primaryStage.close());
+            //   setStyleToStage(currentStyleCSS, sceneLog);
+            goodMorningStage.setResizable(false);
+            goodMorningStage.setScene(sceneLog);
+            goodMorningStage.initModality(Modality.WINDOW_MODAL);
+            goodMorningStage.initOwner(primaryStage);
+
+
+            DayController controller = loaderLog.getController();
+            controller.setMainController(mainController);
+            controller.setMainApp(this);
+            controller.setStage(goodMorningStage);
+            controller.setAdministrator(user);
+            controller.init();
+
+            goodMorningStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
     public void initOrderConfirmLayout(List<GlassObject> cart) {
         try {
             // новое окно логина

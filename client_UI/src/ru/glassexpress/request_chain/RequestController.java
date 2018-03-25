@@ -2,7 +2,7 @@ package ru.glassexpress.request_chain;
 
 import ru.glassexpress.core.ConnectionManager;
 import ru.glassexpress.core.JsonController;
-import ru.glassexpress.core.data.Prefs;
+import ru.glassexpress.library.Resources;
 import ru.glassexpress.core.URLConnection;
 import ru.glassexpress.library.AlertWindow;
 import ru.glassexpress.core.objects.BaseObject;
@@ -29,7 +29,7 @@ public class RequestController {
            // String req = URLEncoder.encode(request.toString(), "UTF-8");
             jsonResponse = connectionManager.setRequest(req).getResp();
             if (jsonResponse != null) {
-                if (!jsonResponse.equals(Prefs.ERROR_RESPONSE)) {
+                if (!jsonResponse.equals(Resources.ERROR_RESPONSE)) {
                     return jsonResponse;
                 }
             } else {
@@ -44,7 +44,7 @@ public class RequestController {
 //            jsonResponse = urlConnection.receiveData(request);
 //
 //            if (jsonResponse != null) {
-//                if (!jsonResponse.equals(Prefs.ERROR_RESPONSE)) {
+//                if (!jsonResponse.equals(Resources.ERROR_RESPONSE)) {
 //                    return jsonResponse;
 //                }
 //            } else {

@@ -1,6 +1,6 @@
-package ru.glassexpress.core.data;
+package ru.glassexpress.library;
 
-public class Prefs {
+public class Resources {
 
     public final static String METHOD_GET = "GET";
     public final static String METHOD_POST = "POST";
@@ -13,14 +13,15 @@ public class Prefs {
 
     public final static float DEFAULT_INSERT_PRICE = 2000;
 
-
+    public final static String DATE_PATTERN = "EEEE, d MMMM yyyy 'г'. ";
+ public final static String DATE_PATTERN_SIMPLE = "dd.MM.yyyy";
     public final static String TARGET_MARK = "mark";
     public static final String TARGET_MODEL = "model" ;
     public static final String TARGET_GENERATION = "generation" ;
     public static final String TARGET_USER = "user" ;
     public static final String TARGET_TABLE_GOODS = "table_goods";
     public static final String TARGET_INSERT_CLASS = "insert_class";
- public static final String TARGET_INSERT_CLASS_ELEMENT = "insert_class_";
+    public static final String TARGET_INSERT_CLASS_ELEMENT = "insert_class_";
     public final static String ERROR_RESPONSE= "FUCK OFF";
 
     public final static String ADD_MARK= "ADD_MARK";

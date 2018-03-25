@@ -11,7 +11,7 @@ import javafx.stage.Stage;
 import ru.glassexpress.core.JsonController;
 import ru.glassexpress.core.StringValidator;
 import ru.glassexpress.core.data.Log2File;
-import ru.glassexpress.core.data.Prefs;
+import ru.glassexpress.library.Resources;
 import ru.glassexpress.core.URLConnection;
 import ru.glassexpress.core.GetListOperator;
 import ru.glassexpress.core.edit_content_command.addCommand.AddOperator;
@@ -27,8 +27,6 @@ import ru.glassexpress.core.objects.builders.GlassBuilder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 
 public class MainController extends BaseController {
@@ -480,7 +478,7 @@ public class MainController extends BaseController {
             GlassObject glass = new GlassBuilder()
                     .setCarTitle("")
                     .setDescription("Стекло клиента")
-                    .setInsertPrice(Prefs.DEFAULT_INSERT_PRICE + 500)
+                    .setInsertPrice(Resources.DEFAULT_INSERT_PRICE + 500)
                     .build();
 
             dataMap.getGlassList().add(glass);
