@@ -50,6 +50,12 @@ public class JsonController {
                     composite.addComponent(parseJson(arrayElement));
                 }
                 return composite;
+            case "error":
+                ErrorObject err = (ErrorObject)objectFabric(jsonObj);
+                if (err!=null) {
+                    AlertWindow.errorMessage(err.getMessage());
+                }
+                return null;
             default:
 
                 return objectFabric(jsonObj);

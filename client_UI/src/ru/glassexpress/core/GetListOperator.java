@@ -12,7 +12,11 @@ import java.util.List;
 
 public class GetListOperator implements GetListCommands {
 
-    String key;
+    public void setKey(String key) {
+        this.key = key;
+    }
+
+    private String key;
     public GetListOperator(String key) {
 
         this.key = key;
@@ -121,5 +125,17 @@ public class GetListOperator implements GetListCommands {
         command = new GetUserByKeyCommand(key);
 //        return objectAdapter.baseObjToIdTitleObj(command.returnRecievedList());
         return objectAdapter.returnUser(command.returnRecievedList());
+    }
+
+    public IdTitleObj getUserByLoginPass(BaseObject user) {
+        command = new GetUserByLoginPass(user);
+//        return objectAdapter.baseObjToIdTitleObj(command.returnRecievedList());
+        return objectAdapter.returnKey(command.returnRecievedList());
+    }
+
+    public boolean isUserFree(String login) {
+        command  = new GetIsUserFreeCommand(new IdTitleObj(0, login), key);
+
+        return command.returnRecievedList().size() <= 0;
     }
 }

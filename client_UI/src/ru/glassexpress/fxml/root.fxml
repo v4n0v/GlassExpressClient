@@ -31,8 +31,8 @@
             </Menu>
             <Menu fx:id="menuUsers" mnemonicParsing="false" text="Пользователи">
                <items>
-                  <MenuItem mnemonicParsing="false" onAction="#addAdmin" text="Добавить админимтратора" />
-                  <MenuItem mnemonicParsing="false" onAction="#addEmp" text="Добавить сотрудника" />
+                  <MenuItem mnemonicParsing="false" onAction="#addAdmin" text="Добавить сотрудника" />
+                  <MenuItem mnemonicParsing="false" onAction="#editEmp" text="Управление сотрудниками" />
                </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Помощь">

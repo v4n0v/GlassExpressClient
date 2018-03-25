@@ -75,8 +75,9 @@ public class AddEmpController extends BaseController {
                     // добавляем пользователя на сервер
                     if (addOperator.addUserIsComplete(newUser)) {
                         // если добавлен, тогда добавляем в локальную базу логин\пароль\ключ
-                        SQLConnectionManager sqlConnectionManager = SQLConnectionManager.getInstance();
-                        sqlConnectionManager.addNewUser(login, pass, key);
+                        System.out.println("Все ок");
+//                        SQLConnectionManager sqlConnectionManager = SQLConnectionManager.getInstance();
+//                        sqlConnectionManager.addNewUser(login, pass, key);
                         close();
                         AlertWindow.infoMessage("Пользователь '"+login+"' успешно добавлен на сервер");
                     } else {

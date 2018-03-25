@@ -15,6 +15,7 @@ import ru.glassexpress.core.objects.CartProductObject;
 import ru.glassexpress.core.objects.CartServiceObject;
 import ru.glassexpress.core.objects.GlassObject;
 import ru.glassexpress.core.objects.ServiceObject;
+import ru.glassexpress.library.AlertWindow;
 
 import java.util.List;
 
@@ -26,6 +27,8 @@ public class OrderConfirmController extends BaseController {
     public TableColumn<CartProductObject, Boolean> isInsertCol;
     //public TableColumn<CartProductObject, Boolean> isToneCol;
     public TableColumn<CartProductObject, String> glassCol;
+    public TableColumn<CartProductObject, String> typeCol;
+
     public TableColumn<CartProductObject, Integer> countCol;
     public TableColumn<CartProductObject, Float> priceCol;
 //    public ComboBox<String> servicesComboBox;
@@ -53,7 +56,7 @@ public class OrderConfirmController extends BaseController {
     public void setSelectedGlass(List<GlassObject> selectedGlass) {
         this.selectedGlass = selectedGlass;
     }
-
+  private  float orderPrice;
     private ObservableList<String> discounts;
     private List<GlassObject> selectedGlass;
     private BaseObjectAdapter adapter;
@@ -121,6 +124,7 @@ public class OrderConfirmController extends BaseController {
             ServiceObject serviceObject = dataMap.getServices().get(index);
             cartService.add(new CartServiceObject(serviceObject, Float.parseFloat(servicesPriceTextField.getText())));
         }
+        calculateOrderPrice();
     }
 
     private void initTable() {
@@ -136,6 +140,7 @@ public class OrderConfirmController extends BaseController {
         isInsertCol.setCellValueFactory(cellData -> cellData.getValue().isInsertProperty());
         isInsertCol.setCellFactory(tc -> new CheckBoxTableCell<>());
         glassCol.setCellValueFactory(cellData -> cellData.getValue().getGlassStringProperty());
+        //typeCol.setCellValueFactory(cellData -> cellData.getValue().());
         countCol.setCellValueFactory(cellData -> cellData.getValue().getCountProperty().asObject());
         countCol.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
         priceCol.setCellValueFactory(cellData -> cellData.getValue().getPriceFloatProperty());
@@ -153,11 +158,17 @@ public class OrderConfirmController extends BaseController {
     }
 
     public void confirm(ActionEvent actionEvent) {
-        close();
+        calculateOrderPrice();
+        boolean isTrue = AlertWindow.confirmationWindow("Вы уверены", "Вы точно хотите подтвердить заказ?\nСумма зазаза = "+ orderPrice );
+        if (isTrue) {
+            close();
+        }
+
     }
 
     public void calculateOrderPrice() {
-        float orderPrice = 0;
+
+        orderPrice = 0;
         for (CartProductObject o : cart) {
             float prcire = o.getPriceFloatProperty().get();
             float insPrice = o.getGlass().getInsertPrice();

@@ -345,7 +345,7 @@ public class GlassObject extends BaseObject {
     @Override
     public String toString() {
         if (bodyTypeTitle != null && carTitle != null)
-            return carTitle + " " + bodyTypeTitle + " " + glassFactoryTitle;
+            return carTitle + " " + bodyTypeTitle + " " + glassFactoryTitle+ " "+glassTypeTitle;
         else
             return "Cтекло клиента";
     }

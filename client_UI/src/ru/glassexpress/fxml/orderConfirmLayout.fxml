@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="586.0" prefWidth="690.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.glassexpress.controllers.OrderConfirmController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="586.0" prefWidth="690.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.glassexpress.controllers.OrderConfirmController">
    <children>
       <Label layoutX="14.0" layoutY="11.0" text="Корзина" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
          <font>
@@ -68,8 +68,9 @@
                         <TableView fx:id="tableCart" prefHeight="240.0" prefWidth="575.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="10.0">
                           <columns>
                             <TableColumn fx:id="isInsertCol" prefWidth="78.0" resizable="false" text="Установка" />
-                            <TableColumn fx:id="glassCol" prefWidth="339.0" resizable="false" text="Стекло" />
-                              <TableColumn fx:id="priceCol" prefWidth="126.0" resizable="false" text="Цена" />
+                            <TableColumn fx:id="glassCol" prefWidth="272.99999237060547" resizable="false" text="Стекло" />
+                              <TableColumn fx:id="typeCol" prefWidth="99.0" resizable="false" text="Тип" />
+                              <TableColumn fx:id="priceCol" prefWidth="114.00003051757812" resizable="false" text="Цена" />
                               <TableColumn fx:id="countCol" prefWidth="84.0" resizable="false" text="Кол-во" />
                           </columns>
                         </TableView>

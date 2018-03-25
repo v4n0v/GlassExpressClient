@@ -30,8 +30,8 @@ public class MenuController extends BaseController {
         System.out.println("Добавляем админа");
     }
 
-    public void addEmp(ActionEvent actionEvent) {
-        System.out.println("Добавляем сотрудника");
+    public void editEmp(ActionEvent actionEvent) {
+        System.out.println("Редактируем сотрудников");
     }
 
     public void initPermission() {

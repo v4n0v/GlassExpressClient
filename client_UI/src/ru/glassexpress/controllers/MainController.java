@@ -36,6 +36,7 @@ public class MainController extends BaseController {
 
     public Label nameLabel;
     public Label salonLabel;
+    public Button createOrderButton;
     @FXML
     ComboBox<String> bodyTypeListView;
 
@@ -195,6 +196,9 @@ public class MainController extends BaseController {
         } else {
             isDiasbled = false;
             isVisible=true;
+        }
+        if (user.getPermission()== 3) {
+            createOrderButton.setDisable(true);
         }
         deleteGlassButton.setDisable(isDiasbled);
         colTGPriceIn.setVisible(isVisible);
@@ -475,7 +479,7 @@ public class MainController extends BaseController {
 
             GlassObject glass = new GlassBuilder()
                     .setCarTitle("")
-                    .setDescription("свое стекло")
+                    .setDescription("Стекло клиента")
                     .setInsertPrice(Prefs.DEFAULT_INSERT_PRICE + 500)
                     .build();
 

@@ -164,6 +164,21 @@ public class BaseObjectAdapter {
         return null;
     }
 
+
+    public IdTitleObj returnKey(ObservableList<BaseObject> inputList) {
+
+        if (inputList != null) {
+            System.out.println("UserObject input size = "+inputList.size());
+            IdTitleObj result = (IdTitleObj)inputList.get(0);
+//            for (int i = 0; i < inputList.size(); i++) {
+//                InsertClassElement row = (InsertClassElement) inputList.get(i);
+//                resultList.add(row);
+//            }
+            return result;
+        }
+        return null;
+    }
+
     public  List<ServiceObject> returnServicesList(List<BaseObject> services) {
         if (services != null) {
             List<ServiceObject> resultList = new ArrayList<>();

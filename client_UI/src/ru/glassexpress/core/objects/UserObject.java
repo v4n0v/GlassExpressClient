@@ -5,7 +5,7 @@ import com.google.gson.JsonElement;
 public class UserObject extends BaseObject{
 
     private String login;
-    private int pasHash;
+
     private int passHash;
 
     public UserObject () {
@@ -120,8 +120,8 @@ public class UserObject extends BaseObject{
         return login;
     }
 
-    public int getPasHash() {
-        return pasHash;
+    public int getPassHash() {
+        return passHash;
     }
 
     public void setLogin(String login) {

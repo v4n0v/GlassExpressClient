@@ -14,7 +14,8 @@ public class AddUserCommand extends AddElementCommand {
     protected void prepareRequest() {
         UserObject user = (UserObject) baseObject;
 
-        request = new RequestBuilder().setMethod(Prefs.METHOD_POST)
+        request = new RequestBuilder()
+                .setMethod(Prefs.METHOD_POST)
                 .setAction(Prefs.ACTION_INSERT)
                 .setTarget(Prefs.TARGET_USER)
                 .setKey(key)
@@ -22,10 +23,10 @@ public class AddUserCommand extends AddElementCommand {
                 .setRequest("last_name", user.getLastName())
                 .setRequest("id_pos", String.valueOf(user.getPositionId()))
                 .setRequest("id_salon",String.valueOf(user.getSalonId()))
-                .setRequest("key_user", String.valueOf(user.getKey().hashCode()))
-                .setRequest("id_permission", String.valueOf(user.getPositionId()))
+                .setRequest("key_user", String.valueOf(user.getKey()))
+                .setRequest("id_permission", String.valueOf(user.getPermission()))
                 .setRequest("login", user.getLogin())
-                .setRequest("passHash", String.valueOf(user.getPasHash()))
+                .setRequest("passHash", String.valueOf(user.getPassHash()))
                 .build();
     }
 }

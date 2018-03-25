@@ -8,6 +8,8 @@ public class Prefs {
     public final static String ACTION_SELECT = "list";
    // public final static String ACTION_GET_MODEL_LIST = "model-list";
     public final static String ACTION_INSERT = "insert";
+    public static final String ACTION_CHECK = "check";
+
 
     public final static float DEFAULT_INSERT_PRICE = 2000;
 
@@ -39,4 +41,7 @@ public class Prefs {
     public static final String TARGET_PERMISSIONS = "permis";
     public static final String TARGET_POSITIONS = "pos";
     public static final String TARGET_SERVICE = "service";
+    public static final String ACTION_LOGIN = "login";
+
+
 }

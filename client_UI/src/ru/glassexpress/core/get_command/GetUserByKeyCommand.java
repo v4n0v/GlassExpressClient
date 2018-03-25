@@ -14,7 +14,7 @@ public class GetUserByKeyCommand extends ObservedCommand {
     @Override
     public void buildRequest() {
 
-            UserObject usr = (UserObject) inputObject;
+          //  UserObject usr = (UserObject) inputObject;
             request = new RequestBuilder().setMethod(Prefs.METHOD_POST)
                     .setAction(Prefs.ACTION_SELECT)
                     .setTarget(Prefs.TARGET_USER)
