@@ -2,20 +2,44 @@ package ru.glassexpress.core.objects;
 
 import com.google.gson.JsonElement;
 
+import java.time.Instant;
+import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
 
 public class DateObject extends BaseObject {
 
-    public DateObject() {
+    private int salonId;
+
+    public DateObject(int id) {
         super("day");
-        employees=new ArrayList<>();
+        employees = new ArrayList<>();
     }
 
+    public DateObject(int id, long date, String employeesJson, int idAdmin, int salonId) {
+        super("day");
+        employees = new ArrayList<>();
+        this.id = id;
+        this.date = date;
+        this.employeesJson = employeesJson;
+        this.idAdmin = idAdmin;
+        this.salonId=salonId;
+    }
 
-    int id;
-    long date;
-    List<Integer> employees;
+    private int id;
+    private long date;
+    private List<Integer> employees;
+
+    public String getEmployeesJson() {
+        return employeesJson;
+    }
+
+    public void setEmployeesJson(String employeesJson) {
+        this.employeesJson = employeesJson;
+    }
+
+    private String employeesJson;
+    private int idAdmin;
 
     public int getId() {
         return id;
@@ -41,11 +65,20 @@ public class DateObject extends BaseObject {
         this.idAdmin = idAdmin;
     }
 
-    int idAdmin;
 
     @Override
     public JsonElement toJSONObject() {
         obj1.addProperty("objClass", objectClass);
+        obj1.addProperty("id", id);
+        obj1.addProperty("date", String.valueOf(date));
+        obj1.addProperty("employeesJson", employeesJson);
+        obj1.addProperty("idAdmin", idAdmin);
+        obj1.addProperty("salonId", idAdmin);
         return obj1;
     }
+
+    public int getSalonId() {
+        return salonId;
+    }
 }
+

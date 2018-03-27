@@ -1,12 +1,22 @@
 package ru.glassexpress.controllers;
 
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.scene.control.*;
+import ru.glassexpress.core.GetListOperator;
+import ru.glassexpress.core.data.DataMap;
 import ru.glassexpress.core.data.Log2File;
-import ru.glassexpress.core.objects.UserObject;
+import ru.glassexpress.core.get_command.adapter.BaseObjectAdapter;
+import ru.glassexpress.core.objects.*;
+import ru.glassexpress.core.utils.ObservableListAdapter;
+import ru.glassexpress.library.AlertWindow;
 import ru.glassexpress.library.Resources;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 
 public class DayController extends BaseController {
@@ -16,26 +26,107 @@ public class DayController extends BaseController {
     public Label dataLabel;
     public Button skipButton;
 
-    private UserObject administrator;
-    private long date;
+    public ListView<UserObject> totalEmpListView;
+    public ListView<UserObject> currentEmpListView;
+    public Label salonLabel;
 
+    private UserObject administrator;
+    private Date date;
+    DateObject today;
+
+    DataMap dataMap;
+    ObservableList<UserObject> totalEmployees;
+    ObservableList<UserObject> currentEmployees;
+    ObservableList<IdTitleObj> salons;
+    GetListOperator operator;
+    private ObservableListAdapter<UserObject> userObservableAdapter;
 
     @Override
     public void init() {
         Log2File.writeLog("Инициализация окна составления рабочего графика");
         initPermissions();
+        userObservableAdapter = new ObservableListAdapter<>();
+        currentEmployees = FXCollections.observableArrayList();
+        salons = FXCollections.observableArrayList();
         adminLabel.setText(administrator.getName() + " " + administrator.getLastName());
-        date = System.currentTimeMillis();
+
+        // устанавливаем дауту в заголовок
+        date = new Date();
         SimpleDateFormat dateFormat = new SimpleDateFormat(Resources.DATE_PATTERN);
         String title = dateFormat.format(date);
         dataLabel.setText(title);
 
-        // получаем из базы последний день, открытый этим администратором
+        // устанавливаем список магазинов в ComboBox
+        operator = new GetListOperator(administrator.getKey());
+        dataMap = mainController.getDataMap();
+        dataMap.setCurrentEmployeesList(currentEmployees);
+
+
+//        salonsComboBox.setCellFactory(p -> new ListCell<IdTitleObj>() {
+//            @Override
+//            protected void updateItem(IdTitleObj item, boolean empty) {
+//                super.updateItem(item, empty);
+//                if (item != null && !empty) {
+//                    setText(item.getTitle());
+//                } else {
+//                    setText(null);
+//                }
+//            }
+//        });
+//        salons.addAll(dataMap.getSalonsList());
+//        salonsComboBox.setItems(salons);
+        int salon = administrator.getSalonId();
+        administrator.setSalonId(salon);
+        totalEmployees = userObservableAdapter.asObservableList(operator.getEmloyees(administrator));
+        totalEmpListView.setItems(totalEmployees);
+        currentEmpListView.setItems(currentEmployees);
+
+
+        salonLabel.setText(dataMap.getTitleById(dataMap.getSalonsList(), salon));
+
 
     }
 
+//    public void refreshEmpList() {
+//        if (salonsComboBox.getSelectionModel().getSelectedIndex() != -1) {
+//            int salon = dataMap.getSalonsList().get(salonsComboBox.getSelectionModel().getSelectedIndex()).getId();
+//            administrator.setSalonId(salon);
+//            totalEmployees = userObservableAdapter.asObservableList(operator.getEmloyees(administrator));
+//            totalEmpListView.setItems(totalEmployees);
+//            currentEmpListView.setItems(currentEmployees);
+//        }
+//    }
+
+
     public void beginMakingMoney() {
-        startApplication();
+      //  if (salonsComboBox.getSelectionModel().getSelectedIndex() != -1) {
+            if (currentEmployees != null && currentEmployees.size() > 0) {
+
+                String empListJson = parseToJson(currentEmployees);
+                //
+                today = new DateObject(0, date.getTime(), empListJson, administrator.getId(), administrator.getSalonId());
+                if (mainController.getAddOperator().addNewDay(today)) {
+                    startApplication();
+                }
+
+            } else {
+                AlertWindow.errorMessage("Кто-то должен поработать!");
+            }
+//        } else {
+//            AlertWindow.errorMessage("Выбирите салон!");
+//        }
+    }
+
+
+    private String parseToJson(List<UserObject> empList) {
+
+        Composite composite = new Composite();
+        for (int i = 0; i < empList.size(); i++) {
+            composite.addComponent(new IdElement(empList.get(i).getId()));
+//            composite.addComponent(empList.get(i));
+        }
+        return composite.toJSONObject().toString();
+
     }
 
     private void initPermissions() {
@@ -56,30 +147,21 @@ public class DayController extends BaseController {
     }
 
 
-    // проверка дней теущего и последнего с сервера
-    static boolean isDayAlreadyOpened(long currentDateMillis, long dbDateMillis) {
+    public void addEmployer(ActionEvent actionEvent) {
 
-        if (currentDateMillis == 0 || dbDateMillis == 0) {
-            return false;
+        int index = totalEmpListView.getSelectionModel().getSelectedIndex();
+        if (index != -1) {
+            currentEmployees.add(totalEmployees.get(index));
+            totalEmployees.remove(index);
         }
 
-        SimpleDateFormat formatter = new SimpleDateFormat(Resources.DATE_PATTERN_SIMPLE);
-        formatter.setLenient(false);
-        String value1 = formatter.format(currentDateMillis);
-        String value2 = formatter.format(dbDateMillis);
-
-        if (!value1.equals(value2)){
-            return false;
-        }
-//        try {
-//            formatter.parse(value);
-//        } catch (ParseException e) {
-//            return false;
-//        }
-        return true;
     }
 
-    public long getLastOpenedDay() {
-        return 0;
+    public void removeEmployer(ActionEvent actionEvent) {
+        int index = currentEmpListView.getSelectionModel().getSelectedIndex();
+        if (index != -1) {
+            totalEmployees.add(currentEmployees.get(index));
+            currentEmployees.remove(index);
+        }
     }
 }

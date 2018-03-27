@@ -72,10 +72,20 @@ public class MainController extends BaseController {
 
 
     UserObject user;
-    GetListOperator getListOperator;
-    AddOperator addOperator;
-    DeleteOperator deleteOperator;
-    UpdateOperator updateOperator;
+
+    public GetListOperator getGetListOperator() {
+        return getListOperator;
+    }
+
+    private GetListOperator getListOperator;
+
+    public AddOperator getAddOperator() {
+        return addOperator;
+    }
+
+    private AddOperator addOperator;
+    private  DeleteOperator deleteOperator;
+    private  UpdateOperator updateOperator;
     private URLConnection urlConnection;
     private JsonController jsonController;
 
@@ -147,7 +157,7 @@ public class MainController extends BaseController {
 
     public void reconnect() {
         initTGTable();
-        getListOperator = new GetListOperator(user.getKey());
+        //getListOperator = new GetListOperator(user.getKey());
         deleteOperator = new DeleteOperator(user.getKey());
         addOperator = new AddOperator(user.getKey());
         updateOperator = new UpdateOperator(user.getKey());
@@ -928,5 +938,9 @@ public class MainController extends BaseController {
 
     public void setUser(UserObject user) {
         this.user = user;
+    }
+
+    public void setOperator(GetListOperator operator) {
+        this.getListOperator = operator;
     }
 }

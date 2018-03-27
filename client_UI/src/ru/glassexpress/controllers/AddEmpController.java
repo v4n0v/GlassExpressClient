@@ -8,7 +8,7 @@ import ru.glassexpress.core.data.Log2File;
 import ru.glassexpress.core.edit_content_command.addCommand.AddOperator;
 import ru.glassexpress.core.get_command.adapter.BaseObjectAdapter;
 import ru.glassexpress.core.objects.UserObject;
-import ru.glassexpress.core.security.SQLConnectionManager;
+
 import ru.glassexpress.library.AlertWindow;
 
 public class AddEmpController extends BaseController {

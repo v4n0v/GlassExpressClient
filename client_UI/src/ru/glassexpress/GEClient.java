@@ -264,7 +264,7 @@ public class GEClient extends Application {
             Scene sceneLog = new Scene(dayRootElement);
 
             goodMorningStage.setTitle("C добрыйм утром! Сегодня нас ждет прекрасный день!");
-            //  addEmpStage.setOnCloseRequest((event) -> primaryStage.close());
+            goodMorningStage.setOnCloseRequest((event) -> primaryStage.close());
             //   setStyleToStage(currentStyleCSS, sceneLog);
             goodMorningStage.setResizable(false);
             goodMorningStage.setScene(sceneLog);
@@ -316,4 +316,39 @@ public class GEClient extends Application {
         }
 
     }
+
+    public void showSelectSalonLayout() {
+        try {
+            // новое окно логина
+            Stage selectStage = new Stage();
+            FXMLLoader loaderLog = new FXMLLoader();
+            loaderLog.setLocation(GEClient.class.getResource("fxml/selectSalon.fxml"));
+            AnchorPane selectRootElement = (AnchorPane) loaderLog.load();
+            Scene sceneLog = new Scene(selectRootElement);
+
+            // получаем ссылку у контроллера окна
+            // controller.
+
+            // loginStage.getIcons().add(new Image(logoPath));
+            selectStage.setTitle("Выбирите салон");
+            selectStage.setOnCloseRequest((event) ->
+                    primaryStage.close());
+            //   setStyleToStage(currentStyleCSS, sceneLog);
+            selectStage.setResizable(false);
+            selectStage.setScene(sceneLog);
+            selectStage.initModality(Modality.WINDOW_MODAL);
+            selectStage.initOwner(primaryStage);
+            SelectSalonController controller = loaderLog.getController();
+            controller.setMainController(mainController);
+            controller.setMainApp(this);
+           // mainController.setLoginStage(selectStage);
+            controller.setStage(selectStage);
+            controller.init();
+            selectStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
 }

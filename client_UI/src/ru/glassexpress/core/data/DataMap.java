@@ -27,9 +27,21 @@ public class DataMap {
     // список прав доступа
     private List<IdTitleObj> permissionsList;
 
-
+    // список сегодняшних согрудников
+    private ObservableList<UserObject> currentEmployeesList;
     // список услуг
     private List<ServiceObject> services;
+
+
+
+
+    public ObservableList<UserObject> getCurrentEmployeesList() {
+        return currentEmployeesList;
+    }
+
+    public void setCurrentEmployeesList(ObservableList<UserObject> currentEmployeesList) {
+        this.currentEmployeesList = currentEmployeesList;
+    }
 
     public List<IdTitleObj> getSalonsList() {
         return salonsList;
@@ -187,6 +199,14 @@ public class DataMap {
         }
         return -1;
     }
+
+    public String getTitleById(List<IdTitleObj> list, int id){
+        for (IdTitleObj o: list){
+            if (o.getId()==id) return o.getTitle();
+        }
+        return null;
+    }
+
 
     public void setServices(List<ServiceObject> services) {
         this.services = services;

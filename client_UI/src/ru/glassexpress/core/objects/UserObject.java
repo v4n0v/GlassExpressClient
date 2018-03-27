@@ -113,7 +113,8 @@ public class UserObject extends BaseObject{
 
     @Override
     public String toString() {
-        return "name = "+name+", last name = "+lastName ;
+        return  name+" "+lastName ;
+//        return "name = "+name+", last name = "+lastName ;
 //        return "name = "+name+", last name = "+lastName+"\npos = "+positionId+"\nsalon = "+salonId+"\npermis = "+permission;
     }
 

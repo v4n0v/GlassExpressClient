@@ -3,11 +3,14 @@ package ru.glassexpress.core;
 import javafx.collections.ObservableList;
 import ru.glassexpress.core.get_command.*;
 import ru.glassexpress.core.get_command.adapter.BaseObjectAdapter;
+import ru.glassexpress.core.get_command.lists.GetEmployeesListCommand;
 import ru.glassexpress.core.get_command.lists.GetPermissionsListCommand;
 import ru.glassexpress.core.get_command.lists.GetPositionsListCommand;
 import ru.glassexpress.core.get_command.lists.GetSalonsCommand;
 import ru.glassexpress.core.objects.*;
+import ru.glassexpress.core.utils.ObservableListAdapter;
 
+import java.util.Date;
 import java.util.List;
 
 public class GetListOperator implements GetListCommands {
@@ -137,5 +140,16 @@ public class GetListOperator implements GetListCommands {
         command  = new GetIsUserFreeCommand(new IdTitleObj(0, login), key);
 
         return command.returnRecievedList().size() <= 0;
+    }
+
+    public long getLastOpenedDay(IdElement id) {
+        command  = new GetLastOpenedDayCommand(id, key);
+        return objectAdapter.returnDay(command.returnRecievedList());
+    }
+//    ObservableListAdapter observableListAdapter;
+    public List<UserObject> getEmloyees(UserObject administrator) {
+        command = new GetEmployeesListCommand(administrator, key);
+        return objectAdapter.returnUserList(command.returnRecievedList());
+//        return observableListAdapter.asObservableListFromBase(command.returnRecievedList());
     }
 }

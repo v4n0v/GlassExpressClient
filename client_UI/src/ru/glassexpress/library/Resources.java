@@ -45,4 +45,7 @@ public class Resources {
     public static final String ACTION_LOGIN = "login";
 
 
+    public static final String TARGET_EMPLOYEES = "emp";
+    public static final String TARGET_LAST_DAY = "last_day" ;
+    public static final String TARGET_DAY = "day";
 }

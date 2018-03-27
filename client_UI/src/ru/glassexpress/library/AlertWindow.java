@@ -1,10 +1,12 @@
 package ru.glassexpress.library;
 
 import javafx.application.Platform;
+import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.TextInputDialog;
+import ru.glassexpress.core.objects.BaseObject;
 
 import java.awt.*;
 import java.util.Optional;
@@ -89,4 +91,6 @@ public class AlertWindow {
 
         return null;
     }
+
+
 }

@@ -7,14 +7,17 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import ru.glassexpress.core.GetListOperator;
 import ru.glassexpress.core.data.Log2File;
+import ru.glassexpress.core.objects.IdElement;
 import ru.glassexpress.core.objects.IdTitleObj;
 import ru.glassexpress.core.objects.UserObject;
 //import ru.glassexpress.core.security.ClientSecurityManager;
 import ru.glassexpress.core.StringValidator;
+import ru.glassexpress.core.utils.OpenDayManager;
 import ru.glassexpress.library.AlertWindow;
 import ru.glassexpress.library.Resources;
 
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
 public class LoginController extends BaseController {
@@ -60,17 +63,41 @@ public class LoginController extends BaseController {
                         if (user != null) {
                             user.setKey(keyObj.getTitle());
                             mainController.setUser(user);
-
+                            mainController.setOperator(operator);
+                            mainController.reconnect();
                             // получаем из базы последний день, открытый этим администратором
-                            long lastDay = getLastOpenedDay();
-                            long date = System.currentTimeMillis();
-                            // если адиминстратор уже заполнял форму дня, тогда открываем приложенеие,
-                            // иначе заполнять форму, добавлять сотрудников дня
-                            if (!isDayAlreadyOpened(date, lastDay)){
-                                mainApp.initGoodMorningLayout(user);
+                            int id = user.getId();
+
+
+                            if (user.getPermission()==1){
+                               mainApp.showSelectSalonLayout();
                             } else {
-                                mainController.initPermission();
+
+                                OpenDayManager openDayManager = new OpenDayManager(operator, user);
+                                if (openDayManager.isDayAlreadyOpened()){
+                                    mainApp.initGoodMorningLayout(user);
+                                } else {
+                                    mainController.initPermission();
+                                    System.out.println("день уже начат, открываю приложение");
+                                }
+
+//                                Date lastDay = operator.getLastOpenedDay(new IdElement(id));
+//                                Date date = new Date();
+//
+//                                //todo босс на несколько точек работает, нужно как-то актуализировать точку!
+//                                // если адиминстратор уже заполнял форму дня, тогда открываем приложенеие,
+//                                // иначе заполнять форму, добавлять сотрудников дня
+//                                if (!isDayAlreadyOpened(date, lastDay)){
+//                                    System.out.println("день не начат, создаю новый");
+//                                    mainApp.initGoodMorningLayout(user);
+//                                } else {
+//                                    mainController.initPermission();
+//                                    System.out.println("день уже начат, открываю приложение");
+//                                }
+
                             }
+
+
                             close();
                         } else {
                             AlertWindow.errorMessage("Пользователя не получены. Сервер не отвечает.");
@@ -96,9 +123,9 @@ public class LoginController extends BaseController {
         Log2File.writeLog("Иинициализация окна аутентификации");
     }
 
-    private static boolean isDayAlreadyOpened(long currentDateMillis, long dbDateMillis) {
+    private static boolean isDayAlreadyOpened(Date currentDateMillis, Date dbDateMillis) {
 
-        if (currentDateMillis == 0 || dbDateMillis == 0) {
+        if (currentDateMillis == null || dbDateMillis == null) {
             return false;
         }
 
@@ -106,20 +133,24 @@ public class LoginController extends BaseController {
         formatter.setLenient(false);
         String value1 = formatter.format(currentDateMillis);
         String value2 = formatter.format(dbDateMillis);
-
+        System.out.println("день1 = "+value1+" день2 = "+value2);
         if (!value1.equals(value2)){
+
             return false;
+
         }
 //        try {
 //            formatter.parse(value);
 //        } catch (ParseException e) {
 //            return false;
 //        }
+
         return true;
     }
 
     private long getLastOpenedDay() {
-        return 0;
+//        return 0;
+        return System.currentTimeMillis();
     }
 
 }

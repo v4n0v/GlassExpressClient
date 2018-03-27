@@ -5,12 +5,13 @@ import javafx.collections.ObservableList;
 import ru.glassexpress.core.objects.*;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class BaseObjectAdapter {
 
     public static BaseObjectAdapter getInsance() {
-        if (adapter==null) return new BaseObjectAdapter();
+        if (adapter == null) return new BaseObjectAdapter();
         return adapter;
     }
 
@@ -153,8 +154,8 @@ public class BaseObjectAdapter {
     public UserObject returnUser(ObservableList<BaseObject> inputList) {
 
         if (inputList != null) {
-            System.out.println("UserObject input size = "+inputList.size());
-            UserObject result = (UserObject)inputList.get(0);
+            System.out.println("UserObject input size = " + inputList.size());
+            UserObject result = (UserObject) inputList.get(0);
 //            for (int i = 0; i < inputList.size(); i++) {
 //                InsertClassElement row = (InsertClassElement) inputList.get(i);
 //                resultList.add(row);
@@ -168,8 +169,8 @@ public class BaseObjectAdapter {
     public IdTitleObj returnKey(ObservableList<BaseObject> inputList) {
 
         if (inputList != null) {
-            System.out.println("UserObject input size = "+inputList.size());
-            IdTitleObj result = (IdTitleObj)inputList.get(0);
+            System.out.println("UserObject input size = " + inputList.size());
+            IdTitleObj result = (IdTitleObj) inputList.get(0);
 //            for (int i = 0; i < inputList.size(); i++) {
 //                InsertClassElement row = (InsertClassElement) inputList.get(i);
 //                resultList.add(row);
@@ -179,11 +180,11 @@ public class BaseObjectAdapter {
         return null;
     }
 
-    public  List<ServiceObject> returnServicesList(List<BaseObject> services) {
+    public List<ServiceObject> returnServicesList(List<BaseObject> services) {
         if (services != null) {
             List<ServiceObject> resultList = new ArrayList<>();
             for (BaseObject service : services) {
-                ServiceObject obj= (ServiceObject) service;
+                ServiceObject obj = (ServiceObject) service;
                 resultList.add(obj);
             }
             return FXCollections.observableArrayList(resultList);
@@ -198,6 +199,29 @@ public class BaseObjectAdapter {
             for (ServiceObject service : services) {
 
                 resultList.add(service.getTitle());
+            }
+            return FXCollections.observableArrayList(resultList);
+        }
+        return null;
+    }
+
+    public long returnDay(List<BaseObject> days) {
+
+        if (days != null && days.size()>0) {
+            //  List<DateObject> resultList = new ArrayList<>();
+            DateObject obj = (DateObject) days.get(0);
+            return obj.getDate();
+        }
+        return 0;
+    }
+
+
+    public List<UserObject> returnUserList(ObservableList<BaseObject> baseObjects) {
+        if (baseObjects != null) {
+            List<UserObject> resultList = new ArrayList<>();
+            for (BaseObject element : baseObjects) {
+                UserObject user = (UserObject) element;
+                resultList.add(user);
             }
             return FXCollections.observableArrayList(resultList);
         }

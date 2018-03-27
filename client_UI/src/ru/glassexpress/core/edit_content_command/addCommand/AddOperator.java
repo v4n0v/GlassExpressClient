@@ -2,6 +2,7 @@ package ru.glassexpress.core.edit_content_command.addCommand;
 
 import ru.glassexpress.core.edit_content_command.updCommand.UpdateGlassCommand;
 import ru.glassexpress.core.objects.BaseObject;
+import ru.glassexpress.core.objects.DateObject;
 import ru.glassexpress.core.objects.GlassObject;
 
 public class AddOperator  implements AddCommands{
@@ -39,4 +40,8 @@ public class AddOperator  implements AddCommands{
         return comand.addElement(null);
     }
 
+    public boolean addNewDay(BaseObject today) {
+        comand = new AddNewDayCommand (today, key);
+        return  comand.addElement(null);
+    }
 }
