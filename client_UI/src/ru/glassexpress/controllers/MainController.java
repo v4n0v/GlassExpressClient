@@ -35,6 +35,7 @@ public class MainController extends BaseController {
     public Label nameLabel;
     public Label salonLabel;
     public Button createOrderButton;
+    public ListView  employeesListView;
     @FXML
     ComboBox<String> bodyTypeListView;
 
@@ -167,6 +168,8 @@ public class MainController extends BaseController {
         genListView.setItems(genList);
         bodyTypeListView.setItems(bodyTypeStringList);
 
+        //todo добавить список сотрудников в listView
+
 
         insertClassComboBox.setItems(classList);
 
@@ -196,6 +199,7 @@ public class MainController extends BaseController {
     public Button deleteGlassButton;
 
     public void initPermission() {
+        employeesListView.setItems(dataMap.getCurrentEmployeesList());
         boolean isDiasbled;
         boolean isVisible;
         if (user.getPermission()!= 1) {
@@ -503,6 +507,8 @@ public class MainController extends BaseController {
 //                dataMap.getGlassList().get(i).setInsertPrice(dataMap.getInsertClassPriceByGlassType(inserClassId, glassTypeId));
 //          }
             for (int i = 0; i < dataMap.getGlassList().size() - 1; i++) {
+
+                String ss = getDataMap().getGlassList().get(i).getOptListString();
                 Composite optList = (Composite) JsonController.getInstance().convertJsonToObject(getDataMap().getGlassList().get(i).getOptListString());
                 List<IdTitleObj> list = adapter.baseObjToIdTitleObj(optList.getComponents());
                 String params = "";

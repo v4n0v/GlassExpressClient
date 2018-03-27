@@ -106,7 +106,9 @@ public class DayController extends BaseController {
                 //
                 today = new DateObject(0, date.getTime(), empListJson, administrator.getId(), administrator.getSalonId());
                 if (mainController.getAddOperator().addNewDay(today)) {
+                    dataMap.setCurrentEmployeesList(currentEmployees);
                     startApplication();
+                    close();
                 }
 
             } else {
@@ -122,7 +124,7 @@ public class DayController extends BaseController {
 
         Composite composite = new Composite();
         for (int i = 0; i < empList.size(); i++) {
-            composite.addComponent(new IdElement(empList.get(i).getId()));
+            composite.addComponent(empList.get(i));
 //            composite.addComponent(empList.get(i));
         }
         return composite.toJSONObject().toString();

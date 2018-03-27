@@ -68,7 +68,7 @@ public class DateObject extends BaseObject {
 
     @Override
     public JsonElement toJSONObject() {
-        obj1.addProperty("objClass", objectClass);
+        obj1.addProperty("objectClass", objectClass);
         obj1.addProperty("id", id);
         obj1.addProperty("date", String.valueOf(date));
         obj1.addProperty("employeesJson", employeesJson);

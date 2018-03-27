@@ -31,6 +31,7 @@ public class MenuController extends BaseController {
     }
 
     public void editEmp(ActionEvent actionEvent) {
+        mainApp.showManageUsersLayout();
         System.out.println("Редактируем сотрудников");
     }
 

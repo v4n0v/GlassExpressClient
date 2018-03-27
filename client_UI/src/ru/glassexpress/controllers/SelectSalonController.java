@@ -4,7 +4,12 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListCell;
+import ru.glassexpress.core.JsonController;
+import ru.glassexpress.core.get_command.adapter.BaseObjectAdapter;
+import ru.glassexpress.core.objects.Composite;
+import ru.glassexpress.core.objects.DateObject;
 import ru.glassexpress.core.objects.IdTitleObj;
+import ru.glassexpress.core.objects.UserObject;
 import ru.glassexpress.core.utils.OpenDayManager;
 
 public class SelectSalonController extends BaseController {
@@ -38,6 +43,13 @@ public class SelectSalonController extends BaseController {
             OpenDayManager openDayManager = new OpenDayManager(mainController.getGetListOperator(), mainController.getUser());
             if (!openDayManager.isDayAlreadyOpened()){
                 mainApp.initGoodMorningLayout(mainController.getUser());
+            } else {
+                DateObject day = openDayManager.getCurrentDay();
+                Composite empComposite = (Composite) JsonController.getInstance().convertJsonToObject(day.getEmployeesJson());
+                BaseObjectAdapter adapter=BaseObjectAdapter.getInsance();
+                ObservableList<UserObject> empList = adapter.baseObjToUserObjList(empComposite.getComponents());
+                dataMap.setCurrentEmployeesList(empList);
+                mainController.initPermission();
             }
 
 

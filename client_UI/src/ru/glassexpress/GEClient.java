@@ -2,6 +2,7 @@ package ru.glassexpress;
 
 import javafx.application.Application;
 import javafx.collections.ObservableList;
+import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -331,8 +332,7 @@ public class GEClient extends Application {
 
             // loginStage.getIcons().add(new Image(logoPath));
             selectStage.setTitle("Выбирите салон");
-            selectStage.setOnCloseRequest((event) ->
-                    primaryStage.close());
+            selectStage.setOnCloseRequest(Event::consume);
             //   setStyleToStage(currentStyleCSS, sceneLog);
             selectStage.setResizable(false);
             selectStage.setScene(sceneLog);
@@ -350,5 +350,37 @@ public class GEClient extends Application {
         }
 
     }
+    public void showManageUsersLayout() {
+        try {
+            // новое окно логина
+            Stage manageUsersStage = new Stage();
+            FXMLLoader loaderLog = new FXMLLoader();
+            loaderLog.setLocation(GEClient.class.getResource("fxml/manageUsersLayout.fxml"));
+            AnchorPane manageRootElement = (AnchorPane) loaderLog.load();
+            Scene sceneLog = new Scene(manageRootElement);
 
+            // получаем ссылку у контроллера окна
+            // controller.
+
+            // loginStage.getIcons().add(new Image(logoPath));
+            manageUsersStage.setTitle("Управление пользователями");
+//            manageUsersStage.setOnCloseRequest((event) ->
+//                    primaryStage.close());
+            //   setStyleToStage(currentStyleCSS, sceneLog);
+            manageUsersStage.setResizable(false);
+            manageUsersStage.setScene(sceneLog);
+            manageUsersStage.initModality(Modality.WINDOW_MODAL);
+            manageUsersStage.initOwner(primaryStage);
+            ManageUsersController controller = loaderLog.getController();
+            controller.setMainController(mainController);
+            controller.setMainApp(this);
+            // mainController.setLoginStage(selectStage);
+            controller.setStage(manageUsersStage);
+            controller.init();
+            manageUsersStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
 }

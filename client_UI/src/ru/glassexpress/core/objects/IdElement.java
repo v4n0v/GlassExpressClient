@@ -19,7 +19,7 @@ public class IdElement extends BaseObject {
     private int id;
     @Override
     public JsonElement toJSONObject() {
-       obj1.addProperty("objClass", objectClass);
+       obj1.addProperty("objectClass", objectClass);
         obj1.addProperty("id", id);
         return  obj1;
     }

@@ -39,7 +39,7 @@ public class JsonController {
 
     // реурсивное преобразование в объект
     private BaseObject parseJson(JsonObject jsonObj) {
-        String objClass = removeBrackets(jsonObj.get("objClass").toString());
+        String objClass = removeBrackets(jsonObj.get("objectClass").toString());
 
         switch (objClass) {
             case "composite":
@@ -63,7 +63,7 @@ public class JsonController {
     }
 
     private BaseObject objectFabric(JsonObject jsonObj) {
-        String objClass = removeBrackets(jsonObj.get("objClass").toString());
+        String objClass = removeBrackets(jsonObj.get("objectClass").toString());
 
         switch (objClass) {
             case "IdTitleObj":

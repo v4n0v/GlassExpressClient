@@ -250,7 +250,7 @@ public class GlassObject extends BaseObject {
 
     @Override
     public JsonElement toJSONObject() {
-        obj1.addProperty("objClass", objectClass);
+        obj1.addProperty("objectClass", objectClass);
         obj1.addProperty("id", id);
         obj1.addProperty("carId", carId);
         obj1.addProperty("glassTypeId", glassTypeId);

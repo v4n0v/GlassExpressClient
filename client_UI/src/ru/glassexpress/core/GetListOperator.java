@@ -15,6 +15,7 @@ import java.util.List;
 
 public class GetListOperator implements GetListCommands {
 
+
     public void setKey(String key) {
         this.key = key;
     }
@@ -142,7 +143,7 @@ public class GetListOperator implements GetListCommands {
         return command.returnRecievedList().size() <= 0;
     }
 
-    public long getLastOpenedDay(IdElement id) {
+    public DateObject getLastOpenedDay(IdElement id) {
         command  = new GetLastOpenedDayCommand(id, key);
         return objectAdapter.returnDay(command.returnRecievedList());
     }
@@ -152,4 +153,6 @@ public class GetListOperator implements GetListCommands {
         return objectAdapter.returnUserList(command.returnRecievedList());
 //        return observableListAdapter.asObservableListFromBase(command.returnRecievedList());
     }
+
+
 }

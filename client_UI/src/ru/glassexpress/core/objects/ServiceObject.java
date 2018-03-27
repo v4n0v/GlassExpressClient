@@ -46,7 +46,7 @@ public class ServiceObject extends BaseObject {
 
     @Override
     public JsonElement toJSONObject() {
-        obj1.addProperty("objClass", objectClass);
+        obj1.addProperty("objectClass", objectClass);
         obj1.addProperty("id", id);
         obj1.addProperty("title", title);
         obj1.addProperty("price", price);

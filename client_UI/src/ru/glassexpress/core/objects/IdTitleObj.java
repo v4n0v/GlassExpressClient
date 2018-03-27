@@ -40,7 +40,7 @@ public class IdTitleObj extends BaseObject {
 
     public JsonElement toJSONObject() {
 
-        obj1.addProperty("objClass", objectClass);
+        obj1.addProperty("objectClass", objectClass);
         obj1.addProperty("id", id);
         obj1.addProperty("title", title);
 

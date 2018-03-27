@@ -49,7 +49,18 @@ public class BaseObjectAdapter {
         }
         return null;
     }
+    public ObservableList<UserObject> baseObjToUserObjList(List<BaseObject> inputList) {
+        if (inputList != null) {
+            List<UserObject> resultList = new ArrayList<>();
+            for (int i = 0; i < inputList.size(); i++) {
+                UserObject obj = (UserObject) inputList.get(i);
 
+                resultList.add(obj);
+            }
+            return  FXCollections.observableArrayList(resultList);
+        }
+        return null;
+    }
     public ObservableList<String> idTitleObjToString(List<IdTitleObj> inputList) {
         if (inputList != null) {
             List<String> resultList = new ArrayList<>();
@@ -205,14 +216,14 @@ public class BaseObjectAdapter {
         return null;
     }
 
-    public long returnDay(List<BaseObject> days) {
+    public DateObject returnDay(List<BaseObject> days) {
 
         if (days != null && days.size()>0) {
             //  List<DateObject> resultList = new ArrayList<>();
             DateObject obj = (DateObject) days.get(0);
-            return obj.getDate();
+            return obj;
         }
-        return 0;
+        return null;
     }
 
 

@@ -1,15 +1,16 @@
 package ru.glassexpress.controllers;
 
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import ru.glassexpress.core.GetListOperator;
+import ru.glassexpress.core.JsonController;
 import ru.glassexpress.core.data.Log2File;
-import ru.glassexpress.core.objects.IdElement;
-import ru.glassexpress.core.objects.IdTitleObj;
-import ru.glassexpress.core.objects.UserObject;
+import ru.glassexpress.core.get_command.adapter.BaseObjectAdapter;
+import ru.glassexpress.core.objects.*;
 //import ru.glassexpress.core.security.ClientSecurityManager;
 import ru.glassexpress.core.StringValidator;
 import ru.glassexpress.core.utils.OpenDayManager;
@@ -18,6 +19,7 @@ import ru.glassexpress.library.Resources;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 
 public class LoginController extends BaseController {
@@ -77,6 +79,11 @@ public class LoginController extends BaseController {
                                 if (openDayManager.isDayAlreadyOpened()){
                                     mainApp.initGoodMorningLayout(user);
                                 } else {
+                                    DateObject day = openDayManager.getCurrentDay();
+                                    Composite empComposite = (Composite) JsonController.getInstance().convertJsonToObject(day.getEmployeesJson());
+                                    BaseObjectAdapter adapter=BaseObjectAdapter.getInsance();
+                                    ObservableList<UserObject> empList = adapter.baseObjToUserObjList(empComposite.getComponents());
+                                    dataMap.setCurrentEmployeesList(empList);
                                     mainController.initPermission();
                                     System.out.println("день уже начат, открываю приложение");
                                 }

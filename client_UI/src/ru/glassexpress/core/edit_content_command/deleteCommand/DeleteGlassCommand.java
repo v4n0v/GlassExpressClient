@@ -14,6 +14,7 @@ public class DeleteGlassCommand extends DeleteElementCommand {
                 .setMethod(Resources.METHOD_POST)
                 .setTarget(Resources.TARGET_GLASS)
                 .setAction(Resources.ACTION_DELETE)
+                .setKey(key)
                 .setRequest("id", String.valueOf(id))
                 .build();
     }

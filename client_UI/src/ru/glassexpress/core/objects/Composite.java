@@ -41,7 +41,7 @@ public class Composite extends BaseObject {
     @Override
     public JsonElement toJSONObject() {
         JsonObject object = new JsonObject();
-        object.addProperty("objClass", objectClass);
+        object.addProperty("objectClass", objectClass);
         //object.addProperty("objClass", objectClass);
         JsonArray arr = new JsonArray();
         for (BaseObject component: components){

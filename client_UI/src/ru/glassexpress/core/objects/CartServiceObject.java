@@ -22,7 +22,7 @@ public class CartServiceObject extends BaseObject {
 
     @Override
     public JsonElement toJSONObject() {
-        obj1.addProperty("objClass", objectClass);
+        obj1.addProperty("objectClass", objectClass);
         return obj1;
     }
 

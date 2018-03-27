@@ -13,7 +13,7 @@ public class ErrorObject extends BaseObject{
 
     @Override
     public JsonElement toJSONObject() {
-        obj1.addProperty("objClass", objectClass);
+        obj1.addProperty("objectClass", objectClass);
         obj1.addProperty("message", message);
         return obj1;
     }

@@ -100,6 +100,7 @@ public class UserObject extends BaseObject{
 
     @Override
     public JsonElement toJSONObject() {
+        obj1.addProperty("objectClass", objectClass);
         obj1.addProperty("id", id);
         obj1.addProperty("name", name);
         obj1.addProperty("lastName",lastName);
