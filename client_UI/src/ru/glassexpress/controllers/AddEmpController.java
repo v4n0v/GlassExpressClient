@@ -4,6 +4,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import ru.glassexpress.core.data.DataMap;
 import ru.glassexpress.core.data.Log2File;
 import ru.glassexpress.core.edit_content_command.addCommand.AddOperator;
 import ru.glassexpress.core.get_command.adapter.BaseObjectAdapter;
@@ -32,7 +33,7 @@ public class AddEmpController extends BaseController {
     public void init() {
         Log2File.writeLog("Иинициализация окна добавления сотрудника");
         // инициализация формы
-        dataMap = mainController.getDataMap();
+        dataMap = DataMap.getInstance();
         adapter = BaseObjectAdapter.getInsance();
         salonsList = adapter.idTitleObjToString(dataMap.getSalonsList());
         permisList = adapter.idTitleObjToString(dataMap.getPermissionsList());

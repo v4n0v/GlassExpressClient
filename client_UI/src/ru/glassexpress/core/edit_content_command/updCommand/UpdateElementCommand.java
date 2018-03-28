@@ -1,15 +1,17 @@
 package ru.glassexpress.core.edit_content_command.updCommand;
 
+import ru.glassexpress.core.objects.BaseObject;
 import ru.glassexpress.request_builder.Request;
 import ru.glassexpress.request_chain.RequestController;
 
 public abstract class UpdateElementCommand {
     Request request;
-
+BaseObject object;
     int id;
     String key;
-    public UpdateElementCommand(int id, String key) {
-        this.id = id;
+    public UpdateElementCommand(BaseObject object, String key) {
+//        this.id = id;
+        this.object=object;
         this.key=key;
     }
 

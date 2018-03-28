@@ -1,6 +1,7 @@
 package ru.glassexpress.core.objects;
 
 import com.google.gson.JsonElement;
+import ru.glassexpress.core.data.DataMap;
 
 public class UserObject extends BaseObject{
 
@@ -96,7 +97,7 @@ public class UserObject extends BaseObject{
     private String salonTitle;
     private int permission;
     private String key;
-
+ DataMap datamap;
 
     @Override
     public JsonElement toJSONObject() {
@@ -109,12 +110,21 @@ public class UserObject extends BaseObject{
         obj1.addProperty("salonId", salonId);
         obj1.addProperty("salonTitle", salonTitle);
         obj1.addProperty("permission", permission);
+        obj1.addProperty("login", login);
         return obj1;
     }
 
+
+
     @Override
     public String toString() {
-        return  name+" "+lastName ;
+        datamap=DataMap.getInstance();
+        if (datamap.getPositionsList() != null) {
+            return  name+" "+lastName +" ("+datamap.getTitleById(datamap.getPositionsList(),positionId)+")" ;
+        } else{
+            return  name+" "+lastName;
+        }
+
 //        return "name = "+name+", last name = "+lastName ;
 //        return "name = "+name+", last name = "+lastName+"\npos = "+positionId+"\nsalon = "+salonId+"\npermis = "+permission;
     }

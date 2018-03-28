@@ -14,6 +14,7 @@ public class AddGeneratonCommand extends AddElementCommand {
     protected void prepareRequest() {
         answer = answer.replace(" ", "");
         String[] gen = answer.split("-");
+        // получаем модель, к которой добавляем поколение
         IdTitleObj car = (IdTitleObj) baseObject;
         request = new RequestBuilder().setMethod(Resources.METHOD_POST)
                 .setTarget(Resources.TARGET_GENERATION)

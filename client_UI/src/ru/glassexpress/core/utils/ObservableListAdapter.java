@@ -33,4 +33,32 @@ public class ObservableListAdapter<T> {
         return null;
 
     }
+    public ObservableList<T> convertObservableList(List<BaseObject> inputList, List<T> outputList){
+
+        if (inputList != null) {
+           // List<T> resultList = new ArrayList<>();
+            for (BaseObject element: inputList){
+                T obj = (T) element;
+                outputList.add(obj);
+            }
+            return FXCollections.observableArrayList(outputList);
+        }
+        return null;
+
+    }
+    public  List<T> convertList(List<BaseObject> inputList, List<T> outputList){
+
+        if (inputList != null) {
+            // List<T> resultList = new ArrayList<>();
+            for (BaseObject element: inputList){
+                T obj = (T) element;
+                outputList.add(obj);
+            }
+            return outputList;
+        }
+        return null;
+
+    }
+
+
 }

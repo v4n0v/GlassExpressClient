@@ -42,20 +42,13 @@ public class LoginController extends BaseController {
         String pass = fieldPass.getText();
         System.out.println(login + " " + pass);
 
+        // проверяем поля на пустые значения
         if (!login.isEmpty() || !pass.isEmpty()) {
+            // проверяем на корректность введенных символов
             if (StringValidator.isLoginCorrect(login) && StringValidator.isPassCorrect(pass)) {
-//                securityManager.setLogin(login);
-//                securityManager.setPassword(pass);
-//
-//                // проверяем наличие пользователя
-//                // if (securityManager.isUserValid(login, pass)){
-//                // получаем ключ
-//                String key = securityManager.getKey(login, pass);
-//                if (key != null) {
-//                    // устанавливаем соединение, закрываем окно
-//                    mainController.getUser().setKey(key);
-                    GetListOperator operator = new GetListOperator(null);
 
+                    GetListOperator operator = new GetListOperator(null);
+                    // получаем ключ
                     IdTitleObj keyObj = operator.getUserByLoginPass(new IdTitleObj(pass.hashCode(), login));
 
                     if (keyObj!=null&&keyObj.getTitle()!=null&&!keyObj.getTitle().equals("")) {
@@ -68,15 +61,15 @@ public class LoginController extends BaseController {
                             mainController.setOperator(operator);
                             mainController.reconnect();
                             // получаем из базы последний день, открытый этим администратором
-                            int id = user.getId();
-
-
+                            // если у пользовалетя права root, тогда уточняем какую точку продаж открыть
                             if (user.getPermission()==1){
                                mainApp.showSelectSalonLayout();
                             } else {
 
                                 OpenDayManager openDayManager = new OpenDayManager(operator, user);
-                                if (openDayManager.isDayAlreadyOpened()){
+
+                                // проверка, был ли уже открыт день и заполнены сотрудники на этой точке продаж
+                                if (!openDayManager.isDayAlreadyOpened()){
                                     mainApp.initGoodMorningLayout(user);
                                 } else {
                                     DateObject day = openDayManager.getCurrentDay();

@@ -1,0 +1,42 @@
+* {
+    -fx-font-family: roboto;
+    -fx-text-fill: #c4c4c4;
+}
+
+.body {
+    -fx-background-color: #3c3f41;
+}
+
+.button {
+    -fx-text-fill: white;
+    -fx-background-color: #87939a;
+    -fx-background-radius: 0;
+    /*-fx-background-color: #626254;*/
+}
+
+.button:hover {
+    -fx-text-fill: white;
+    -fx-background-color: #808c93;
+
+}
+
+.button:pressed, .button:default:hover:pressed {
+    -fx-background-color: white;
+    -fx-text-fill: #5c676e;
+}
+
+.textView {
+    -fx-background-color: #65686a;
+    -fx-background-radius: 0;
+
+}
+
+.textView:selected {
+
+}
+.menu {
+    -fx-text-fill: white;
+    -fx-background-color: #87939a;
+    -fx-background-radius: 0;
+    /*-fx-background-color: #626254;*/
+}

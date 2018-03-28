@@ -5,25 +5,24 @@
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
 
-<VBox fx:id="rootElement" alignment="TOP_RIGHT" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="134.0" prefWidth="250.0" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.glassexpress.controllers.LoginController">
+<VBox fx:id="rootElement" alignment="TOP_RIGHT" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="134.0" prefWidth="250.0" styleClass="body" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.glassexpress.controllers.LoginController">
    <!--<VBox fx:id="rootElement" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="115.0" prefWidth="490.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.geekbrains.filebox.client.fxcontrollers.LoginController">-->
 
       <children>
-         <TextField id="fieldLogin" fx:id="fieldLogin" promptText="login" styleClass="fontverdabold">
+         <TextField id="textView" fx:id="fieldLogin" promptText="login" styleClass="textView">
 
          <VBox.margin>
             <Insets bottom="10.0" />
          </VBox.margin>
          </TextField>
-         <PasswordField id="fieldPass" fx:id="fieldPass" promptText="password" styleClass="fontverdabold">
+         <PasswordField fx:id="fieldPass" promptText="password" styleClass="textView">
 
          <VBox.margin>
             <Insets bottom="10.0" />
          </VBox.margin>
          </PasswordField>
-         <Button id="btnLogin" mnemonicParsing="false" onAction="#login" prefHeight="28.0" prefWidth="100.0" styleClass="fontverdabold" text="Login">
+         <Button id="btnLogin" mnemonicParsing="false" onAction="#login" prefHeight="28.0" prefWidth="100.0" style="" text="Login">
 
          </Button>
    </children>

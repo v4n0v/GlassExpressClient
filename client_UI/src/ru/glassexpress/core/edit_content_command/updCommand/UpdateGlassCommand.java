@@ -6,16 +6,16 @@ import ru.glassexpress.request_builder.RequestBuilder;
 
 public class UpdateGlassCommand extends UpdateElementCommand {
 
-    GlassObject glass;
+   // GlassObject glass;
 
     public UpdateGlassCommand(GlassObject glass, String key) {
-        super(glass.getId(),key);
-        this.glass = glass;
+        super(glass,key);
+     //   this.glass = glass;
     }
 
     @Override
     void prepareRequest() {
-
+        GlassObject glass = (GlassObject) object;
         request=new RequestBuilder().setMethod(Resources.METHOD_GET)
                 .setTarget(Resources.TARGET_GLASS)
                 .setAction(Resources.ACTION_UPD)

@@ -5,6 +5,7 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListCell;
 import ru.glassexpress.core.JsonController;
+import ru.glassexpress.core.data.DataMap;
 import ru.glassexpress.core.get_command.adapter.BaseObjectAdapter;
 import ru.glassexpress.core.objects.Composite;
 import ru.glassexpress.core.objects.DateObject;
@@ -18,7 +19,7 @@ public class SelectSalonController extends BaseController {
     @Override
     public void init() {
         salons = FXCollections.observableArrayList();
-        dataMap = mainController.getDataMap();
+        dataMap = DataMap.getInstance();
         salonsComboBox.setCellFactory(p -> new ListCell<IdTitleObj>() {
             @Override
             protected void updateItem(IdTitleObj item, boolean empty) {

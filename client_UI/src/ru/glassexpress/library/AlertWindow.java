@@ -31,6 +31,13 @@ public class AlertWindow {
     public static void infoMessage(String msg) {
         alertWindow("Info", msg, Alert.AlertType.INFORMATION );
     }
+
+    public static void completeMessage() {
+        alertWindow("Info", "Уперация выполнена успешно", Alert.AlertType.INFORMATION );
+    }
+    public static void notCompleteMessage() {
+        alertWindow("Info", "Уперация не выполнена", Alert.AlertType.ERROR );
+    }
     public static void warningMessage(String msg) {
         alertWindow("Warning", msg, Alert.AlertType.WARNING );
     }

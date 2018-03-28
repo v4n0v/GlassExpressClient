@@ -84,7 +84,7 @@ public class AddGlassController extends BaseController {
         glassFactoryComboBox.getSelectionModel().select(0);
         glassTypeComboBox.setItems(glassTypeList);
         glassTypeComboBox.getSelectionModel().select(0);
-        glassBodyComboBox.setItems(mainController.getBodyTypeStringList());
+        glassBodyComboBox.setItems(adapter.idTitleObjToString(dataMap.getBodyTypeList()));
         glassBodyComboBox.getSelectionModel().select(0);
 
 

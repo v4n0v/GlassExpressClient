@@ -51,4 +51,8 @@ public class IdTitleObj extends BaseObject {
     public String toString() {
         return title;
     }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
 }

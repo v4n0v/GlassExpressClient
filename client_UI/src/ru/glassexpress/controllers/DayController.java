@@ -49,7 +49,7 @@ public class DayController extends BaseController {
         currentEmployees = FXCollections.observableArrayList();
         salons = FXCollections.observableArrayList();
         adminLabel.setText(administrator.getName() + " " + administrator.getLastName());
-
+        dataMap = DataMap.getInstance();
         // устанавливаем дауту в заголовок
         date = new Date();
         SimpleDateFormat dateFormat = new SimpleDateFormat(Resources.DATE_PATTERN);
@@ -58,9 +58,11 @@ public class DayController extends BaseController {
 
         // устанавливаем список магазинов в ComboBox
         operator = new GetListOperator(administrator.getKey());
-        dataMap = mainController.getDataMap();
-        dataMap.setCurrentEmployeesList(currentEmployees);
 
+
+        if (currentEmployees!=null) {
+            dataMap.setCurrentEmployeesList(currentEmployees);
+        }
 
 //        salonsComboBox.setCellFactory(p -> new ListCell<IdTitleObj>() {
 //            @Override

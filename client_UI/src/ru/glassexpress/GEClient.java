@@ -11,6 +11,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import ru.glassexpress.controllers.*;
 import ru.glassexpress.core.data.Log2File;
 import ru.glassexpress.core.data.DataMap;
@@ -36,14 +37,14 @@ public class GEClient extends Application {
     private AnchorPane rootLayout;
 
 
-
+    private final String styleCSS = "css/style.css";
 // запуск приложения
     @Override
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("GlassExpress client");
 
-        dataMap=new DataMap();
+        dataMap= DataMap.getInstance();
         // мэнеджер клиента, в нем вся бизнеслогика
 
 
@@ -53,7 +54,11 @@ public class GEClient extends Application {
 
     }
 
+    private void setStyleToStage(String style, Scene scene) {
+        scene.getStylesheets().clear();
+        scene.getStylesheets().add(GEClient.class.getResource(style).toString());
 
+    }
     // инициализация корневого
     public void initRootLayout() {
 
@@ -72,13 +77,52 @@ public class GEClient extends Application {
 
             // Отображаем сцену, содержащую корневой макет.
             Scene scene = new Scene(rootLayout);
+     //     setStyleToStage(styleCSS, scene);
             primaryStage.setScene(scene);
             primaryStage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+    public void initMainLayout() {
+        try {
+            // Загружаем сведения об адресатах.
+            Stage carsSelectStage = new Stage();
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(GEClient.class.getResource("fxml/baseScreen.fxml"));
+            Log2File.writeLog("addCarLayout подгружен");
 
+            AnchorPane modelAdd = (AnchorPane) loader.load();
+           // Scene sceneMain= new Scene(modelAdd);
+            mainController = loader.getController();
+            // Помещаем сведения об адресатах в центр корневого макета.
+            menuController.setMainController(mainController);
+
+            ObservableList<Node>childrens = rootLayout.getChildren();
+
+
+            AnchorPane.setLeftAnchor(modelAdd, 0d);
+            AnchorPane.setRightAnchor(modelAdd, 0d);
+
+            AnchorPane.setTopAnchor(modelAdd, 15d);
+            AnchorPane.setBottomAnchor(modelAdd, 0d);
+            childrens.add(modelAdd);
+//            AnchorPane container = (AnchorPane) childrens.get(1);
+//            container.modelAdd;
+            // setStyleToStage(styleCSS, sceneMain);
+            //  mainController.setMainController(clientController);
+            mainController.setMainApp(this);
+            mainController.setStage(carsSelectStage);
+            mainController.setDataMap(dataMap);
+            mainController.setMenuController(menuController);
+            //clientController.setCarsController(mainController);
+            mainController.init();
+            carsSelectStage.setOnCloseRequest((event) -> primaryStage.close());
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     public void showClientLoginLayout() {
         try {
             // новое окно логина
@@ -99,6 +143,8 @@ public class GEClient extends Application {
             loginStage.setScene(sceneLog);
             loginStage.initModality(Modality.WINDOW_MODAL);
             loginStage.initOwner(primaryStage);
+
+     //  setStyleToStage(styleCSS, sceneLog);
             LoginController controller = loaderLog.getController();
             controller.setMainController(mainController);
             controller.setMainApp(this);
@@ -118,8 +164,8 @@ public class GEClient extends Application {
             Stage addAdminStage = new Stage();
             FXMLLoader loaderLog = new FXMLLoader();
             loaderLog.setLocation(GEClient.class.getResource("fxml/addUserLogin.fxml"));
-            VBox loginRootElement = (VBox) loaderLog.load();
-            Scene sceneLog = new Scene(loginRootElement);
+            VBox addAdminRootElement = (VBox) loaderLog.load();
+            Scene sceneLog = new Scene(addAdminRootElement);
 
             // получаем ссылку у контроллера окна
             // controller.
@@ -144,45 +190,7 @@ public class GEClient extends Application {
         }
 
     }
-    public void initMainLayout() {
-        try {
-            // Загружаем сведения об адресатах.
-            Stage carsSelectStage = new Stage();
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(GEClient.class.getResource("fxml/baseScreen.fxml"));
-            Log2File.writeLog("addCarLayout подгружен");
 
-            AnchorPane modelAdd = (AnchorPane) loader.load();
-            mainController = loader.getController();
-            // Помещаем сведения об адресатах в центр корневого макета.
-            menuController.setMainController(mainController);
-
-            ObservableList<Node>childrens = rootLayout.getChildren();
-
-
-            AnchorPane.setLeftAnchor(modelAdd, 0d);
-            AnchorPane.setRightAnchor(modelAdd, 0d);
-
-            AnchorPane.setTopAnchor(modelAdd, 15d);
-            AnchorPane.setBottomAnchor(modelAdd, 0d);
-            childrens.add(modelAdd);
-//            AnchorPane container = (AnchorPane) childrens.get(1);
-//            container.modelAdd;
-
-
-          //  mainController.setMainController(clientController);
-            mainController.setMainApp(this);
-            mainController.setStage(carsSelectStage);
-            mainController.setDataMap(dataMap);
-            mainController.setMenuController(menuController);
-            //clientController.setCarsController(mainController);
-            mainController.init();
-            carsSelectStage.setOnCloseRequest((event) -> primaryStage.close());
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
     public void initAddGlassLayout(String selectedCar) {
         try {
             // Загружаем сведения об адресатах.

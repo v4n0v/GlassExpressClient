@@ -21,7 +21,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1091.0" prefWidth="1419.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.glassexpress.controllers.MainController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1091.0" prefWidth="1419.0" styleClass="body" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.glassexpress.controllers.MainController">
     <children>
         <TabPane layoutX="247.0" layoutY="39.0" prefHeight="950.0" prefWidth="1154.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="300.0">
             <tabs>
@@ -77,7 +77,7 @@
                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                            </columnResizePolicy>
                                 </TableView>
-                                <Button layoutX="1236.0" layoutY="751.0" mnemonicParsing="false" onAction="#openAddGlassDialog" text="Добавить " AnchorPane.bottomAnchor="2.0" AnchorPane.rightAnchor="0.0" />
+                                <Button fx:id="addGlassButton" layoutX="1236.0" layoutY="751.0" mnemonicParsing="false" onAction="#openAddGlassDialog" text="Добавить " AnchorPane.bottomAnchor="2.0" AnchorPane.rightAnchor="0.0" />
                                 <Button fx:id="createOrderButton" layoutX="1261.0" layoutY="760.0" mnemonicParsing="false" onAction="#openNewOrder" text="Оформить заказ" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" />
                                 <Button fx:id="deleteGlassButton" layoutX="1228.0" layoutY="701.0" mnemonicParsing="false" onAction="#deleteSelectedGlass" text="Удалить" AnchorPane.bottomAnchor="2.0" AnchorPane.rightAnchor="92.0" />
                                 <Button fx:id="editGlassButton" layoutX="1108.0" layoutY="701.0" mnemonicParsing="false" onAction="#editGlass" text="Редактировать" AnchorPane.bottomAnchor="2.0" AnchorPane.rightAnchor="172.0" />
@@ -194,7 +194,7 @@
                 </Tab>
             </tabs>
         </TabPane>
-        <GridPane layoutX="30.0" layoutY="31.0" prefHeight="274.0" prefWidth="668.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="16.0">
+        <GridPane hgap="10.0" layoutX="30.0" layoutY="31.0" prefHeight="265.0" prefWidth="680.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="16.0">
             <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -214,10 +214,11 @@
                                 <Insets bottom="5.0" />
                             </VBox.margin>
                         </Label>
-                        <ListView fx:id="markListView" onMouseClicked="#fillModelsListView" prefHeight="299.0" prefWidth="216.0" />
+                        <ListView fx:id="markListView" onMouseClicked="#fillModelsListView" prefHeight="299.0" prefWidth="216.0" styleClass="textView" />
                         <HBox>
                             <children>
                                 <Button fx:id="addMarkButton" mnemonicParsing="false" onAction="#showAddTitleModal" prefHeight="25.0" prefWidth="222.0" text="+" />
+                        <Button fx:id="editMarkButton" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#showAddTitleModal" prefHeight="25.0" prefWidth="222.0" text="..." />
                                 <Button fx:id="delMarkButton" mnemonicParsing="false" onAction="#showAddTitleModal" prefHeight="25.0" prefWidth="222.0" text="-" />
                             </children>
                         </HBox>
@@ -230,10 +231,11 @@
                                 <Insets bottom="5.0" />
                             </VBox.margin>
                         </Label>
-                        <ListView fx:id="modelListView" onMouseClicked="#fillGenerationsListView" prefHeight="361.0" prefWidth="216.0" />
+                        <ListView fx:id="modelListView" onMouseClicked="#fillGenerationsListView" prefHeight="361.0" prefWidth="216.0" styleClass="textView" />
                         <HBox>
                             <children>
                                 <Button fx:id="addModelButton" mnemonicParsing="false" onAction="#showAddTitleModal" prefHeight="25.0" prefWidth="223.0" text="+" />
+                        <Button fx:id="editModelButton" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#showAddTitleModal" prefHeight="25.0" prefWidth="223.0" text="..." />
                                 <Button fx:id="delModelButton" mnemonicParsing="false" onAction="#showAddTitleModal" prefHeight="25.0" prefWidth="223.0" text="-" />
                             </children>
                         </HBox>
@@ -246,10 +248,11 @@
                                 <Insets bottom="5.0" />
                             </VBox.margin>
                         </Label>
-                        <ListView fx:id="genListView" prefWidth="294.0" />
+                        <ListView fx:id="genListView" prefWidth="294.0" styleClass="textView" />
                         <HBox>
                             <children>
                                 <Button fx:id="addGenerationButton" mnemonicParsing="false" onAction="#showAddTitleModal" prefHeight="25.0" prefWidth="223.0" text="+" />
+                        <Button fx:id="editGenerationButton" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#showAddTitleModal" prefHeight="25.0" prefWidth="223.0" text="..." />
                                 <Button fx:id="delGenerationButton" mnemonicParsing="false" onAction="#delGen" prefHeight="25.0" prefWidth="223.0" text="-" />
                             </children>
                         </HBox>
@@ -258,7 +261,7 @@
             </children>
         </GridPane>
         <ComboBox fx:id="insertClassComboBox" disable="true" layoutX="704.0" layoutY="65.0" onHiding="#initPriceClassLabels" prefWidth="150.0" promptText="Класс установки" />
-        <Button disable="true" layoutX="704.0" layoutY="100.0" mnemonicParsing="false" onAction="#saveInsertClass" prefHeight="25.0" prefWidth="150.0" text="Сохранить" />
+        <Button disable="true" layoutX="704.0" layoutY="100.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="150.0" text="Сохранить" />
         <Separator layoutX="695.0" layoutY="80.0" orientation="VERTICAL" prefHeight="230.0" prefWidth="10.0" AnchorPane.leftAnchor="665.0" AnchorPane.topAnchor="50.0" />
         <Separator layoutX="190.0" layoutY="24.0" prefHeight="6.0" prefWidth="1199.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
         <Separator layoutX="149.0" layoutY="306.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="290.0" />

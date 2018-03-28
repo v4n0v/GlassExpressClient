@@ -14,7 +14,8 @@
       <Button layoutX="322.0" layoutY="79.0" mnemonicParsing="false" onAction="#editLogin" prefHeight="25.0" prefWidth="141.0" text="Сменить логин" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="70.0" />
       <Button layoutX="321.0" layoutY="119.0" mnemonicParsing="false" onAction="#editPassword" prefHeight="25.0" prefWidth="141.0" text="Сменить пароль" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="105.0" />
       <Button layoutX="331.0" layoutY="125.0" mnemonicParsing="false" onAction="#editUserInfo" prefHeight="25.0" prefWidth="141.0" text="Редактировать" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="140.0" />
-      <ComboBox fx:id="salonComboBox" layoutX="321.0" layoutY="194.0" prefHeight="25.0" prefWidth="141.0" promptText="Салон" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="225.0" />
+      <ComboBox fx:id="salonComboBox" layoutX="321.0" layoutY="194.0" onAction="#filterUsersBySalon" prefHeight="25.0" prefWidth="141.0" promptText="Салон" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="225.0" />
+      <Button layoutX="321.0" layoutY="269.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="141.0" text="Показать всех" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="260.0" />
    </children>
    <padding>
       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />

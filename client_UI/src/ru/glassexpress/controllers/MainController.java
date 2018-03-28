@@ -11,6 +11,7 @@ import javafx.stage.Stage;
 import ru.glassexpress.core.JsonController;
 import ru.glassexpress.core.StringValidator;
 import ru.glassexpress.core.data.Log2File;
+import ru.glassexpress.core.utils.ObservableListAdapter;
 import ru.glassexpress.library.Resources;
 import ru.glassexpress.core.URLConnection;
 import ru.glassexpress.core.GetListOperator;
@@ -36,6 +37,10 @@ public class MainController extends BaseController {
     public Label salonLabel;
     public Button createOrderButton;
     public ListView  employeesListView;
+    public Button editGenerationButton;
+    public Button editModelButton;
+    public Button editMarkButton;
+    public Button addGlassButton;
     @FXML
     ComboBox<String> bodyTypeListView;
 
@@ -51,7 +56,7 @@ public class MainController extends BaseController {
     ListView<String> modelListView;
 
     @FXML
-    ListView<String> markListView;
+    ListView<IdTitleObj> markListView;
 
     @FXML
     ListView<String> genListView;
@@ -122,6 +127,7 @@ public class MainController extends BaseController {
 //        return car;
 //    }
 
+    ObservableListAdapter observableListAdapter;
     // класс авто, заполняющийся после конструктора
     // Car car;
     BaseObjectAdapter adapter;
@@ -133,7 +139,7 @@ public class MainController extends BaseController {
         Log2File.writeLog("Инициализация главного окна");
 
         user = new UserObject();
-
+        observableListAdapter=new ObservableListAdapter();
         urlConnection = URLConnection.getInstance();
         jsonController = JsonController.getInstance();
         // car = new Car();
@@ -141,7 +147,17 @@ public class MainController extends BaseController {
 
         // glassTypeList = new ArrayList<>();
 
-
+//        markListView.setCellFactory(p -> new ListCell<IdTitleObj>() {
+//            @Override
+//            protected void updateItem(IdTitleObj item, boolean empty) {
+//                super.updateItem(item, empty);
+//                if (item != null && !empty) {
+//                    setText(item.getTitle());
+//                } else {
+//                    setText(null);
+//                }
+//            }
+//        });
         radioGroup = new ToggleGroup();
         isFrontRadio.setToggleGroup(radioGroup);
         isRearRadio.setToggleGroup(radioGroup);
@@ -163,10 +179,10 @@ public class MainController extends BaseController {
         addOperator = new AddOperator(user.getKey());
         updateOperator = new UpdateOperator(user.getKey());
         Log2File.writeLog("reconnect");
-        markListView.setItems(marksList);
-        modelListView.setItems(modelsList);
-        genListView.setItems(genList);
-        bodyTypeListView.setItems(bodyTypeStringList);
+//
+//        modelListView.setItems(modelsList);
+//        genListView.setItems(genList);
+//        bodyTypeListView.setItems(bodyTypeStringList);
 
         //todo добавить список сотрудников в listView
 
@@ -175,7 +191,7 @@ public class MainController extends BaseController {
 
 
         fillMarksListView();
-// если получили список марок, то тянем остальные параметры и модели
+        // если получили список марок, то тянем остальные параметры и модели
         if (dataMap.getCarMarksList() != null) {
             dataMap.setGlassTypeList(getListOperator.getGlassTypes());
             if (dataMap.getGlassTypeList() != null) {
@@ -186,13 +202,16 @@ public class MainController extends BaseController {
                 dataMap.setPositionsList(getListOperator.getPositions());
                 dataMap.setPermissionsList(getListOperator.getPermissions());
                 dataMap.setServices(getListOperator.getServices());
-                fillObservableList(bodyTypeStringList, adapter.idTitleObjToString(dataMap.getBodyTypeList()));
+                bodyTypeListView.setItems(observableListAdapter.asObservableList(dataMap.getBodyTypeList()));
+
+               // fillObservableList(bodyTypeStringList, adapter.idTitleObjToString(dataMap.getBodyTypeList()));
                 nameLabel.setText(user.getName() + " " + user.getLastName());
                 int salonPos = dataMap.getPosById(dataMap.getSalonsList(), user.getSalonId());
                 salonLabel.setText(dataMap.getSalonsList().get(salonPos).getTitle());
             }
         }
-         initPermission();
+
+        initPermission();
     }
 
     public Button editGlassButton;
@@ -200,24 +219,28 @@ public class MainController extends BaseController {
 
     public void initPermission() {
         employeesListView.setItems(dataMap.getCurrentEmployeesList());
-        boolean isDiasbled;
+        boolean isDisabled;
         boolean isVisible;
         if (user.getPermission()!= 1) {
-            isDiasbled = true;
+            isDisabled = true;
             isVisible=false;
         } else {
-            isDiasbled = false;
+            isDisabled = false;
             isVisible=true;
         }
         if (user.getPermission()== 3) {
             createOrderButton.setDisable(true);
         }
-        deleteGlassButton.setDisable(isDiasbled);
+        addGlassButton.setDisable(isDisabled);
+        editGenerationButton.setDisable(isDisabled);
+        editMarkButton.setDisable(isDisabled);
+        editModelButton.setDisable(isDisabled);
+        deleteGlassButton.setDisable(isDisabled);
         colTGPriceIn.setVisible(isVisible);
-        delMarkButton.setDisable(isDiasbled);
-        delGenerationButton.setDisable(isDiasbled);
-        delModelButton.setDisable(isDiasbled);
-        editGlassButton.setDisable(isDiasbled);
+        delMarkButton.setDisable(isDisabled);
+        delGenerationButton.setDisable(isDisabled);
+        delModelButton.setDisable(isDisabled);
+        editGlassButton.setDisable(isDisabled);
         menuController.initPermission();
 
     }
@@ -251,7 +274,10 @@ public class MainController extends BaseController {
     private void fillMarksListView() {
         Log2File.writeLog("Запрос марок авто");
         dataMap.setCarMarksList(getListOperator.getMarks());
-        fillObservableList(marksList, adapter.idTitleObjToString(dataMap.getCarMarksList()));
+
+        markListView.setItems(observableListAdapter.asObservableList(dataMap.getCarMarksList()));
+
+        // fillObservableList(marksList, adapter.idTitleObjToString(dataMap.getCarMarksList()));
         if (dataMap.getCarMarksList() != null && dataMap.getCarMarksList().size() > 0) {
             markListView.getSelectionModel().selectFirst();
 
@@ -272,7 +298,9 @@ public class MainController extends BaseController {
         markListView.getSelectionModel().getSelectedIndex();
 
         dataMap.setCarModelsList(getListOperator.getModels(dataMap.getCarMarksList().get(markListView.getSelectionModel().getSelectedIndex())));
-        fillObservableList(modelsList, adapter.idTitleObjToString(dataMap.getCarModelsList()));
+        modelListView.setItems(observableListAdapter.asObservableList(dataMap.getCarModelsList()));
+
+       // fillObservableList(modelsList, adapter.idTitleObjToString(dataMap.getCarModelsList()));
         if (dataMap.getCarModelsList() != null && dataMap.getCarModelsList().size() > 0) {
             modelListView.getSelectionModel().selectFirst();
             //   System.out.println("показать модели марки " + car.getMark());
@@ -292,7 +320,8 @@ public class MainController extends BaseController {
         IdTitleObj model = dataMap.getCarModelsList().get(modelListView.getSelectionModel().getSelectedIndex());
         dataMap.setGenerationObjList(getListOperator.getGenerations(model));
 
-        fillObservableList(genList, adapter.generationObjToString(dataMap.getGenerationObjList()));
+        genListView.setItems(observableListAdapter.asObservableList(dataMap.getGenerationObjList()));
+//        fillObservableList(genList, adapter.generationObjToString(dataMap.getGenerationObjList()));
         if (dataMap.getGenerationObjList().size() > 0) {
             genListView.getSelectionModel().selectFirst();
             // получаем список классов цен
@@ -348,6 +377,30 @@ public class MainController extends BaseController {
 
     }
 
+    private void editMark(IdTitleObj model){
+        Log2File.writeLog("Редактируем маркувто");
+
+        if (updateOperator.updateMarkIsComplete(model)) {
+            fillMarksListView();
+            Log2File.writeLog("Марка авто " + getSelectedMarkObj().getTitle() + " успешно обновлена");
+        } else {
+            Log2File.writeLog(Level.WARNING, "Фиаско!" + getSelectedMarkObj().getTitle() +  " не обновлена");
+        }
+    }
+
+
+
+    private void editModel(IdTitleObj model){
+        Log2File.writeLog("Редактируем модель авто");
+
+        if (updateOperator.updateModelIsComplete(model)) {
+            fillModelsListView();
+            Log2File.writeLog("Модель авто " + getSelectedMarkObj().getTitle() + " "+getSelectedModelTitle()+ " успешно обновлена");
+        } else {
+            Log2File.writeLog(Level.WARNING, "Фиаско!" + getSelectedMarkObj().getTitle() + " " + model + " не обновлена");
+        }
+    }
+
     private void addGeneration(String answer) {
         Log2File.writeLog("Добавляем поколение авто");
         if (addOperator.addGenerationIsComplete(answer, getSelectedModelObj())) {
@@ -358,7 +411,13 @@ public class MainController extends BaseController {
             Log2File.writeLog(Level.WARNING, "Фиаско!" + getSelectedMarkTitle() + " " + getSelectedModelTitle() + " " + answer + " не добавлено");
         }
     }
-
+    private void editGeneration(GenerationObj obj) {
+        if (updateOperator.editGenerationIsComplete(obj)) {
+            fillGenerationsListView();
+        } else {
+            System.out.println("Фиаско! Не отредактированно");
+        }
+    }
 
     private void deleteGeneration(int id) {
         if (deleteOperator.deleteGenerationIsComplete(id)) {
@@ -401,7 +460,24 @@ public class MainController extends BaseController {
             } else {
                 AlertWindow.errorMessage("Полее ввода не заполнено!");
             }
+        } else if ((Button) keyEvent.getSource() == editMarkButton) {
 
+            String answer = AlertWindow.dialogWindow("Редактировать марку авто", "Введите марку " );
+            if (answer != null && !answer.equals("")) {
+
+                boolean isTrue = AlertWindow.confirmationWindow("Вы уверены?", "Изменить марку на " +  answer);
+                if (isTrue) {
+                    if (!answer.equals("")) {
+                        int index = markListView.getSelectionModel().getSelectedIndex();
+                        IdTitleObj model = dataMap.getCarMarksList().get(index);
+                        model.setTitle(answer);
+                        editMark(model);
+
+                    }
+                }
+            } else {
+                AlertWindow.errorMessage("Полее ввода не заполнено!");
+            }
         } else if ((Button) keyEvent.getSource() == addModelButton) {
 
             String answer = AlertWindow.dialogWindow("Добавить новую модель авто", "Введите модель марки " + getSelectedMarkTitle());
@@ -410,13 +486,30 @@ public class MainController extends BaseController {
                 if (isTrue) {
                     if (!answer.equals("")) {
                         addModel(answer);
-                        System.out.println("добавить модель авто " + getSelectedMarkTitle() + " ");
+
                     }
                 }
             } else {
                 AlertWindow.errorMessage("Полее ввода не заполнено!");
             }
+        } else if ((Button) keyEvent.getSource() == editModelButton) {
 
+            String answer = AlertWindow.dialogWindow("Редактировать модель авто", "Введите модель марки " + getSelectedMarkTitle());
+            if (answer != null && !answer.equals("")) {
+
+                boolean isTrue = AlertWindow.confirmationWindow("Вы уверены?", "Изменить модель на " + getSelectedMarkTitle() + " " + answer);
+                if (isTrue) {
+                    if (!answer.equals("")) {
+                        int index = modelListView.getSelectionModel().getSelectedIndex();
+                        IdTitleObj model = dataMap.getCarModelsList().get(index);
+                        model.setTitle(answer);
+                        editModel(model);
+                        System.out.println("изменить модель авто " + getSelectedMarkTitle() + " ");
+                    }
+                }
+            } else {
+                AlertWindow.errorMessage("Полее ввода не заполнено!");
+            }
         } else if ((Button) keyEvent.getSource() == addGenerationButton) {
 
             String answer = AlertWindow.dialogWindow("Добавить поколение авто " + getSelectedMarkTitle() + " " + getSelectedModelTitle(), "Введите введите годы в формате (ХХХХ-ХХХХ)\n" +
@@ -440,6 +533,33 @@ public class MainController extends BaseController {
             } else {
                 AlertWindow.errorMessage("Полее ввода не заполнено!");
             }
+
+        } else if ((Button) keyEvent.getSource() == editGenerationButton) {
+
+            String answer = AlertWindow.dialogWindow("Изменить поколение авто " + getSelectedMarkTitle() + " "
+                    + getSelectedModelTitle(), "Введите введите годы в формате (ХХХХ-ХХХХ)\n" +
+                    "Если авто все еще выпускается, введите только\nгод начала производства ХХХХ ");
+            boolean isTrue = AlertWindow.confirmationWindow("Вы уверены?", "Проверьте правильность ввода ("+answer+")");
+            if (isTrue) {
+                if (!answer.equals("")) {
+                    if (StringValidator.isYearsInputCorrect(answer) || StringValidator.isSingleYearInputCorrect(answer)) {
+                        if (StringValidator.isSingleYearInputCorrect(answer)) {
+                            answer += "-9999";
+                        }
+                        // получаем поколение
+                        GenerationObj gen = dataMap.getGenerationObjList().get(genListView.getSelectionModel().getSelectedIndex());
+                        // парсим введенные годы
+                        answer = answer.replace(" ", "");
+                        String[] genYears = answer.split("-");
+                        // применяем  введенные годы
+                        gen.setYearFrom(Integer.parseInt(genYears[0]));
+                        gen.setYearTo(Integer.parseInt(genYears[1]));
+                        editGeneration(gen);
+                        System.out.println("редактирование поколение авто " + getSelectedModelTitle());
+                    }
+                }
+            }
+
 
         } else if ((Button) keyEvent.getSource() == delGenerationButton) {
 
@@ -468,10 +588,29 @@ public class MainController extends BaseController {
                 deleteMark(id);
                 System.out.println("удалить модель авто " + getSelectedMarkTitle());
             }
+        } else if ((Button) keyEvent.getSource() == editMarkButton) {
+            System.out.println("Редактируем марку " + getSelectedModelTitle());
+            boolean isTrue = AlertWindow.confirmationWindow("Вы уверены?", "Удалить модель " + getSelectedMarkTitle() + " " + getSelectedModelTitle() + " " + " из базы?");
+            if (isTrue) {
+                int id = dataMap.getCarModelsList().get(modelListView.getSelectionModel().getSelectedIndex()).getId();
+                dataMap.getCarModelsList().clear();
+                deleteModel(id);
+                System.out.println("удалить модель авто " + getSelectedMarkTitle() + " " + getSelectedModelTitle());
+            }
+
+
+        } else if ((Button) keyEvent.getSource() == editModelButton) {
+
+
+
+
+
         } else {
             System.out.println("Такую кнопку не умею");
         }
     }
+
+
 
 
     public void setGeneration() {
@@ -508,8 +647,8 @@ public class MainController extends BaseController {
 //          }
             for (int i = 0; i < dataMap.getGlassList().size() - 1; i++) {
 
-                String ss = getDataMap().getGlassList().get(i).getOptListString();
-                Composite optList = (Composite) JsonController.getInstance().convertJsonToObject(getDataMap().getGlassList().get(i).getOptListString());
+
+                Composite optList = (Composite) JsonController.getInstance().convertJsonToObject(dataMap.getGlassList().get(i).getOptListString());
                 List<IdTitleObj> list = adapter.baseObjToIdTitleObj(optList.getComponents());
                 String params = "";
                 for (int j = 0; j < list.size(); j++) {
@@ -662,8 +801,8 @@ public class MainController extends BaseController {
     // получаем название модели авто из datamap
     private String getSelectedModelTitle() {
         if (dataMap.getCarModelsList() != null && dataMap.getCarModelsList().size() > 0) {
-            return getSelectedMarkTitle() + " " + dataMap.getCarModelsList().get(modelListView.getSelectionModel().getSelectedIndex()).getTitle();
-        } else return null;
+            return dataMap.getCarModelsList().get(modelListView.getSelectionModel().getSelectedIndex()).getTitle();
+        } else return null; //getSelectedMarkTitle() + " " +
     }
 
     // получаем полное название авто из datamap
@@ -726,35 +865,35 @@ public class MainController extends BaseController {
 
 
     // получаю номер класса установки и вношу его в текущий автомобиль
-    public void saveInsertClass() {
-        // получаю ид класса установки
-        int id = dataMap.getInsertClassList().get(insertClassComboBox.getSelectionModel().getSelectedIndex()).getId();
-        // id авто
-        int carID = getSelectedCarId();
-        boolean isTrue = AlertWindow.confirmationWindow("Вы уверены?",
-                "Изменить класс установки " + getSelectedMarkTitle() + " " + getSelectedModelTitle() + "?\n"
-                        + insertClassComboBox.getSelectionModel().getSelectedItem());
-        if (isTrue) {
-            // если нажата ok, обновляем
-            if (updateOperator.updAutoInsertClass(id, carID, user.getKey())) {
-                // обновил класс установки в объекте в dataMap
-                getSelectedCarObj().setIdInsert(id);
-                // если уже открыты  доступные товары, то предлогает обновить список
-                if (dataMap.getGlassList() != null && dataMap.getGlassList().size() > 0) {
-                    isTrue = AlertWindow.confirmationWindow("Класс установки изменен",
-                            "Обновить данные таблицы товаров?");
-                    if (isTrue) {
-                        showGoods();
-                    }
-                }
-                System.out.println("Класс установки обновлен");
-            } else {
-                System.out.println("Фиаско! не обновлено");
-            }
-        }
-
-
-    }
+//    public void saveInsertClass() {
+//        // получаю ид класса установки
+//        int id = dataMap.getInsertClassList().get(insertClassComboBox.getSelectionModel().getSelectedIndex()).getId();
+//        // id авто
+//        int carID = getSelectedCarId();
+//        boolean isTrue = AlertWindow.confirmationWindow("Вы уверены?",
+//                "Изменить класс установки " + getSelectedMarkTitle() + " " + getSelectedModelTitle() + "?\n"
+//                        + insertClassComboBox.getSelectionModel().getSelectedItem());
+//        if (isTrue) {
+//            // если нажата ok, обновляем
+//            if (updateOperator.updAutoInsertClass(id, carID, user.getKey())) {
+//                // обновил класс установки в объекте в dataMap
+//                getSelectedCarObj().setIdInsert(id);
+//                // если уже открыты  доступные товары, то предлогает обновить список
+//                if (dataMap.getGlassList() != null && dataMap.getGlassList().size() > 0) {
+//                    isTrue = AlertWindow.confirmationWindow("Класс установки изменен",
+//                            "Обновить данные таблицы товаров?");
+//                    if (isTrue) {
+//                        showGoods();
+//                    }
+//                }
+//                System.out.println("Класс установки обновлен");
+//            } else {
+//                System.out.println("Фиаско! не обновлено");
+//            }
+//        }
+//
+//
+//    }
 
     @FXML
     Label frontInsertPriceLabel;
@@ -948,5 +1087,9 @@ public class MainController extends BaseController {
 
     public void setOperator(GetListOperator operator) {
         this.getListOperator = operator;
+    }
+
+    public UpdateOperator getUpdateOperator() {
+        return updateOperator;
     }
 }

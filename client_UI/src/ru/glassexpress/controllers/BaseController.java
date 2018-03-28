@@ -8,11 +8,8 @@ import ru.glassexpress.core.data.DataMap;
 abstract class BaseController {
     GEClient mainApp;
     Stage stage;
-    DataMap dataMap;
+    DataMap dataMap = DataMap.getInstance();
 
-    public DataMap getDataMap() {
-        return dataMap;
-    }
 
     public void setDataMap(DataMap dataMap) {
         this.dataMap = dataMap;

@@ -7,6 +7,19 @@ import java.util.List;
 
 // класс, в котором хранятся данные в "чистом виде", как пришли с сервера
 public class DataMap {
+
+    public static  DataMap getInstance() {
+        if (dataMap==null){
+            dataMap=new DataMap();
+        }
+        return dataMap;
+    }
+
+    private DataMap() {
+    }
+
+    private static DataMap dataMap;
+
     private GlassObject glassTableRow;
     // список видов стекол
     private List<IdTitleObj> glassTypeList;
