@@ -21,7 +21,6 @@ public class UpdatePassCommand extends UpdateElementCommand {
                 //   .setRequest("mark", car.getMark())
                 .setRequest("login",  user.getLogin())
                 .setRequest("pass",String.valueOf(user.getPassHash()))
-
                 .build();
     }
 }
