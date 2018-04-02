@@ -38,7 +38,7 @@ public class MenuController extends BaseController {
     public void initPermission() {
         boolean visible;
 
-            if (mainController.getUser().getPermission() == 1) {
+            if (dataMap.getUser().getPermission() == 1) {
                 visible = true;
             } else {
                 visible = false;

@@ -1,42 +1,284 @@
 * {
-    -fx-font-family: roboto;
-    -fx-text-fill: #c4c4c4;
-}
+    /* Change according to your needs */
 
+    -fx-my-background-color: #3c3f41;
+    -fx-my-background-color-highlighted: #4c4f51;
+
+    -fx-my-button-color: #2b2e30;
+    -fx-my-button-hovered: #808c93;
+    -fx-my-button-pressed: #505960;
+
+    -fx-my-font-color: c4c4c4;
+
+    -fx-my-item-color: #4c4f51;
+    -fx-my-item-odd-color: #393c3e;
+    -fx-my-item-selected: #3a4d3b;
+    -fx-my-item-hover: #575b5e;
+
+    -fx-my-menu-color: #263238;
+    -fx-my-menu-color-highlighted: #455a64; /* Change according to your needs */
+    -fx-my-menu-font-color: #FFFFFF; /* Change according to your needs */
+    -fx-my-menu-font-color-highlighted: #FFFFFF; /* Change according to your needs */
+    /*-fx-gradient-selector-color: linear-gradient(#0f3957 0%, #10314f 25%, #102946 75%, #10213d 100%);*/
+    -fx-gradient-selector-color: linear-gradient(#1b572b 0%, #184f2a 25%, #0e4623 75%, #0d3d22 100%);
+
+    -fx-font-family: roboto;
+    -fx-font-size: 12;
+    -fx-text-fill: -fx-my-font-color;
+}
+.pane{
+    -fx-background-color: -fx-my-background-color;
+}
 .body {
-    -fx-background-color: #3c3f41;
+    -fx-background-color: -fx-my-background-color;
+    -fx-padding: 10;
 }
 
 .button {
-    -fx-text-fill: white;
-    -fx-background-color: #87939a;
+
+    -fx-background-color: -fx-my-button-color;
     -fx-background-radius: 0;
+    /*-fx-padding:10; */
     /*-fx-background-color: #626254;*/
 }
 
 .button:hover {
     -fx-text-fill: white;
-    -fx-background-color: #808c93;
+    -fx-background-color: -fx-my-button-hovered;
 
 }
 
 .button:pressed, .button:default:hover:pressed {
-    -fx-background-color: white;
-    -fx-text-fill: #5c676e;
+    -fx-background-color: -fx-my-button-pressed;
+    -fx-text-fill: #bab9b9;
 }
 
-.textView {
+/*.textView {
+    -fx-table-cell-border-color: transparent;
+    -fx-table-header-border-color: transparent;
+    -fx-background-color: #65686a;
+    -fx-background-radius: 0;
+
+}*/
+
+.list-view {
+    -fx-table-cell-border-color: transparent;
+    -fx-table-header-border-color: transparent;
     -fx-background-color: #65686a;
     -fx-background-radius: 0;
 
 }
 
-.textView:selected {
-
+.list-cell:filled:selected:focused, .list-cell:filled:selected {
+    -fx-background-color: -fx-gradient-selector-color;
+    -fx-text-fill: white;
 }
+
+.list-cell:odd {
+    -fx-cell-hover-color: -fx-my-item-hover;
+    -fx-background-color: -fx-my-item-odd-color;
+}
+
+.list-cell:even {
+    -fx-cell-hover-color: -fx-my-item-hover;
+    -fx-background-color: -fx-my-item-color;
+}
+
+.list-cell:filled:hover {
+    -fx-cell-hover-color: black;
+    -fx-text-fill: white;
+}
+
+/*.textView:selected {
+
+}*/
+.separator {
+
+    -fx-base: #202325;
+}
+
 .menu {
     -fx-text-fill: white;
     -fx-background-color: #87939a;
     -fx-background-radius: 0;
     /*-fx-background-color: #626254;*/
+}
+
+.tab-pane {
+    -fx-background-color: #3c3f41;
+    -fx-base: #3c3f41;
+}
+
+.tab-pane *.tab-header-background {
+    -fx-background-color: transparent;
+
+}
+
+.tab:hover {
+    -fx-background-color: #102946;
+}
+
+.lilBtn {
+    -fx-padding: 2;
+    -fx-border-color: #65686a;
+}
+
+.table-view {
+    -fx-base: #2b2e30;
+
+    -fx-background-color: #65686a;
+
+    -fx-table-header-border-color: transparent;
+    -fx-padding: 0;
+}
+
+.table-view:focused {
+    -fx-background-color: #102946;
+}
+
+.table-row-cell:odd {
+    -fx-background-color: -fx-my-item-odd-color;
+}
+
+.table-row-cell:even {
+    -fx-background-color: -fx-my-item-color;
+}
+
+.table-row-cell:filled:selected:focused, .table-row-cell:filled:selected {
+    -fx-background-color: -fx-gradient-selector-color;
+    -fx-text-fill: white;
+    -fx-base: #2b2e30;
+}
+
+
+/* MENU BAR + Top-level MENU BUTTONS */
+/*** The menu bar itself ***/
+.menu-bar {
+    -fx-background-color: -fx-my-menu-color;
+}
+
+/*** Top-level menu itself (not selected / hovered) ***/
+.menu-bar > .container > .menu-button {
+    -fx-background-color: -fx-my-menu-color;
+}
+
+/*** Top-level menu's label (not selected / hovered) ***/
+.menu-bar > .container > .menu-button > .label {
+    -fx-text-fill: -fx-my-menu-font-color;
+}
+
+/*** Top-level menu's label (disabled) ***/
+.menu-bar > .container > .menu-button > .label:disabled {
+    -fx-opacity: 1.0;
+}
+
+/*** Top-level menu itself (selected / hovered) ***/
+.menu-bar > .container > .menu-button:hover,
+.menu-bar > .container > .menu-button:focused,
+.menu-bar > .container > .menu-button:showing {
+    -fx-background-color: -fx-my-menu-color-highlighted;
+}
+
+/*** Top-level menu's label (selected / hovered) ***/
+.menu-bar > .container > .menu-button:hover > .label,
+.menu-bar > .container > .menu-button:focused > .label,
+.menu-bar > .container > .menu-button:showing > .label {
+    -fx-text-fill: -fx-my-menu-font-color-highlighted;
+}
+
+/* MENU ITEM (children of a MENU BUTTON) */
+/*** The item itself (not hovered / focused) ***/
+.menu-item {
+    -fx-background-color: -fx-my-menu-color;
+}
+
+/*** The item's label (not hovered / focused) ***/
+.menu-item .label {
+    -fx-text-fill: -fx-my-menu-font-color;
+}
+
+/*** The item's label (disabled) ***/
+.menu-item .label:disabled {
+    -fx-opacity: 1.0;
+}
+
+/*** The item itself (hovered / focused) ***/
+.menu-item:focused, .menu-item:hovered {
+    -fx-background-color: -fx-my-menu-color-highlighted;
+}
+
+/*** The item's label (hovered / focused) ***/
+.menu-item:focused .label, .menu-item:hovered .label {
+    -fx-text-fill: -fx-my-menu-font-color-highlighted;
+}
+
+/* CONTEXT MENU */
+/*** The context menu that contains a menu's menu items ***/
+.context-menu {
+    -fx-background-color: -fx-my-menu-color;
+}
+
+
+
+/* The main scrollbar **track** CSS class  */
+.workspace-grid .list-vew-scroll-bar:horizontal .track,
+.workspace-grid .list-vew-scroll-bar:vertical .track{кщще
+    -fx-background-color:transparent;
+    -fx-border-color:transparent;
+    -fx-background-radius: 0em;
+    -fx-border-radius:2em;
+}
+
+/* The increment and decrement button CSS class of scrollbar */
+.workspace-grid .list-scroll-bar:horizontal .increment-button ,
+.workspace-grid .scroll-bar:horizontal .decrement-button {
+    -fx-background-color:transparent;
+    -fx-background-radius: 0em;
+    -fx-padding:0 0 10 0;
+
+}
+
+/* The increment and decrement button CSS class of scrollbar */
+
+.workspace-grid .scroll-bar:vertical .increment-button ,
+.workspace-grid .scroll-bar:vertical .decrement-button {
+
+    -fx-background-color:transparent;
+    -fx-background-radius: 0em;
+    -fx-padding:0 10 0 0;
+
+}
+
+.workspace-grid .scroll-bar .increment-arrow,
+.workspace-grid .scroll-bar .decrement-arrow
+{
+    -fx-shape: " ";
+    -fx-padding:0;
+}
+
+/* The main scrollbar **thumb** CSS class which we drag every time (movable) */
+.workspace-grid .scroll-bar:horizontal .thumb,
+.workspace-grid .scroll-bar:vertical .thumb {
+    -fx-background-color:derive(black,90%);
+    -fx-background-insets: 2, 0, 0;
+    -fx-background-radius: 2em;
+
+}
+.myDialog{
+    -fx-background-color: #f9d900;
+}
+.myDialog > *.button-bar > *.container{
+    -fx-background-color: #a9e200;
+}
+.myDialog > *.label.content{
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+.myDialog:header *.header-panel{
+    -fx-background-color: #a59c31;
+}
+.myDialog:header *.header-panel *.label{
+    -fx-font-size: 18px;
+    -fx-font-style: italic;
+    -fx-fill: #292929;
 }

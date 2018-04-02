@@ -28,4 +28,9 @@ public class DeleteOperator {
         comand=new DeleteGlassCommand(id,key);
         return comand.deleteElement();
     }
+
+    public boolean deleteUserIsComplete(int id) {
+        comand=new DeleteUserCommand(id,key);
+        return comand.deleteElement();
+    }
 }

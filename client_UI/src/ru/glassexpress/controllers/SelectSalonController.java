@@ -13,9 +13,12 @@ import ru.glassexpress.core.objects.IdTitleObj;
 import ru.glassexpress.core.objects.UserObject;
 import ru.glassexpress.core.utils.OpenDayManager;
 
+import java.util.List;
+
 public class SelectSalonController extends BaseController {
     public ComboBox<IdTitleObj> salonsComboBox;
     private ObservableList<IdTitleObj> salons;
+    private List<IdTitleObj> totalSalons;
     @Override
     public void init() {
         salons = FXCollections.observableArrayList();
@@ -31,7 +34,16 @@ public class SelectSalonController extends BaseController {
                 }
             }
         });
+
+
         salons.addAll(dataMap.getSalonsList());
+
+        for (int i = 0; i < salons.size(); i++) {
+
+            if (salons.get(i).getTitle().equals("Все салоны")){
+                salons.remove(i);
+            }
+        }
         salonsComboBox.setItems(salons);
     }
 
@@ -39,11 +51,11 @@ public class SelectSalonController extends BaseController {
 
         if (salonsComboBox.getSelectionModel().getSelectedIndex() != -1) {
             int salon = salons.get(salonsComboBox.getSelectionModel().getSelectedIndex()).getId();
-            mainController.getUser().setSalonId(salon);
+            dataMap.getUser().setSalonId(salon);
 
-            OpenDayManager openDayManager = new OpenDayManager(mainController.getGetListOperator(), mainController.getUser());
+            OpenDayManager openDayManager = new OpenDayManager(mainController.getGetListOperator(), dataMap.getUser());
             if (!openDayManager.isDayAlreadyOpened()){
-                mainApp.initGoodMorningLayout(mainController.getUser());
+                mainApp.initGoodMorningLayout(dataMap.getUser());
             } else {
                 DateObject day = openDayManager.getCurrentDay();
                 Composite empComposite = (Composite) JsonController.getInstance().convertJsonToObject(day.getEmployeesJson());

@@ -72,12 +72,12 @@ public class MainController extends BaseController {
     @FXML
     RadioButton isRearRadio;
 
-    public UserObject getUser() {
-        return user;
-    }
+//    public UserObject getUser() {
+//        return user;
+//    }
 
 
-    UserObject user;
+    private UserObject user;
 
     public GetListOperator getGetListOperator() {
         return getListOperator;
@@ -145,30 +145,10 @@ public class MainController extends BaseController {
         // car = new Car();
         adapter =  BaseObjectAdapter.getInsance();
 
-        // glassTypeList = new ArrayList<>();
-
-//        markListView.setCellFactory(p -> new ListCell<IdTitleObj>() {
-//            @Override
-//            protected void updateItem(IdTitleObj item, boolean empty) {
-//                super.updateItem(item, empty);
-//                if (item != null && !empty) {
-//                    setText(item.getTitle());
-//                } else {
-//                    setText(null);
-//                }
-//            }
-//        });
         radioGroup = new ToggleGroup();
         isFrontRadio.setToggleGroup(radioGroup);
         isRearRadio.setToggleGroup(radioGroup);
 
-        //   reconnect();
-        // получаем список типов стекол, кузовов
-
-//        initTGTable();
-
-
-        //ystem.out.println(dataMap.getBodyTypeList());
     }
 
 
@@ -179,13 +159,6 @@ public class MainController extends BaseController {
         addOperator = new AddOperator(user.getKey());
         updateOperator = new UpdateOperator(user.getKey());
         Log2File.writeLog("reconnect");
-//
-//        modelListView.setItems(modelsList);
-//        genListView.setItems(genList);
-//        bodyTypeListView.setItems(bodyTypeStringList);
-
-        //todo добавить список сотрудников в listView
-
 
         insertClassComboBox.setItems(classList);
 
@@ -1091,5 +1064,9 @@ public class MainController extends BaseController {
 
     public UpdateOperator getUpdateOperator() {
         return updateOperator;
+    }
+
+    public DeleteOperator getDeleteOperator() {
+        return deleteOperator;
     }
 }

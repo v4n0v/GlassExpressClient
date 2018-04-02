@@ -18,6 +18,16 @@ public class DataMap {
     private DataMap() {
     }
 
+    public UserObject getUser() {
+        return user;
+    }
+
+    public void setUser(UserObject user) {
+        this.user = user;
+    }
+
+    private UserObject user;
+
     private static DataMap dataMap;
 
     private GlassObject glassTableRow;
@@ -225,8 +235,8 @@ public class DataMap {
         this.services = services;
     }
 
-    public ObservableList<ServiceObject> getServices() {
-        return (ObservableList<ServiceObject>) services;
+    public  List<ServiceObject> getServices() {
+        return  services;
     }
 
 

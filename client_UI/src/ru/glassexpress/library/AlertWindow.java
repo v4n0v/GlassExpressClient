@@ -2,14 +2,14 @@ package ru.glassexpress.library;
 
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
+import javafx.scene.control.*;
 import javafx.scene.control.Dialog;
-import javafx.scene.control.TextInputDialog;
 import ru.glassexpress.core.objects.BaseObject;
 
 import java.awt.*;
 import java.util.Optional;
+
+import static com.sun.javafx.scene.control.skin.Utils.getResource;
 
 public class AlertWindow {
     private static Alert alert;
@@ -17,10 +17,18 @@ public class AlertWindow {
     private static void alertWindow(String title, String msg, Alert.AlertType type){
         Platform.runLater(() -> {
             alert = new Alert(type);
+
             alert.setTitle(title);
             alert.setHeaderText(null);
             alert.setContentText(msg);
             alert.showAndWait();
+
+
+            DialogPane dialogPane = alert.getDialogPane();
+            dialogPane.getStylesheets().add(
+                    getResource("css/style.css").toExternalForm());
+            dialogPane.getStyleClass().add("myDialog");
+
         });
     }
     public static void errorMessage(String msg) {

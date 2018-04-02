@@ -89,6 +89,9 @@ public class DayController extends BaseController {
 
     }
 
+
+
+
 //    public void refreshEmpList() {
 //        if (salonsComboBox.getSelectionModel().getSelectedIndex() != -1) {
 //            int salon = dataMap.getSalonsList().get(salonsComboBox.getSelectionModel().getSelectedIndex()).getId();

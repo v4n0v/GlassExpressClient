@@ -23,7 +23,7 @@
             <Insets bottom="10.0" />
          </VBox.margin>
       </PasswordField>
-      <Button id="btnLogin" mnemonicParsing="false" onAction="#addAdmin" prefHeight="28.0" prefWidth="154.0" styleClass="fontverdabold" text="Добавить пользователя" />
+      <Button   mnemonicParsing="false" onAction="#onAddButtonClick" prefHeight="28.0" prefWidth="154.0" styleClass="fontverdabold" text="Добавить пользователя" />
    </children>
    <padding>
       <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />

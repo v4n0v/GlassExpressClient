@@ -54,7 +54,7 @@ public class AddEmpController extends BaseController {
 
     public void addEmp(ActionEvent actionEvent) {
 
-        AddOperator addOperator = new AddOperator(mainController.getUser().getKey());
+        AddOperator addOperator = new AddOperator(dataMap.getUser().getKey());
         UserObject newUser = new UserObject();
         // проверяем правильность заполнения полей
         if (!fieldName.getText().equals("") && !fieldLastName.getText().equals("")

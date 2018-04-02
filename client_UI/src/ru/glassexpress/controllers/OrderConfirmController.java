@@ -15,6 +15,7 @@ import ru.glassexpress.core.objects.CartProductObject;
 import ru.glassexpress.core.objects.CartServiceObject;
 import ru.glassexpress.core.objects.GlassObject;
 import ru.glassexpress.core.objects.ServiceObject;
+import ru.glassexpress.core.utils.ObservableListAdapter;
 import ru.glassexpress.library.AlertWindow;
 
 import java.util.List;
@@ -48,7 +49,7 @@ public class OrderConfirmController extends BaseController {
     public TitledPane goodsAccordion;
     @FXML
     Label totalLabel;
-
+    ObservableListAdapter observableAdapter;
     public List<GlassObject> getSelectedGlass() {
         return selectedGlass;
     }
@@ -66,21 +67,21 @@ public class OrderConfirmController extends BaseController {
         Log2File.writeLog("Иинициализация окна подтверждения заказа");
         adapter=BaseObjectAdapter.getInsance();
         initTable();
-
+        observableAdapter=new ObservableListAdapter();
        // ObservableList<String> services = adapter.returnServicesStringList(dataMap.getServices());
-        servicesComboBox.setCellFactory(p -> new ListCell <ServiceObject> () {
-            @Override
-            protected void updateItem(ServiceObject item, boolean empty) {
-                super.updateItem(item, empty);
-                if (item != null && !empty) {
-                    setText(item.getTitle());
-                } else {
-                    setText(null);
-                }
-            }
-        });
+//        servicesComboBox.setCellFactory(p -> new ListCell <ServiceObject> () {
+//            @Override
+//            protected void updateItem(ServiceObject item, boolean empty) {
+//                super.updateItem(item, empty);
+//                if (item != null && !empty) {
+//                    setText(item.getTitle());
+//                } else {
+//                    setText(null);
+//                }
+//            }
+//        });
 
-        servicesComboBox.setItems(dataMap.getServices());
+        servicesComboBox.setItems(observableAdapter.asObservableList(dataMap.getServices()));
 
         initPermission();
         ToggleGroup payment = new ToggleGroup();
@@ -101,7 +102,8 @@ public class OrderConfirmController extends BaseController {
     public Button dellServiceButton;
     private void initPermission() {
         boolean isVisible;
-        if (mainController.getUser().getPermission() == 1) {
+        if (dataMap.getUser().getPermission() == 1) {
+//        if (mainController.getUser().getPermission() == 1) {
             isVisible = true;
         } else {
             isVisible = false;
@@ -169,6 +171,8 @@ public class OrderConfirmController extends BaseController {
     public void calculateOrderPrice() {
 
         orderPrice = 0;
+
+        // проверка, выбрана ли установка стекла
         for (CartProductObject o : cart) {
             float prcire = o.getPriceFloatProperty().get();
             float insPrice = o.getGlass().getInsertPrice();
@@ -180,15 +184,16 @@ public class OrderConfirmController extends BaseController {
             orderPrice *= o.getCountValue();
         }
 
+        // если добавлены услуги
         for (CartServiceObject o : cartService) {
-            float prcire = o.getPriceFloatProperty().get();
+            float priceService = o.getPriceFloatProperty().get();
             float insPrice = o.getService().getPrice();
             //BooleanProperty isInsert = o.isInsertProperty();
-            orderPrice += prcire;
+             priceService*= o.getCountValue();
 //            if (isInsert.get()) {
 //                orderPrice += insPrice;
 //            }
-            orderPrice *= o.getCountValue();
+            orderPrice+=priceService;
         }
 
 
@@ -198,7 +203,8 @@ public class OrderConfirmController extends BaseController {
             dsc = Float.parseFloat(discounts.get(indexDsc));
             dsc /= 100;
         }
-        totalLabel.setText(String.valueOf(orderPrice - (orderPrice * dsc)));
+        orderPrice -= orderPrice * dsc;
+        totalLabel.setText(String.valueOf(orderPrice));
     }
 
 

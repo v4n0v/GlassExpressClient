@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="515.0" prefWidth="424.0" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.glassexpress.controllers.AddGlassController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="515.0" prefWidth="424.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.glassexpress.controllers.AddGlassController">
    <children>
       <GridPane layoutX="72.0" layoutY="61.0" vgap="30.0" AnchorPane.bottomAnchor="310.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="20.0">
         <columnConstraints>
@@ -33,13 +33,31 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label text="Закупка" GridPane.rowIndex="5" />
-            <TextField fx:id="descriptionTextField" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <TextField fx:id="priceInTextField" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-            <TextField fx:id="priceTextField" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-            <Label text="Описание" GridPane.rowIndex="4" />
-            <Label text="Продажа" GridPane.rowIndex="6" />
+            <Label layoutX="10.0" layoutY="48.0" text="Производитель" />
+            <HBox GridPane.columnIndex="1">
+               <children>
+                  <ComboBox fx:id="glassFactoryComboBox" prefHeight="25.0" prefWidth="777.0" promptText="Выбирите производителя" />
+                  <Button fx:id="addFactory" mnemonicParsing="false" onAction="#addNewFactory" text="+" />
+               </children>
+            </HBox>
+            <Label layoutX="10.0" layoutY="88.0" text="Тип стекла" GridPane.rowIndex="1" />
+            <HBox GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <children>
+                  <ComboBox fx:id="glassTypeComboBox" prefHeight="25.0" prefWidth="304.0" promptText="Выбирите тип стекла" />
+                  <Button fx:id="addType" mnemonicParsing="false" onAction="#addNewGlassType" text="+" />
+               </children>
+            </HBox>
             <Label text="Параметр" GridPane.rowIndex="2" />
+            <Label text="Описание" GridPane.rowIndex="4" />
+            <TextField fx:id="descriptionTextField" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <Label text="Закупка" GridPane.rowIndex="5" />
+            <TextField fx:id="priceInTextField" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <Label text="Продажа" GridPane.rowIndex="6" />
+            <TextField fx:id="priceTextField" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+            <Label text="Мин. остаток" GridPane.rowIndex="7" />
+            <TextField fx:id="alertTextField" layoutX="134.0" layoutY="83.0" prefWidth="0.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+            <Label text="Цена установки" GridPane.rowIndex="8" />
+            <TextField fx:id="insertPriceTextField" GridPane.columnIndex="1" GridPane.rowIndex="8" />
             <HBox GridPane.columnIndex="1" GridPane.rowIndex="2">
                <children>
                   <MenuButton fx:id="menuBTN" accessibleRole="CHECK_BOX" mnemonicParsing="false" prefHeight="25.0" prefWidth="205.0" text="Выбирите параметры" />
@@ -47,24 +65,6 @@
 
 
                   <Button fx:id="addOption" mnemonicParsing="false" onAction="#addNewGlassOption" text="+" />
-               </children>
-            </HBox>
-            <Label text="Мин. остаток" GridPane.rowIndex="7" />
-            <TextField fx:id="alertTextField" layoutX="134.0" layoutY="83.0" prefWidth="0.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-            <Label text="Цена установки" GridPane.rowIndex="8" />
-            <TextField fx:id="insertPriceTextField" GridPane.columnIndex="1" GridPane.rowIndex="8" />
-            <HBox GridPane.columnIndex="1">
-               <children>
-                  <ComboBox fx:id="glassFactoryComboBox" prefHeight="25.0" prefWidth="777.0" promptText="Выбирите производителя" />
-                  <Button fx:id="addFactory" mnemonicParsing="false" onAction="#addNewFactory" text="+" />
-               </children>
-            </HBox>
-            <Label layoutX="10.0" layoutY="48.0" text="Производитель" />
-            <Label layoutX="10.0" layoutY="88.0" text="Тип стекла" GridPane.rowIndex="1" />
-            <HBox GridPane.columnIndex="1" GridPane.rowIndex="1">
-               <children>
-                  <ComboBox fx:id="glassTypeComboBox" prefHeight="25.0" prefWidth="304.0" promptText="Выбирите тип стекла" />
-                  <Button fx:id="addType" mnemonicParsing="false" onAction="#addNewGlassType" text="+" />
                </children>
             </HBox>
             <Label layoutX="10.0" layoutY="328.0" text="Тип кузова" GridPane.rowIndex="3" />
