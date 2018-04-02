@@ -4,6 +4,9 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import ru.glassexpress.controllers.presenters.AddAdminView;
+import ru.glassexpress.controllers.presenters.AddEmployerPresenter;
+import ru.glassexpress.controllers.presenters.AddEmployerView;
 import ru.glassexpress.core.data.DataMap;
 import ru.glassexpress.core.data.Log2File;
 import ru.glassexpress.core.edit_content_command.addCommand.AddOperator;
@@ -12,7 +15,7 @@ import ru.glassexpress.core.objects.UserObject;
 
 import ru.glassexpress.library.AlertWindow;
 
-public class AddEmpController extends BaseController {
+public class AddEmpController extends BaseController implements AddEmployerView {
 
     public TextField fieldName;
     public ComboBox<String> salonsComboBox;
@@ -20,30 +23,19 @@ public class AddEmpController extends BaseController {
     public ComboBox<String> permisComboBox;
     public ComboBox<String> posComboBox;
 
-    private BaseObjectAdapter adapter;
-    private ObservableList<String> salonsList;
-    private ObservableList<String> permisList;
-    private ObservableList<String> posList;
 
     private String login;
     private String pass;
     private String key;
+    private AddEmployerPresenter presenter;
 
     @Override
     public void init() {
         Log2File.writeLog("Иинициализация окна добавления сотрудника");
-        // инициализация формы
-        dataMap = DataMap.getInstance();
-        adapter = BaseObjectAdapter.getInsance();
-        salonsList = adapter.idTitleObjToString(dataMap.getSalonsList());
-        permisList = adapter.idTitleObjToString(dataMap.getPermissionsList());
-        posList = adapter.idTitleObjToString(dataMap.getPositionsList());
-        salonsComboBox.setItems(salonsList);
-        // salonsComboBox.getSelectionModel().select(0);
-        posComboBox.setItems(posList);
-        //salonsComboBox.getSelectionModel().select(0);
-        permisComboBox.setItems(permisList);
-        //  salonsComboBox.getSelectionModel().select(0);
+        presenter = new AddEmployerPresenter(this);
+        presenter.init();
+
+
     }
 
     public void setParams(String login, String pass, String key) {
@@ -52,45 +44,37 @@ public class AddEmpController extends BaseController {
         this.key = key;
     }
 
-    public void addEmp(ActionEvent actionEvent) {
 
-        AddOperator addOperator = new AddOperator(dataMap.getUser().getKey());
-        UserObject newUser = new UserObject();
-        // проверяем правильность заполнения полей
-        if (!fieldName.getText().equals("") && !fieldLastName.getText().equals("")
-                && fieldName.getText()!=null && fieldLastName.getText()!=null
-                && salonsComboBox.getSelectionModel().getSelectedIndex() != -1
-                && permisComboBox.getSelectionModel().getSelectedIndex() != -1
-                && posComboBox.getSelectionModel().getSelectedIndex() != -1) {
+    @Override
+    public void fillSalonsComboBox(ObservableList list) {
+        salonsComboBox.setItems(list);
+    }
 
-            // настраиваем пльзователя
-                    newUser.setName(fieldName.getText());
-                    newUser.setLastName(fieldLastName.getText());
-                    newUser.setSalonId(dataMap.getSalonsList().get(salonsComboBox.getSelectionModel().getSelectedIndex()).getId());
-                    newUser.setPermission(dataMap.getPermissionsList().get(permisComboBox.getSelectionModel().getSelectedIndex()).getId());
-                    newUser.setPositionId(dataMap.getPositionsList().get(posComboBox.getSelectionModel().getSelectedIndex()).getId());
-                    newUser.setLogin(login);
+    @Override
+    public void fillPositionsComboBox(ObservableList list) {
+        posComboBox.setItems(list);
+    }
 
-                    newUser.setPassHash(pass.hashCode());
-                    newUser.setKey(key);
-                    // добавляем пользователя на сервер
-                    if (addOperator.addUserIsComplete(newUser)) {
-                        // если добавлен, тогда добавляем в локальную базу логин\пароль\ключ
-                        System.out.println("Все ок");
-//                        SQLConnectionManager sqlConnectionManager = SQLConnectionManager.getInstance();
-//                        sqlConnectionManager.addNewUser(login, pass, key);
-                        close();
-                        AlertWindow.infoMessage("Пользователь '"+login+"' успешно добавлен на сервер");
-                    } else {
-                        System.out.println("Пользователь не добавлен на сервер");
-                        AlertWindow.errorMessage("Пользователь не добавлен на сервер");
-                    }
+    @Override
+    public void fillPermisComboBox(ObservableList list) {
+        permisComboBox.setItems(list);
+    }
 
+    @Override
+    public void closeView() {
+        close();
+    }
 
-        } else {
-            AlertWindow.errorMessage("Заполниет все поля и формы");
-        }
+    @Override
+    public void onAddEmployerClick() {
+        presenter.addUser(fieldName.getText(),fieldLastName.getText(),
+                salonsComboBox.getSelectionModel().getSelectedIndex(),
+                permisComboBox.getSelectionModel().getSelectedIndex(),
+                posComboBox.getSelectionModel().getSelectedIndex());
+    }
 
-        System.out.println(newUser);
+    @Override
+    public void showError(String msg) {
+        AlertWindow.errorMessage(msg);
     }
 }

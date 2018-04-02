@@ -4,6 +4,8 @@ import ru.glassexpress.core.GetListOperator;
 import ru.glassexpress.core.StringValidator;
 import ru.glassexpress.core.data.DataMap;
 import ru.glassexpress.core.data.Log2File;
+import ru.glassexpress.core.edit_content_command.addCommand.AddOperator;
+import ru.glassexpress.core.objects.UserObject;
 import ru.glassexpress.core.security.Keygen;
 import ru.glassexpress.library.AlertWindow;
 
@@ -19,6 +21,7 @@ public class AddAdminPresenter {
     }
 
     public void addUser(String login, String pass1, String pass2) {
+
         pass1 = pass1.replace(" ", "");
         pass2 = pass2.replace(" ", "");
         login = login.replace(" ", "");
@@ -36,6 +39,10 @@ public class AddAdminPresenter {
                         e.printStackTrace();
                         AlertWindow.errorMessage("Ошибка генерации ключа");
                     }
+                    dataMap.setNewUser(new UserObject());
+                    dataMap.getNewUser().setLogin(login);
+                    dataMap.getNewUser().setPassHash(pass1.hashCode());
+                    dataMap.getNewUser().setKey(key);
                     view.initAddEmpLayout(login, pass1, key);
                     view.closeView();
                 } else {
@@ -49,4 +56,7 @@ public class AddAdminPresenter {
             view.showError("Допустимы только буквы и цифры английского алфавита.\nДлина не менее 3х символов");
         }
     }
+
+
+
 }

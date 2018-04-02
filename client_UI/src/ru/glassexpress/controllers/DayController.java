@@ -64,19 +64,6 @@ public class DayController extends BaseController {
             dataMap.setCurrentEmployeesList(currentEmployees);
         }
 
-//        salonsComboBox.setCellFactory(p -> new ListCell<IdTitleObj>() {
-//            @Override
-//            protected void updateItem(IdTitleObj item, boolean empty) {
-//                super.updateItem(item, empty);
-//                if (item != null && !empty) {
-//                    setText(item.getTitle());
-//                } else {
-//                    setText(null);
-//                }
-//            }
-//        });
-//        salons.addAll(dataMap.getSalonsList());
-//        salonsComboBox.setItems(salons);
         int salon = administrator.getSalonId();
         administrator.setSalonId(salon);
         totalEmployees = userObservableAdapter.asObservableList(operator.getEmloyees(administrator));
@@ -91,24 +78,12 @@ public class DayController extends BaseController {
 
 
 
-
-//    public void refreshEmpList() {
-//        if (salonsComboBox.getSelectionModel().getSelectedIndex() != -1) {
-//            int salon = dataMap.getSalonsList().get(salonsComboBox.getSelectionModel().getSelectedIndex()).getId();
-//            administrator.setSalonId(salon);
-//            totalEmployees = userObservableAdapter.asObservableList(operator.getEmloyees(administrator));
-//            totalEmpListView.setItems(totalEmployees);
-//            currentEmpListView.setItems(currentEmployees);
-//        }
-//    }
-
-
     public void beginMakingMoney() {
-      //  if (salonsComboBox.getSelectionModel().getSelectedIndex() != -1) {
+
             if (currentEmployees != null && currentEmployees.size() > 0) {
 
                 String empListJson = parseToJson(currentEmployees);
-                //
+
                 today = new DateObject(0, date.getTime(), empListJson, administrator.getId(), administrator.getSalonId());
                 if (mainController.getAddOperator().addNewDay(today)) {
                     dataMap.setCurrentEmployeesList(currentEmployees);
@@ -119,9 +94,7 @@ public class DayController extends BaseController {
             } else {
                 AlertWindow.errorMessage("Кто-то должен поработать!");
             }
-//        } else {
-//            AlertWindow.errorMessage("Выбирите салон!");
-//        }
+
     }
 
 

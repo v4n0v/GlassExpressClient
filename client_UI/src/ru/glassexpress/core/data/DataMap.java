@@ -26,6 +26,15 @@ public class DataMap {
         this.user = user;
     }
 
+    public UserObject getNewUser() {
+        return newUser;
+    }
+
+    public void setNewUser(UserObject newUser) {
+        this.newUser = newUser;
+    }
+
+    private UserObject newUser;
     private UserObject user;
 
     private static DataMap dataMap;
@@ -184,9 +193,9 @@ public class DataMap {
     }
 
 
-    public void setPreparedGlass(GlassObject glassTableRow) {
-        this.glassTableRow = glassTableRow;
-    }
+//    public void setPreparedGlass(GlassObject glassTableRow) {
+//        this.glassTableRow = glassTableRow;
+//    }
 
 
     //TODO пееренсти в адаптер
