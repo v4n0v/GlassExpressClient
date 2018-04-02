@@ -298,7 +298,7 @@ public class GEClient extends Application {
             controller.setMainController(mainController);
             controller.setMainApp(this);
             controller.setStage(goodMorningStage);
-            controller.setAdministrator(user);
+            //controller.setAdministrator(user);
             controller.init();
 
             goodMorningStage.show();
