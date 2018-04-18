@@ -1,5 +1,7 @@
 package ru.glassexpress.core.get_command;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import ru.glassexpress.core.objects.BaseObject;
@@ -11,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class ObservedCommand {
-    // объект-контейнер с сервера в виде коллекции c закоголовко типа объекта
+    // объект-контейнер с сервера в виде коллекции c закоголовком типа объекта
     protected Composite serverObject;
 
     // содержимое контейнера
@@ -55,6 +57,10 @@ public abstract class ObservedCommand {
             return FXCollections.observableArrayList(components);
         }
         return null;
+    }
+
+    public String rawResponse(){
+        return  RequestController.recieveResponse(request);
     }
 
 

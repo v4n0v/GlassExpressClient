@@ -55,17 +55,11 @@ public class CartProductObject extends BaseObject {
     }
 
     public StringProperty getGlassStringProperty() {
-
         return new SimpleStringProperty(glass.toString());
     }
 
     public SimpleObjectProperty<Float> getPriceFloatProperty() {
-
         return new SimpleObjectProperty<Float>(glass.getPrice());
     }
 
-//    public SimpleObjectProperty<Integer> getCountValue() {
-//
-//        return new SimpleObjectProperty<Integer>(count);
-//    }
 }

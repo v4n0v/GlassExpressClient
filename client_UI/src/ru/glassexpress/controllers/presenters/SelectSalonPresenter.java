@@ -50,9 +50,11 @@ public class SelectSalonPresenter {
         OpenDayManager openDayManager = new OpenDayManager(getListOperator, dataMap.getUser());
         if (!openDayManager.isDayAlreadyOpened()){
             view.openGoodMorningView(dataMap.getUser());
-
+            DateObject day = openDayManager.getCurrentDay();
+            dataMap.setDate(day);
         } else {
             DateObject day = openDayManager.getCurrentDay();
+            dataMap.setDate(day);
             Composite empComposite = (Composite) JsonController.getInstance().convertJsonToObject(day.getEmployeesJson());
             BaseObjectAdapter adapter=BaseObjectAdapter.getInsance();
             ObservableList<UserObject> empList = adapter.baseObjToUserObjList(empComposite.getComponents());

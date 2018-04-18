@@ -80,9 +80,7 @@ public class OrderConfirmController extends BaseController implements OrderConfi
 
     public void fillServicePrice() {
         presenter.handleServicePrice(servicesComboBox.getSelectionModel().getSelectedIndex());
-
-
-    }
+        }
 
 
     public void addServicePriceInCart() {
@@ -120,7 +118,7 @@ public class OrderConfirmController extends BaseController implements OrderConfi
     }
 
     public void confirm(ActionEvent actionEvent) {
-        presenter.confirmOrder();
+        presenter.confirmOrder(cardRB.isSelected());
         calculateOrderPrice();
     }
 
@@ -131,13 +129,40 @@ public class OrderConfirmController extends BaseController implements OrderConfi
 
 
     public void addService() {
+        //presenter.addNewService();
         System.out.println("Добвляем услугу");
+        startAddDialog();
     }
 
     public void dellService() {
         System.out.println("Удаляем услугу");
+         presenter.delService(servicesComboBox.getSelectionModel().getSelectedIndex());
     }
 
+    public void startAddDialog() {
+        String title = AlertWindow.dialogWindow("Добавление элемента", "Введите название услуги");
+        String price = AlertWindow.dialogWindow("Добавление элемента", "Введите цену услуги");
+
+        if (title != null && !title.equals("") && price != null && !price.equals("")) {
+            boolean isTrue = AlertWindow.confirmationWindow
+                    ("Вы уверены?", "Добавить '" + title +"' за " + price + "р в базу?");
+            if (isTrue) {
+                if (!title.equals("")) {
+                    presenter.addNewService(title, price);
+                }
+            } else {
+                showError("Полее ввода не заполнено!");
+            }
+        }
+    }
+    @Override
+    public void showError(String msg) {
+        AlertWindow.errorMessage(msg);
+    }
+    @Override
+    public void showInfo(String msg) {
+        AlertWindow.infoMessage(msg);
+    }
     @Override
     public void setComboBox(String target, ObservableList list) {
         ComboBox comboBox = initComboBox(target);

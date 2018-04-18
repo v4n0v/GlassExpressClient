@@ -24,5 +24,6 @@ public interface OrderConfirmView {
     boolean confirm(String s);
 
     void closeView();
-
+    void  showError(String msg);
+    void showInfo(String msg);
 }

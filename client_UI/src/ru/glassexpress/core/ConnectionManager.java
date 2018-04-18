@@ -19,8 +19,8 @@ import java.util.logging.Level;
 public class ConnectionManager implements Callable<String> {
     private String responseBody;
     String request;
-   // static final String ADRESS_URL = "http://localhost:8080";
-        static final String ADRESS_URL = "http://46.229.213.157:8080";
+     static final String ADRESS_URL = "http://localhost:8080";
+//        static final String ADRESS_URL = "http://46.229.213.157:8080";
 
     static final String SERVLET = "/controller";
 

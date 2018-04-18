@@ -1,11 +1,15 @@
 package ru.glassexpress.core;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
 import javafx.collections.ObservableList;
 import ru.glassexpress.core.get_command.*;
 import ru.glassexpress.core.get_command.adapter.BaseObjectAdapter;
 import ru.glassexpress.core.get_command.lists.*;
 import ru.glassexpress.core.objects.*;
 import ru.glassexpress.core.utils.ObservableListAdapter;
+import ru.glassexpress.request_chain.RequestController;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -13,7 +17,7 @@ import java.util.List;
 
 public class GetListOperator implements GetListCommands {
 
-
+    protected static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
     public void setKey(String key) {
         this.key = key;
     }

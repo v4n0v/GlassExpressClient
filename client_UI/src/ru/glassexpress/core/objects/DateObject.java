@@ -1,7 +1,9 @@
 package ru.glassexpress.core.objects;
 
 import com.google.gson.JsonElement;
+import ru.glassexpress.library.Resources;
 
+import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.Date;
 import java.util.ArrayList;
@@ -80,5 +82,15 @@ public class DateObject extends BaseObject {
     public int getSalonId() {
         return salonId;
     }
+
+
+    @Override
+    public String toString() {
+        SimpleDateFormat formatter = new SimpleDateFormat(Resources.DATE_PATTERN_SIMPLE);
+
+        return  formatter.format(date)+ "id admin " +idAdmin + " employees "+employeesJson;
+    }
+
+
 }
 

@@ -44,6 +44,7 @@ public class OpenDayManager {
 
             if (value1.equals(value2)) {
                 return true;
+
             }
         }
         return false;

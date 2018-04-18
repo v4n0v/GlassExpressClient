@@ -13,6 +13,7 @@ import ru.glassexpress.core.objects.DateObject;
 import ru.glassexpress.core.objects.IdTitleObj;
 import ru.glassexpress.core.objects.UserObject;
 import ru.glassexpress.core.OpenDayManager;
+import ru.glassexpress.request_chain.RequestController;
 
 public class LoginPresenter {
     private LoginView view;
@@ -30,6 +31,8 @@ public class LoginPresenter {
 
                 GetListOperator operator = new GetListOperator(null);
                 // получаем ключ
+
+                
                 IdTitleObj keyObj = operator.getUserByLoginPass(new IdTitleObj(pass.hashCode(), login));
 
                 if (keyObj != null && keyObj.getTitle() != null && !keyObj.getTitle().equals("")) {
@@ -53,8 +56,11 @@ public class LoginPresenter {
                             // проверка, был ли уже открыт день и заполнены сотрудники на этой точке продаж
                             if (!openDayManager.isDayAlreadyOpened()) {
                                 view.initGoodMorningLayout(user);
+                                DateObject day = openDayManager.getCurrentDay();
+                                dataMap.setDate(day);
                             } else {
                                 DateObject day = openDayManager.getCurrentDay();
+                                dataMap.setDate(day);
                                 Composite empComposite = (Composite) JsonController.getInstance().convertJsonToObject(day.getEmployeesJson());
                                 BaseObjectAdapter adapter = BaseObjectAdapter.getInsance();
                                 ObservableList<UserObject> empList = adapter.baseObjToUserObjList(empComposite.getComponents());

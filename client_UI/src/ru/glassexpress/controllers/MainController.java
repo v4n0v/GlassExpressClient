@@ -36,8 +36,8 @@ public class MainController extends BaseController implements MainView {
     public RadioButton isFrontRadio;
     public RadioButton isRearRadio;
     public Button delModelButton;
-    public  Button delMarkButton;
-    public  Button delGenerationButton;
+    public Button delMarkButton;
+    public Button delGenerationButton;
 
     private SelectCarPresenter selectCarPresenter;
     private GlassTablePresenter glassTablePresenter;
@@ -51,8 +51,6 @@ public class MainController extends BaseController implements MainView {
     private AddGlassController addGlassController;
 
 
-
-
     // инициализация конроллера, вызывается при открытии приложения
     @Override
     public void init() {
@@ -63,7 +61,6 @@ public class MainController extends BaseController implements MainView {
         isFrontRadio.setToggleGroup(radioGroup);
         isRearRadio.setToggleGroup(radioGroup);
     }
-
 
     public void update() {
         initTGTable();
@@ -103,7 +100,6 @@ public class MainController extends BaseController implements MainView {
         delModelButton.setDisable(isDisabled);
         editGlassButton.setDisable(isDisabled);
         menuController.initPermission();
-
     }
 
     // диалоговые окна добавления\ужаления\редактирования элементов авто
@@ -238,11 +234,11 @@ public class MainController extends BaseController implements MainView {
 
     public void deleteSelectedGlass(ActionEvent actionEvent) {
         glassTablePresenter.deleteGlass();
-     }
+    }
 
 
     public void editGlass(ActionEvent actionEvent) {
-     glassTablePresenter.editGlass();
+        glassTablePresenter.editGlass();
 
     }
 
@@ -277,7 +273,6 @@ public class MainController extends BaseController implements MainView {
         Label labelView = initLabel(label);
         labelView.setText(text);
     }
-
 
 
     @Override
@@ -335,6 +330,7 @@ public class MainController extends BaseController implements MainView {
     public void showError(String msg) {
         AlertWindow.errorMessage(msg);
     }
+
     @Override
     public void showInfo(String msg) {
         AlertWindow.infoMessage(msg);
@@ -342,7 +338,7 @@ public class MainController extends BaseController implements MainView {
 
     @Override
     public int getSelectedTableItem() {
-       return tblGoodsInStock.getSelectionModel().getFocusedIndex();
+        return tblGoodsInStock.getSelectionModel().getFocusedIndex();
     }
 
     @Override

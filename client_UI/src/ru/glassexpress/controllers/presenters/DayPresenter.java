@@ -6,10 +6,7 @@ import ru.glassexpress.controllers.views.DayView;
 import ru.glassexpress.core.GetListOperator;
 import ru.glassexpress.core.data.DataMap;
 import ru.glassexpress.core.edit_content_command.addCommand.AddOperator;
-import ru.glassexpress.core.objects.Composite;
-import ru.glassexpress.core.objects.DateObject;
-import ru.glassexpress.core.objects.IdTitleObj;
-import ru.glassexpress.core.objects.UserObject;
+import ru.glassexpress.core.objects.*;
 import ru.glassexpress.core.utils.ObservableListAdapter;
 import ru.glassexpress.library.Resources;
 
@@ -21,24 +18,22 @@ public class DayPresenter {
     DayView view;
     private UserObject administrator;
     private Date date;
-    private DateObject today;
-    private ObservableListAdapter<UserObject> userObservableAdapter;
     private DataMap dataMap;
 
     public DayPresenter(DayView view) {
         this.view = view;
     }
-    AddOperator addOperator;
+    private AddOperator addOperator;
     private ObservableList<UserObject> totalEmployees;
     private ObservableList<UserObject> currentEmployees;
-    private ObservableList<IdTitleObj> salons;
 
     public void init() {
         dataMap = DataMap.getInstance();
+
         administrator = dataMap.getUser();
-        userObservableAdapter = new ObservableListAdapter<>();
+        ObservableListAdapter<UserObject> userObservableAdapter = new ObservableListAdapter<>();
         currentEmployees = FXCollections.observableArrayList();
-        salons = FXCollections.observableArrayList();
+        //ObservableList<IdTitleObj> salons = FXCollections.observableArrayList();
         view.setAdminLabel(administrator.getName() + " " + administrator.getLastName());
         addOperator = new AddOperator(administrator.getKey());
         // устанавливаем дауту в заголовок
@@ -64,7 +59,8 @@ public class DayPresenter {
     public void accept() {
         if (currentEmployees != null && currentEmployees.size() > 0) {
             String empListJson = parseToJson(currentEmployees);
-            today = new DateObject(0, date.getTime(), empListJson, administrator.getId(), administrator.getSalonId());
+//            String empListJson = dataMap.convertListToJson(currentEmployees);
+            DateObject today = new DateObject(0, date.getTime(), empListJson, administrator.getId(), administrator.getSalonId());
             if (addOperator.addNewDay(today)) {
                 dataMap.setCurrentEmployeesList(currentEmployees);
                 view.startApplication();
@@ -75,15 +71,6 @@ public class DayPresenter {
         }
     }
 
-    private String parseToJson(List<UserObject> empList) {
-
-        Composite composite = new Composite();
-        for (int i = 0; i < empList.size(); i++) {
-            composite.addComponent(empList.get(i));
-        }
-        return composite.toJSONObject().toString();
-
-    }
 
     public boolean initVisibility() {
         return administrator.getPermission() == 1;
@@ -96,7 +83,15 @@ public class DayPresenter {
         }
 
     }
+    public String parseToJson(List<UserObject> list) {
 
+        Composite composite = new Composite();
+        for (int i = 0; i < list.size(); i++) {
+            composite.addComponent(list.get(i));
+        }
+        return composite.toJSONObject().toString();
+
+    }
     public void removeEmployer(int index) {
         if (index != -1) {
             totalEmployees.add(currentEmployees.get(index));

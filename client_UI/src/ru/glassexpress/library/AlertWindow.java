@@ -9,7 +9,6 @@ import ru.glassexpress.core.objects.BaseObject;
 import java.awt.*;
 import java.util.Optional;
 
-import static com.sun.javafx.scene.control.skin.Utils.getResource;
 
 public class AlertWindow {
     private static Alert alert;

@@ -1,5 +1,8 @@
 package ru.glassexpress.core.data;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
 import javafx.collections.ObservableList;
 import ru.glassexpress.core.GetListOperator;
 import ru.glassexpress.core.objects.*;
@@ -7,7 +10,7 @@ import ru.glassexpress.core.objects.*;
 import java.util.List;
 
 // класс, в котором хранятся данные в "чистом виде", как пришли с сервера
-public class DataMap {
+public class DataMap  {
 
     public GetListOperator getGetListOperator() {
         return getListOperator;
@@ -24,6 +27,16 @@ public class DataMap {
 
     private DataMap() {
     }
+
+    public DateObject getDate() {
+        return date;
+    }
+
+    public void setDate(DateObject date) {
+        this.date = date;
+    }
+
+    private DateObject date;
 
     public UserObject getUser() {
         return user;
@@ -259,4 +272,21 @@ public class DataMap {
     public void setGetListOperator(GetListOperator getListOperator) {
         this.getListOperator = getListOperator;
     }
+
+    public String convertListToJson(List list){
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+
+        return  gson.toJson(list);
+    }
+
+    public String parseToJson(List<BaseObject> list) {
+
+        Composite composite = new Composite();
+        for (int i = 0; i < list.size(); i++) {
+            composite.addComponent(list.get(i));
+        }
+        return composite.toJSONObject().toString();
+
+    }
+
 }

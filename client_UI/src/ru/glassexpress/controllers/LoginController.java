@@ -30,6 +30,10 @@ public class LoginController extends BaseController implements LoginView{
     @Override
     public void init() {
         Log2File.writeLog("Иинициализация окна аутентификации");
+
+        fieldLogin.setText("root");
+              fieldPass.setText("12345");
+
         presenter= new LoginPresenter(this);
     }
 

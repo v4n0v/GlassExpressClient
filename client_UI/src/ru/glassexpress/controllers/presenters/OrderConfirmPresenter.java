@@ -3,12 +3,10 @@ package ru.glassexpress.controllers.presenters;
 import javafx.beans.property.BooleanProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import ru.glassexpress.controllers.model.OrderModel;
 import ru.glassexpress.controllers.views.OrderConfirmView;
 import ru.glassexpress.core.data.DataMap;
-import ru.glassexpress.core.objects.CartProductObject;
-import ru.glassexpress.core.objects.CartServiceObject;
-import ru.glassexpress.core.objects.GlassObject;
-import ru.glassexpress.core.objects.ServiceObject;
+import ru.glassexpress.core.objects.*;
 import ru.glassexpress.core.utils.ObservableListAdapter;
 import ru.glassexpress.library.Resources;
 
@@ -16,11 +14,9 @@ import java.util.List;
 
 public class OrderConfirmPresenter {
     private OrderConfirmView view;
-    private ObservableList<String> discounts;
     private ObservableListAdapter observableAdapter;
-    private DataMap dataMap;
-    private ObservableList<CartProductObject> cart;
-    private ObservableList<CartServiceObject> cartService;
+
+    OrderModel model;
 
     public void setSelectedGlass(List<GlassObject> selectedGlass) {
         this.selectedGlass = selectedGlass;
@@ -31,110 +27,83 @@ public class OrderConfirmPresenter {
         this.view = view;
     }
     private  float orderPrice;
+
+    // инициализация презентера
     public void init() {
-        dataMap=DataMap.getInstance();
+        // получаем экземпляр списков
+        model = new OrderModel();
         observableAdapter=new ObservableListAdapter();
-        cart = FXCollections.observableArrayList();
-        cartService=FXCollections.observableArrayList();
 
-        for (GlassObject selectedGlas : selectedGlass) {
-            cart.add(new CartProductObject(selectedGlas));
-        }
+        // добавляем вкорзину список выбранных стекол
+        model.addProductsToCart(selectedGlass);
 
-        view.setGlassTable("cart",cart);
-        view.setServiceTable("service", cartService);
-        view.setComboBox(Resources.TARGET_SERVICE, observableAdapter.asObservableList(dataMap.getServices()));
-
+        // заполняем таблицу выбранных товаров
+        view.setGlassTable("cart",model.getCart());
+        view.setServiceTable("service", model.getCartService());
+        view.setComboBox(Resources.TARGET_SERVICE, observableAdapter.asObservableList(model.getServices()));
 
         initPermission();
-
-
-        // goodsAccordion.setExpanded(true);
-        discounts = FXCollections.observableArrayList();
-        discounts.add("5");
-        discounts.add("10");
-        discounts.add("15");
-        discounts.add("20");
-        view.setComboBox("discount", discounts);
+        // заполняем комбо со скидосами
+        view.setComboBox("discount", model.getDiscounts());
 
         calculate();
+
     }
 
+    // опередляем права юзера на видиние кнопок добавить\удалить
     private void initPermission() {
         boolean isVisible;
 
-        if (dataMap.getUser().getPermission() == 1) {
-//        if (mainController.getUser().getPermission() == 1) {
+        if (model.getUserPermission() == 1) {
             isVisible = true;
         } else {
             isVisible = false;
         }
 
         view.setPermission(isVisible);
-
-    }
-
-    public void calculate() {
-        orderPrice = 0;
-
-        // проверка, выбрана ли установка стекла
-        for (CartProductObject o : cart) {
-            float prcire = o.getPriceFloatProperty().get();
-            float insPrice = o.getGlass().getInsertPrice();
-            BooleanProperty isInsert = o.isInsertProperty();
-            orderPrice += prcire;
-            if (isInsert.get()) {
-                orderPrice += insPrice;
-            }
-            orderPrice *= o.getCountValue();
-        }
-
-        // если добавлены услуги
-        for (CartServiceObject o : cartService) {
-            float priceService = o.getPriceFloatProperty().get();
-            float insPrice = o.getService().getPrice();
-            //BooleanProperty isInsert = o.isInsertProperty();
-            priceService*= o.getCountValue();
-//            if (isInsert.get()) {
-//                orderPrice += insPrice;
-//            }
-            orderPrice+=priceService;
-        }
-
-
-        int indexDsc = view.getDiscountIndex();
-
-        float dsc = 0;
-        if (indexDsc != -1) {
-            dsc = Float.parseFloat(discounts.get(indexDsc));
-            dsc /= 100;
-        }
-        orderPrice -= orderPrice * dsc;
         view.setTotalPrice(String.valueOf(orderPrice));
-
     }
 
+    // подсчет конечной цены
+    public void calculate() {
+        view.setTotalPrice(String.valueOf(model.getTotalPrice(view.getDiscountIndex())));
+    }
+
+    //
     public void handleServicePrice(int index) {
         if (index!=-1){
-            view.setTextField(String.valueOf(dataMap.getServices().get(index).getPrice()));
-
-        }
+            view.setTextField(String.valueOf(model.getServices().get(index).getPrice()));
+            }
     }
 
     public void addServicePriceInCart(int index) {
         if (index!=-1){
-            ServiceObject serviceObject = dataMap.getServices().get(index);
-
-            cartService.add(new CartServiceObject(serviceObject, view.getServicesPrice()));
+            model.getCartService().add(new CartServiceObject(model.getServices().get(index), view.getServicesPrice()));
         }
         calculate();
     }
 
-    public void confirmOrder() {
+    public void confirmOrder(boolean selected) {
+        model.setPaymentType(selected);
         calculate();
-        if(view.confirm("Вы точно хотите подтвердить заказ?\nСумма зазаза = "+ orderPrice )) {
+        String payment=", оплата ";
+
+        payment+= (selected) ?  "картой" : "наличныйми";
+        if(view.confirm("Вы точно хотите подтвердить заказ?\nСумма зазаза = "+ model.getOrderPrice() +payment)) {
             // логика оформления заказа
+          model.createOrder();
             view.closeView();
+        }
+    }
+
+    public void addNewService(String answer, String price) {
+        view.showInfo(answer+" за "+price+"р успешно добавлено");
+    }
+
+    public void delService(int selectedIndex) {
+        if(view.confirm("Вы точно хотите удалить услугу '"+ model.getServices().get(selectedIndex)+"'")) {
+            // логика удаления услуги
+            view.showInfo("Услуга успешно удалена");
         }
     }
 }
