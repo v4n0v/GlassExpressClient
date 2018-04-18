@@ -3,7 +3,7 @@ package ru.glassexpress.controllers;
 import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
 import ru.glassexpress.controllers.presenters.AddAdminPresenter;
-import ru.glassexpress.controllers.presenters.AddAdminView;
+import ru.glassexpress.controllers.views.AddAdminView;
 import ru.glassexpress.core.data.Log2File;
 import ru.glassexpress.library.AlertWindow;
 

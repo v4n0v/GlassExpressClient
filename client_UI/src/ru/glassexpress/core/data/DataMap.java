@@ -1,12 +1,19 @@
 package ru.glassexpress.core.data;
 
 import javafx.collections.ObservableList;
+import ru.glassexpress.core.GetListOperator;
 import ru.glassexpress.core.objects.*;
 
 import java.util.List;
 
 // класс, в котором хранятся данные в "чистом виде", как пришли с сервера
 public class DataMap {
+
+    public GetListOperator getGetListOperator() {
+        return getListOperator;
+    }
+
+    private GetListOperator getListOperator;
 
     public static  DataMap getInstance() {
         if (dataMap==null){
@@ -249,4 +256,7 @@ public class DataMap {
     }
 
 
+    public void setGetListOperator(GetListOperator getListOperator) {
+        this.getListOperator = getListOperator;
+    }
 }

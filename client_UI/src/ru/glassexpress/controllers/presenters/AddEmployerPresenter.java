@@ -1,6 +1,8 @@
 package ru.glassexpress.controllers.presenters;
 
 import javafx.collections.ObservableList;
+import ru.glassexpress.controllers.views.AddEmployerView;
+import ru.glassexpress.core.StringValidator;
 import ru.glassexpress.core.data.DataMap;
 import ru.glassexpress.core.edit_content_command.addCommand.AddOperator;
 import ru.glassexpress.core.objects.UserObject;
@@ -31,29 +33,33 @@ public class AddEmployerPresenter {
         view.fillPositionsComboBox(posList);
         view.fillSalonsComboBox(salonsList);
     }
-    public void addUser(String firstName, String lastName, int salonIndex, int permisIndex, int posIndex) {
+    public void addUser(String firstName, String lastName, String email, int salonIndex, int permisIndex, int posIndex) {
         if (firstName != null && lastName != null && !firstName.equals("") && !lastName.equals("")
                 && salonIndex != -1 && permisIndex != -1 && posIndex != -1) {
+            if (StringValidator.isMailCorrect(email)) {
+                AddOperator addOperator = new AddOperator(dataMap.getUser().getKey());
+                UserObject newUser = dataMap.getNewUser();
 
-            AddOperator addOperator = new AddOperator(dataMap.getUser().getKey());
-            UserObject newUser = dataMap.getNewUser();
+                newUser.setName(firstName);
+                newUser.setLastName(lastName);
+                newUser.setSalonId(dataMap.getSalonsList().get(salonIndex).getId());
+                newUser.setPermission(dataMap.getPermissionsList().get(permisIndex).getId());
+                newUser.setPositionId(dataMap.getPositionsList().get(posIndex).getId());
+                newUser.setEmail(email);
+                // добавляем пользователя на сервер
+                if (addOperator.addUserIsComplete(newUser)) {
+                    System.out.println("Все ок");
+                    view.closeView();
 
-            newUser.setName(firstName);
-            newUser.setLastName(lastName);
-            newUser.setSalonId(dataMap.getSalonsList().get(salonIndex).getId());
-            newUser.setPermission(dataMap.getPermissionsList().get(permisIndex).getId());
-            newUser.setPositionId(dataMap.getPositionsList().get(posIndex).getId());
-
-            // добавляем пользователя на сервер
-            if (addOperator.addUserIsComplete(newUser)) {
-                System.out.println("Все ок");
-                view.closeView();
-            } else {
-                System.out.println("Пользователь не добавлен на сервер");
-                view.showError("Пользователь не добавлен на сервер");
+                } else {
+                    System.out.println("Пользователь не добавлен на сервер");
+                    view.showError("Пользователь не добавлен на сервер");
+                }
+            } else{
+                view.showError("Проверьте корректность почты");
             }
         } else {
-            view.showError("Заполниет все поля и формы");
+            view.showError("Заполните все поля и формы");
         }
 
 

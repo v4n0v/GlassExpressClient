@@ -4,6 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.CheckMenuItem;
 import ru.glassexpress.controllers.AddGlassController;
+import ru.glassexpress.controllers.views.AddGlassView;
 import ru.glassexpress.core.data.DataMap;
 import ru.glassexpress.core.data.Log2File;
 import ru.glassexpress.core.get_command.adapter.BaseObjectAdapter;
@@ -11,7 +12,6 @@ import ru.glassexpress.core.objects.Composite;
 import ru.glassexpress.core.objects.GlassObject;
 import ru.glassexpress.core.objects.IdTitleObj;
 import ru.glassexpress.core.objects.builders.GlassBuilder;
-import ru.glassexpress.core.utils.ObservableListAdapter;
 import ru.glassexpress.library.AlertWindow;
 import ru.glassexpress.library.Resources;
 
@@ -56,6 +56,8 @@ public class AddGlassPresenter {
         view.fillMultipleOptionsList(optMultipleList);
 
     }
+
+
 
     public int getBodyTypePosition(int glassBodyId){
        return dataMap.getPosById(dataMap.getBodyTypeList(), glassBodyId);

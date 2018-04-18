@@ -2,14 +2,15 @@ package ru.glassexpress.controllers.presenters;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import ru.glassexpress.controllers.views.DayView;
 import ru.glassexpress.core.GetListOperator;
 import ru.glassexpress.core.data.DataMap;
+import ru.glassexpress.core.edit_content_command.addCommand.AddOperator;
 import ru.glassexpress.core.objects.Composite;
 import ru.glassexpress.core.objects.DateObject;
 import ru.glassexpress.core.objects.IdTitleObj;
 import ru.glassexpress.core.objects.UserObject;
 import ru.glassexpress.core.utils.ObservableListAdapter;
-import ru.glassexpress.library.AlertWindow;
 import ru.glassexpress.library.Resources;
 
 import java.text.SimpleDateFormat;
@@ -27,7 +28,7 @@ public class DayPresenter {
     public DayPresenter(DayView view) {
         this.view = view;
     }
-
+    AddOperator addOperator;
     private ObservableList<UserObject> totalEmployees;
     private ObservableList<UserObject> currentEmployees;
     private ObservableList<IdTitleObj> salons;
@@ -39,7 +40,7 @@ public class DayPresenter {
         currentEmployees = FXCollections.observableArrayList();
         salons = FXCollections.observableArrayList();
         view.setAdminLabel(administrator.getName() + " " + administrator.getLastName());
-
+        addOperator = new AddOperator(administrator.getKey());
         // устанавливаем дауту в заголовок
         date = new Date();
         SimpleDateFormat dateFormat = new SimpleDateFormat(Resources.DATE_PATTERN);
@@ -64,7 +65,7 @@ public class DayPresenter {
         if (currentEmployees != null && currentEmployees.size() > 0) {
             String empListJson = parseToJson(currentEmployees);
             today = new DateObject(0, date.getTime(), empListJson, administrator.getId(), administrator.getSalonId());
-            if (view.addNewDay(today)) {
+            if (addOperator.addNewDay(today)) {
                 dataMap.setCurrentEmployeesList(currentEmployees);
                 view.startApplication();
                 view.closeView();

@@ -1,4 +1,4 @@
-package ru.glassexpress.core.utils;
+package ru.glassexpress.core;
 
 import ru.glassexpress.core.GetListOperator;
 import ru.glassexpress.core.objects.DateObject;

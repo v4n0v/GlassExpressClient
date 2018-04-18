@@ -24,10 +24,10 @@ public class AlertWindow {
             alert.showAndWait();
 
 
-            DialogPane dialogPane = alert.getDialogPane();
-            dialogPane.getStylesheets().add(
-                    getResource("css/style.css").toExternalForm());
-            dialogPane.getStyleClass().add("myDialog");
+//            DialogPane dialogPane = alert.getDialogPane();
+//            dialogPane.getStylesheets().add(
+//                    getResource("css/style.css").toExternalForm());
+//            dialogPane.getStyleClass().add("myDialog");
 
         });
     }

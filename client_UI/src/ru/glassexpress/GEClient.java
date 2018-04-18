@@ -119,7 +119,7 @@ public class GEClient extends Application {
             //  mainController.setMainController(clientController);
             mainController.setMainApp(this);
             mainController.setStage(carsSelectStage);
-            mainController.setDataMap(dataMap);
+
             mainController.setMenuController(menuController);
             //clientController.setCarsController(mainController);
             mainController.init();
@@ -155,7 +155,7 @@ public class GEClient extends Application {
             LoginController controller = loaderLog.getController();
             controller.setMainController(mainController);
             controller.setMainApp(this);
-            mainController.setLoginStage(loginStage);
+            //mainController.setLoginStage(loginStage);
             controller.setStage(loginStage);
             controller.init();
             loginStage.show();
@@ -217,7 +217,7 @@ public class GEClient extends Application {
             // Помещаем сведения об адресатах в центр корневого макета.
             addGlassController.setMainController(mainController);
             addGlassController.setStage(addGlassStage);
-            addGlassController.setDataMap(dataMap);
+
             // rootLayout.setCenter(modelAdd);
             addGlassStage.initModality(Modality.WINDOW_MODAL);
             addGlassStage.initOwner(primaryStage);
@@ -328,11 +328,12 @@ public class GEClient extends Application {
             setStyleToStage(styleCSS, sceneOrder);
             OrderConfirmController controller = loaderLog.getController();
             controller.setMainController(mainController);
+            controller.init();
             controller.setSelectedGlass(cart);
             controller.setMainApp(this);
-            controller.setDataMap(dataMap);
+
             controller.setStage(orderConfirmStage);
-            controller.init();
+
             orderConfirmStage.show();
         } catch (IOException e) {
             e.printStackTrace();

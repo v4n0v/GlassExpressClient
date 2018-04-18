@@ -1,10 +1,10 @@
 package ru.glassexpress.controllers.presenters;
 
+import ru.glassexpress.controllers.views.AddAdminView;
 import ru.glassexpress.core.GetListOperator;
 import ru.glassexpress.core.StringValidator;
 import ru.glassexpress.core.data.DataMap;
 import ru.glassexpress.core.data.Log2File;
-import ru.glassexpress.core.edit_content_command.addCommand.AddOperator;
 import ru.glassexpress.core.objects.UserObject;
 import ru.glassexpress.core.security.Keygen;
 import ru.glassexpress.library.AlertWindow;

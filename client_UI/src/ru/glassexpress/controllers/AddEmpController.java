@@ -1,17 +1,11 @@
 package ru.glassexpress.controllers;
 
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
-import ru.glassexpress.controllers.presenters.AddAdminView;
 import ru.glassexpress.controllers.presenters.AddEmployerPresenter;
-import ru.glassexpress.controllers.presenters.AddEmployerView;
-import ru.glassexpress.core.data.DataMap;
+import ru.glassexpress.controllers.views.AddEmployerView;
 import ru.glassexpress.core.data.Log2File;
-import ru.glassexpress.core.edit_content_command.addCommand.AddOperator;
-import ru.glassexpress.core.get_command.adapter.BaseObjectAdapter;
-import ru.glassexpress.core.objects.UserObject;
 
 import ru.glassexpress.library.AlertWindow;
 
@@ -25,6 +19,7 @@ public class AddEmpController extends BaseController implements AddEmployerView 
 
 
     private String login;
+    public TextField fieldEmail;
     private String pass;
     private String key;
     private AddEmployerPresenter presenter;
@@ -67,7 +62,7 @@ public class AddEmpController extends BaseController implements AddEmployerView 
 
     @Override
     public void onAddEmployerClick() {
-        presenter.addUser(fieldName.getText(),fieldLastName.getText(),
+        presenter.addUser(fieldName.getText(),fieldLastName.getText(), fieldEmail.getText(),
                 salonsComboBox.getSelectionModel().getSelectedIndex(),
                 permisComboBox.getSelectionModel().getSelectedIndex(),
                 posComboBox.getSelectionModel().getSelectedIndex());

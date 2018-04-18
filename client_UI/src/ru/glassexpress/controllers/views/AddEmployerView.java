@@ -1,4 +1,4 @@
-package ru.glassexpress.controllers.presenters;
+package ru.glassexpress.controllers.views;
 
 import javafx.collections.ObservableList;
 

@@ -217,9 +217,9 @@
                         <ListView fx:id="markListView" onMouseClicked="#fillModelsListView" prefHeight="299.0" prefWidth="216.0" styleClass="textView" />
                         <HBox>
                             <children>
-                                <Button fx:id="addMarkButton" mnemonicParsing="false" onAction="#showAddTitleModal" prefHeight="25.0" prefWidth="222.0" styleClass="lilBtn" text="+" />
-                        <Button fx:id="editMarkButton" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#showAddTitleModal" prefHeight="25.0" prefWidth="222.0" styleClass="lilBtn" text="..." />
-                                <Button fx:id="delMarkButton" mnemonicParsing="false" onAction="#showAddTitleModal" prefHeight="25.0" prefWidth="222.0" styleClass="lilBtn" text="-" />
+                                <Button fx:id="addMarkButton" mnemonicParsing="false" onAction="#startAddDialog" prefHeight="25.0" prefWidth="222.0" styleClass="lilBtn" text="+" />
+                        <Button fx:id="editMarkButton" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#startEditDialog" prefHeight="25.0" prefWidth="222.0" styleClass="lilBtn" text="..." />
+                                <Button fx:id="delMarkButton" mnemonicParsing="false" onAction="#startDeleteDialog" prefHeight="25.0" prefWidth="222.0" styleClass="lilBtn" text="-" />
                             </children>
                         </HBox>
                     </children>
@@ -234,9 +234,9 @@
                         <ListView fx:id="modelListView" onMouseClicked="#fillGenerationsListView" prefHeight="361.0" prefWidth="216.0" styleClass="textView" />
                         <HBox>
                             <children>
-                                <Button fx:id="addModelButton" mnemonicParsing="false" onAction="#showAddTitleModal" prefHeight="25.0" prefWidth="223.0" styleClass="lilBtn" text="+" />
-                        <Button fx:id="editModelButton" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#showAddTitleModal" prefHeight="25.0" prefWidth="223.0" styleClass="lilBtn" text="..." />
-                                <Button fx:id="delModelButton" mnemonicParsing="false" onAction="#showAddTitleModal" prefHeight="25.0" prefWidth="223.0" styleClass="lilBtn" text="-" />
+                                <Button fx:id="addModelButton" mnemonicParsing="false" onAction="#startAddDialog" prefHeight="25.0" prefWidth="223.0" styleClass="lilBtn" text="+" />
+                        <Button fx:id="editModelButton" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#startEditDialog" prefHeight="25.0" prefWidth="223.0" styleClass="lilBtn" text="..." />
+                                <Button fx:id="delModelButton" mnemonicParsing="false" onAction="#startDeleteDialog" prefHeight="25.0" prefWidth="223.0" styleClass="lilBtn" text="-" />
                             </children>
                         </HBox>
                     </children>
@@ -251,16 +251,16 @@
                         <ListView fx:id="genListView" prefWidth="294.0" styleClass="textView" />
                         <HBox>
                             <children>
-                                <Button fx:id="addGenerationButton" mnemonicParsing="false" onAction="#showAddTitleModal" prefHeight="25.0" prefWidth="223.0" styleClass="lilBtn" text="+" />
-                        <Button fx:id="editGenerationButton" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#showAddTitleModal" prefHeight="25.0" prefWidth="223.0" styleClass="lilBtn" text="..." />
-                                <Button fx:id="delGenerationButton" mnemonicParsing="false" onAction="#delGen" prefHeight="25.0" prefWidth="223.0" styleClass="lilBtn" text="-" />
+                                <Button fx:id="addGenerationButton" mnemonicParsing="false" onAction="#startAddDialog" prefHeight="25.0" prefWidth="223.0" styleClass="lilBtn" text="+" />
+                        <Button fx:id="editGenerationButton" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#startEditDialog" prefHeight="25.0" prefWidth="223.0" styleClass="lilBtn" text="..." />
+                                <Button fx:id="delGenerationButton" mnemonicParsing="false" onAction="#startDeleteDialog" prefHeight="25.0" prefWidth="223.0" styleClass="lilBtn" text="-" />
                             </children>
                         </HBox>
                     </children>
                 </VBox>
             </children>
         </GridPane>
-        <ComboBox fx:id="insertClassComboBox" disable="true" layoutX="704.0" layoutY="65.0" onHiding="#initPriceClassLabels" prefWidth="150.0" promptText="Класс установки" />
+        <!--<ComboBox fx:id="insertClassComboBox" disable="true" layoutX="704.0" layoutY="65.0" onHiding="#initPriceClassLabels" prefWidth="150.0" promptText="Класс установки" />-->
         <Button disable="true" layoutX="704.0" layoutY="100.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="150.0" text="Сохранить" />
         <Separator layoutX="695.0" layoutY="80.0" orientation="VERTICAL" prefHeight="230.0" prefWidth="10.0" AnchorPane.leftAnchor="665.0" AnchorPane.topAnchor="40.0" />
         <Separator layoutX="149.0" layoutY="306.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="290.0" />

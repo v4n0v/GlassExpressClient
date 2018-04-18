@@ -14,6 +14,11 @@ public class CartServiceObject extends BaseObject {
 
 //    private final BooleanProperty isSelected;
     private  ServiceObject service;
+
+    public float getPrice() {
+        return price;
+    }
+
     private  float price;
     private final IntegerProperty count;
     public IntegerProperty getCountProperty() {

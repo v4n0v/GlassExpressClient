@@ -6,7 +6,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox fx:id="rootElement" alignment="TOP_RIGHT" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="236.0" prefWidth="250.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.glassexpress.controllers.AddEmpController">
+<VBox fx:id="rootElement" alignment="TOP_RIGHT" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="266.0" prefWidth="250.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.glassexpress.controllers.AddEmpController">
    <children>
       <TextField id="fieldLogin" fx:id="fieldName" promptText="Имя" styleClass="fontverdabold">
          <VBox.margin>
@@ -18,6 +18,10 @@
             <Insets bottom="10.0" />
          </VBox.margin>
       </TextField>
+      <TextField id="fieldLogin" fx:id="fieldEmail" layoutX="25.0" layoutY="60.0" promptText="Email" styleClass="fontverdabold">
+         <VBox.margin>
+            <Insets bottom="10.0" />
+         </VBox.margin></TextField>
       <ComboBox fx:id="posComboBox" prefHeight="25.0" prefWidth="268.0" promptText="Должность">
          <VBox.margin>
             <Insets bottom="10.0" />

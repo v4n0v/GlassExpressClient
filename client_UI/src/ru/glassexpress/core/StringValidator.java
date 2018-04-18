@@ -26,4 +26,13 @@ public class StringValidator {
         Matcher m = p.matcher(testString);
         return m.matches();
     }
+
+    public static boolean isMailCorrect(String testString) {
+        Pattern p = Pattern.compile("^((([0-9A-Za-z]{1}[-0-9A-z\\.]{1,}[0-9A-Za-z]{1})|([0-9А-Яа-я]{1}[-0-9А-я\\.]{1,}[0-9А-Яа-я]{1}))@([-0-9A-Za-z]{1,}\\.){1,2}[-A-Za-z]{2,})$");
+        Matcher m = p.matcher(testString);
+        return m.matches();
+    }
+
+
+
 }

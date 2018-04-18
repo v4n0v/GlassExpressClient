@@ -2,6 +2,7 @@ package ru.glassexpress.controllers.presenters;
 
 import javafx.collections.ObservableList;
 import ru.glassexpress.controllers.MainController;
+import ru.glassexpress.controllers.views.LoginView;
 import ru.glassexpress.core.GetListOperator;
 import ru.glassexpress.core.JsonController;
 import ru.glassexpress.core.StringValidator;
@@ -11,8 +12,7 @@ import ru.glassexpress.core.objects.Composite;
 import ru.glassexpress.core.objects.DateObject;
 import ru.glassexpress.core.objects.IdTitleObj;
 import ru.glassexpress.core.objects.UserObject;
-import ru.glassexpress.core.utils.OpenDayManager;
-import ru.glassexpress.library.AlertWindow;
+import ru.glassexpress.core.OpenDayManager;
 
 public class LoginPresenter {
     private LoginView view;
@@ -39,9 +39,9 @@ public class LoginPresenter {
                     if (user != null) {
                         user.setKey(keyObj.getTitle());
                         dataMap.setUser(user);
-                        mainController.setUser(user);
-                        mainController.setOperator(operator);
-                        mainController.reconnect();
+                      //  mainController.setUser(user);
+                        dataMap.setGetListOperator(operator);
+                        mainController.update();
                         // получаем из базы последний день, открытый этим администратором
                         // если у пользовалетя права root, тогда уточняем какую точку продаж открыть
                         if (user.getPermission() == 1) {

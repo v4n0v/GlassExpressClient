@@ -4,7 +4,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import ru.glassexpress.controllers.presenters.AddGlassPresenter;
-import ru.glassexpress.controllers.presenters.AddGlassView;
+import ru.glassexpress.controllers.views.AddGlassView;
 import ru.glassexpress.core.data.Log2File;
 import ru.glassexpress.core.objects.GlassObject;
 import ru.glassexpress.library.AlertWindow;

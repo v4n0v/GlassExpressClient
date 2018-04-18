@@ -8,6 +8,7 @@ public class UserObject extends BaseObject{
     private String login;
 
     private int passHash;
+    private String email;
 
     public UserObject () {
         super("user");
@@ -143,5 +144,13 @@ public class UserObject extends BaseObject{
 
     public void setPassHash(int passHash) {
         this.passHash = passHash;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getEmail() {
+        return email;
     }
 }

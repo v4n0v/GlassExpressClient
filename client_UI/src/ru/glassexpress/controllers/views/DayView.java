@@ -1,4 +1,4 @@
-package ru.glassexpress.controllers.presenters;
+package ru.glassexpress.controllers.views;
 
 import javafx.collections.ObservableList;
 import ru.glassexpress.core.objects.DateObject;
@@ -17,7 +17,7 @@ public interface DayView {
 
     void showError(String msg);
 
-    boolean addNewDay(DateObject today);
+
 
     void closeView();
 

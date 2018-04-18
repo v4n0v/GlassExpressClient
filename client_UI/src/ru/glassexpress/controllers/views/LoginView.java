@@ -1,4 +1,4 @@
-package ru.glassexpress.controllers.presenters;
+package ru.glassexpress.controllers.views;
 
 import ru.glassexpress.core.GetListOperator;
 import ru.glassexpress.core.objects.UserObject;

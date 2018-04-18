@@ -27,6 +27,7 @@ public class AddUserCommand extends AddElementCommand {
                 .setRequest("id_permission", String.valueOf(user.getPermission()))
                 .setRequest("login", user.getLogin())
                 .setRequest("passHash", String.valueOf(user.getPassHash()))
+                .setRequest("mail", user.getEmail())
                 .build();
     }
 }

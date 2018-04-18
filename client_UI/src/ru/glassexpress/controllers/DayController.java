@@ -6,9 +6,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import ru.glassexpress.controllers.presenters.DayPresenter;
-import ru.glassexpress.controllers.presenters.DayView;
+import ru.glassexpress.controllers.views.DayView;
 import ru.glassexpress.core.data.Log2File;
-import ru.glassexpress.core.objects.DateObject;
 import ru.glassexpress.core.objects.UserObject;
 import ru.glassexpress.library.AlertWindow;
 
@@ -41,7 +40,7 @@ public class DayController extends BaseController implements DayView {
 
     @Override
     public void startApplication() {
-        mainController.reconnect();
+        mainController.update();
     }
 
     public void addEmployer(ActionEvent actionEvent) {
@@ -82,11 +81,6 @@ public class DayController extends BaseController implements DayView {
     @Override
     public void showError(String msg) {
         AlertWindow.errorMessage(msg);
-    }
-
-    @Override
-    public boolean addNewDay(DateObject today) {
-        return mainController.getAddOperator().addNewDay(today);
     }
 
     @Override

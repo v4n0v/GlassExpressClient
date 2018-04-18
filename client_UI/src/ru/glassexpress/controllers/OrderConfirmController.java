@@ -1,7 +1,5 @@
 package ru.glassexpress.controllers;
 
-import javafx.beans.property.BooleanProperty;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -9,18 +7,20 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.util.converter.IntegerStringConverter;
+import ru.glassexpress.controllers.presenters.OrderConfirmPresenter;
+import ru.glassexpress.controllers.views.OrderConfirmView;
 import ru.glassexpress.core.data.Log2File;
 import ru.glassexpress.core.get_command.adapter.BaseObjectAdapter;
 import ru.glassexpress.core.objects.CartProductObject;
 import ru.glassexpress.core.objects.CartServiceObject;
 import ru.glassexpress.core.objects.GlassObject;
 import ru.glassexpress.core.objects.ServiceObject;
-import ru.glassexpress.core.utils.ObservableListAdapter;
 import ru.glassexpress.library.AlertWindow;
+import ru.glassexpress.library.Resources;
 
 import java.util.List;
 
-public class OrderConfirmController extends BaseController {
+public class OrderConfirmController extends BaseController implements OrderConfirmView {
     public RadioButton cashRB;
     public RadioButton cardRB;
 
@@ -32,7 +32,7 @@ public class OrderConfirmController extends BaseController {
 
     public TableColumn<CartProductObject, Integer> countCol;
     public TableColumn<CartProductObject, Float> priceCol;
-//    public ComboBox<String> servicesComboBox;
+    //    public ComboBox<String> servicesComboBox;
     public ComboBox<ServiceObject> servicesComboBox;
     public TextField servicesPriceTextField;
 
@@ -44,101 +44,61 @@ public class OrderConfirmController extends BaseController {
 
     @FXML
     private ComboBox<String> discountComboBox;
-    private ObservableList<CartProductObject> cart;
-    private ObservableList<CartServiceObject> cartService;
+
+
     public TitledPane goodsAccordion;
     @FXML
     Label totalLabel;
-    ObservableListAdapter observableAdapter;
-    public List<GlassObject> getSelectedGlass() {
-        return selectedGlass;
-    }
+    OrderConfirmPresenter presenter;
 
-    public void setSelectedGlass(List<GlassObject> selectedGlass) {
-        this.selectedGlass = selectedGlass;
-    }
-  private  float orderPrice;
-    private ObservableList<String> discounts;
-    private List<GlassObject> selectedGlass;
+
+
+
+    public Button addServiceButton;
+    public Button dellServiceButton;
+
+
     private BaseObjectAdapter adapter;
+
     @Override
     public void init() {
 
         Log2File.writeLog("Иинициализация окна подтверждения заказа");
-        adapter=BaseObjectAdapter.getInsance();
+        presenter = new OrderConfirmPresenter(this);
+        adapter = BaseObjectAdapter.getInsance();
         initTable();
-        observableAdapter=new ObservableListAdapter();
-       // ObservableList<String> services = adapter.returnServicesStringList(dataMap.getServices());
-//        servicesComboBox.setCellFactory(p -> new ListCell <ServiceObject> () {
-//            @Override
-//            protected void updateItem(ServiceObject item, boolean empty) {
-//                super.updateItem(item, empty);
-//                if (item != null && !empty) {
-//                    setText(item.getTitle());
-//                } else {
-//                    setText(null);
-//                }
-//            }
-//        });
-
-        servicesComboBox.setItems(observableAdapter.asObservableList(dataMap.getServices()));
-
-        initPermission();
         ToggleGroup payment = new ToggleGroup();
         cashRB.setToggleGroup(payment);
         cardRB.setToggleGroup(payment);
         cashRB.setSelected(true);
-
-        // goodsAccordion.setExpanded(true);
-        discounts = FXCollections.observableArrayList();
-        discounts.add("5");
-        discounts.add("10");
-        discounts.add("15");
-        discounts.add("20");
-        discountComboBox.setItems(discounts);
-        calculateOrderPrice();
     }
-    public Button addServiceButton;
-    public Button dellServiceButton;
-    private void initPermission() {
-        boolean isVisible;
-        if (dataMap.getUser().getPermission() == 1) {
-//        if (mainController.getUser().getPermission() == 1) {
-            isVisible = true;
-        } else {
-            isVisible = false;
-        }
-        dellServiceButton.setVisible(isVisible);
-        addServiceButton.setVisible(isVisible);
+    public void setSelectedGlass(List<GlassObject> selectedGlass) {
+        presenter.setSelectedGlass(selectedGlass);
+        presenter.init();
+
     }
 
-    public  void fillServicePrice(){
+    public void fillServicePrice() {
+        presenter.handleServicePrice(servicesComboBox.getSelectionModel().getSelectedIndex());
+
+
+    }
+
+
+    public void addServicePriceInCart() {
         int index = servicesComboBox.getSelectionModel().getSelectedIndex();
-        if (index!=-1){
-            servicesPriceTextField.setText(String.valueOf(dataMap.getServices().get(index).getPrice()));
-        }
-    }
+        presenter.addServicePriceInCart(index);
 
 
-    public  void addServicePriceInCart(){
-        int index = servicesComboBox.getSelectionModel().getSelectedIndex();
-        if (index!=-1){
-            ServiceObject serviceObject = dataMap.getServices().get(index);
-            cartService.add(new CartServiceObject(serviceObject, Float.parseFloat(servicesPriceTextField.getText())));
-        }
-        calculateOrderPrice();
     }
 
     private void initTable() {
         Log2File.writeLog("Иинициализация таблицы корзины");
-        cart = FXCollections.observableArrayList();
-        cartService=FXCollections.observableArrayList();
-       // таблица товаров
-        for (GlassObject selectedGlas : selectedGlass) {
-            cart.add(new CartProductObject(selectedGlas));
-        }
+
+        // таблица товаров
+
         tableCart.setEditable(true);
-        tableCart.setItems(cart);
+
         isInsertCol.setCellValueFactory(cellData -> cellData.getValue().isInsertProperty());
         isInsertCol.setCellFactory(tc -> new CheckBoxTableCell<>());
         glassCol.setCellValueFactory(cellData -> cellData.getValue().getGlassStringProperty());
@@ -149,7 +109,7 @@ public class OrderConfirmController extends BaseController {
 
         // таблица услуг
         tableServiceCart.setEditable(true);
-        tableServiceCart.setItems(cartService);
+
         serviceTitleCol.setCellValueFactory(cellData -> cellData.getValue().getTitleStringProperty());
 
         countServiceCol.setCellValueFactory(cellData -> cellData.getValue().getCountProperty().asObject());
@@ -160,59 +120,86 @@ public class OrderConfirmController extends BaseController {
     }
 
     public void confirm(ActionEvent actionEvent) {
+        presenter.confirmOrder();
         calculateOrderPrice();
-        boolean isTrue = AlertWindow.confirmationWindow("Вы уверены", "Вы точно хотите подтвердить заказ?\nСумма зазаза = "+ orderPrice );
-        if (isTrue) {
-            close();
-        }
-
     }
 
     public void calculateOrderPrice() {
+        presenter.calculate();
 
-        orderPrice = 0;
-
-        // проверка, выбрана ли установка стекла
-        for (CartProductObject o : cart) {
-            float prcire = o.getPriceFloatProperty().get();
-            float insPrice = o.getGlass().getInsertPrice();
-            BooleanProperty isInsert = o.isInsertProperty();
-            orderPrice += prcire;
-            if (isInsert.get()) {
-                orderPrice += insPrice;
-            }
-            orderPrice *= o.getCountValue();
-        }
-
-        // если добавлены услуги
-        for (CartServiceObject o : cartService) {
-            float priceService = o.getPriceFloatProperty().get();
-            float insPrice = o.getService().getPrice();
-            //BooleanProperty isInsert = o.isInsertProperty();
-             priceService*= o.getCountValue();
-//            if (isInsert.get()) {
-//                orderPrice += insPrice;
-//            }
-            orderPrice+=priceService;
-        }
-
-
-        int indexDsc = discountComboBox.getSelectionModel().getSelectedIndex();
-        float dsc = 0;
-        if (indexDsc != -1) {
-            dsc = Float.parseFloat(discounts.get(indexDsc));
-            dsc /= 100;
-        }
-        orderPrice -= orderPrice * dsc;
-        totalLabel.setText(String.valueOf(orderPrice));
     }
 
 
-    public void addService(){
+    public void addService() {
         System.out.println("Добвляем услугу");
     }
 
-    public void dellService(){
+    public void dellService() {
         System.out.println("Удаляем услугу");
     }
+
+    @Override
+    public void setComboBox(String target, ObservableList list) {
+        ComboBox comboBox = initComboBox(target);
+        comboBox.setItems(list);
+    }
+
+    @Override
+    public void setPermission(boolean isVisible) {
+        dellServiceButton.setVisible(isVisible);
+        addServiceButton.setVisible(isVisible);
+    }
+
+    @Override
+    public void setTotalPrice(String s) {
+        totalLabel.setText(s);
+    }
+
+    @Override
+    public int getDiscountIndex() {
+        return discountComboBox.getSelectionModel().getSelectedIndex();
+
+    }
+
+    @Override
+    public void setTextField(String s) {
+        servicesPriceTextField.setText(s);
+    }
+
+    @Override
+    public void setServiceTable(String service, ObservableList<CartServiceObject> cartService) {
+        tableServiceCart.setItems(cartService);
+    }
+
+    @Override
+    public float getServicesPrice() {
+        return Float.parseFloat(servicesPriceTextField.getText());
+    }
+
+    @Override
+    public boolean confirm(String s) {
+        return AlertWindow.confirmationWindow("Вы уверены", s);
+
+    }
+
+    @Override
+    public void closeView() {
+        close();
+    }
+
+    @Override
+    public void setGlassTable(String cartName, ObservableList<CartProductObject> cart) {
+        tableCart.setItems(cart);
+    }
+
+    private ComboBox initComboBox(String target) {
+        switch (target) {
+            case Resources.TARGET_SERVICE:
+                return servicesComboBox;
+            case "discount":
+                return discountComboBox;
+        }
+        return null;
+    }
+
 }
